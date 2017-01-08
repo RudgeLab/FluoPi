@@ -10,53 +10,47 @@ camera = PiCamera()
 
 folder = ""
 filename = "exptest"
-interval = 3
-steps = 3
+interval = 120
+steps = 240
 
 #camera settings
-camera.awb_mode = 'off'
-camera.awb_gain = 1
-#camera.analog_gain = 1
 
-#camera.brightness = 60
+#camera.analog_gain = 1
+#camera.digital_gain=1
+#camera.brightness = 50
 #camera.sharpness = 0
 #camera.contrast = 0
 #camera.saturation = 0
-camera.exposure_mode = 'fixedfps'
+#camera.exposure_compensation=0
+#camera.image_effect='none'
+#camera.color_effects=None
 
-camera.framerate = 1
-camera.shutter_speed = 1000000
-
-print camera._get_camera_settings()
+#camera.rotation=0
+camera.ISO=0
+sleep(2)
+camera.shutter_speed = camera.exposure_speed
+camera.exposure_mode = 'off'
+g=camera.awb_gains
+camera.awb_mode = 'off'
 
 for i in range(steps):
+    
+    t1 = time.time()
+            
+    GPIO.output(29,GPIO.HIGH)
+    #camera.start_preview()
+    sleep(interval)
+    camera.awb_gains = g
+    
+    #camera._get_camera_settings() still not sure how to use it
+    fname = folder + filename + "_%04d.jpg"%(i)
+    camera.capture(fname)
 
-        t1 = time.time()
-	sleep(interval)
+    GPIO.output(29,GPIO.LOW)
+    #camera.stop_preview()
 
-        fname0 = folder + filename + "_BG_%04d.jpg"%(i)
-        #camera.start_preview()
-        #sleep(10)
-
-        camera.capture(fname0)
-        
-	GPIO.output(29,GPIO.HIGH)
-	sleep(1)
-	
-	#camera.start_preview()
-	#sleep(10)
-	
-	fname = folder + filename + "_%04d.jpg"%(i)
-	camera.capture(fname)
-
-	print camera.exposure_speed
-	
-	GPIO.output(29,GPIO.LOW)
-	#camera.stop_preview()
-	
-	elapsed = time.time()-t1
-	print elapsed
-
+    elapsed = time.time()-t1
+    #camera._get_camera_settings()
+    print elapsed
 
 GPIO.cleanup()
-
