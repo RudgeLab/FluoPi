@@ -9,29 +9,16 @@ GPIO.setup(29, GPIO.OUT)
 camera = PiCamera()
 
 folder = ""
-filename = "exptest"
-interval = 120
-steps = 240
+filename = "valdivia_test_%04d.jpg"
+interval = 300
+steps = 24
 
-#camera settings
-
-#camera.analog_gain = 1
-#camera.digital_gain=1
-#camera.brightness = 50
-#camera.sharpness = 0
-#camera.contrast = 0
-#camera.saturation = 0
-#camera.exposure_compensation=0
-#camera.image_effect='none'
-#camera.color_effects=None
-
-#camera.rotation=0
 camera.ISO=0
 sleep(2)
 camera.shutter_speed = camera.exposure_speed
 camera.exposure_mode = 'off'
-g=camera.awb_gains
 camera.awb_mode = 'off'
+camera.awb_gains = [1,1]
 
 for i in range(steps):
     
@@ -40,10 +27,11 @@ for i in range(steps):
     GPIO.output(29,GPIO.HIGH)
     #camera.start_preview()
     sleep(interval)
-    camera.awb_gains = g
     
     #camera._get_camera_settings() still not sure how to use it
-    fname = folder + filename + "_%04d.jpg"%(i)
+
+    fname = os.path.join(folder, filename%(i))
+    #folder + filename + "_%04d.jpg"%(i)
     camera.capture(fname)
 
     GPIO.output(29,GPIO.LOW)
