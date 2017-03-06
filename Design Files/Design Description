@@ -1,0 +1,21 @@
+The object was developed based on a 3 mm acrylic structure processed using a laser cut machine. This technology is growing in ubiquity in the world and is a simple and quick process. Also, as they are mostly flat surfaces, the laser cut pieces can be easily shipped.
+
+The acrylic plates are held together with small 3d printed parts, designed for slide on standard nuts and bolts that can be replaced depending on local supply. All 3d printed parts are designed considering the FDM process: using mostly horizontal and vertical faces, low inclination angles and no “ceilings” so no support structures are needed, assuring success in the fabrication.
+
+The object architecture is modular. The bottom module consist of a LED transilluminator and the top module is the visualizer/digitizer support.
+
+The transilluminator has a 100 blue (470 nm) 5 mm LEDs matrix, mounted on a custom designed PCB. The 24 volts input board supports the matrix and components for the analog and digital on/off control. For the digital control, it was used a TIP122 transistor, considering 3.3 volts for the Raspberry GPIO control.
+
+The 24 volts supply was chosen so the pcb required less components (using 5 leds in parallel for a resistor) and it wouldn't be a need for additional security requirements (i.e. a fuse).
+
+The excitation filter is housed in the top plates of the bottom module and is fastened between the top adjusting screws and the main mounting screws on the base. It is a blue 3 mm acrylic that slides in from the front, allowing the filter to be exchangeable.
+
+The top module mounts on the bottom module by sliding in from the front (as the filter) and secures with the top adjusting screws.
+
+The top module supports the imaging system and the Raspberry Pi for image processing and timelapse control. The image acquisition is made with a RPi Camera (B) with adjustable focus lens, and transmitted to the Raspberry Pi with the standard 15 pin ribbon cable via a sloth in the top plates of the module. This adjustable lens can focus on the whole vertical range of the top module. The height adjustment system is manual an consist of a standard bolt and nut mounted with a nob, that slides up and down and press on tightening for fixation on the back plate of the module.
+
+The maximum height of the imaging system allows the camera module to get images as wide as the illuminated area on the bottom, maximizing use of space.
+
+On the adjustable height system there is a 3d printed adaptor that enclosures the camera module and the focus system mounts directly on the camera lens. This adaptor allows to be removed with the camera for stand alone use, transforming the camera in a powerful microscope and visualizer by it’s own, yet not fully developed in this project.
+
+The base of the top module supports the sample for imaging an transillumination. Holds, as a maximum, a 120 mm standard petri dish.
