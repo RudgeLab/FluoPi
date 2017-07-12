@@ -86,7 +86,7 @@ def count_files(path,filetype):
 
 def get_im_data(xframes,imageCount,fname):
     """
-    To count the number of files of a defined extension (filetype on a certain folder (path)
+    Load image data from a sequence of files
 
     Parameters
     ----------
@@ -97,7 +97,7 @@ def get_im_data(xframes,imageCount,fname):
         total number of files on the folder (can be obtained with count_files function)
 
     fname : string
-        folder name where the images are stored
+        file name pattern including full path where images are stored, e.g. "/folder/image-%04d"
 
     Returns
     -------
@@ -131,6 +131,18 @@ def get_im_data(xframes,imageCount,fname):
 # get the background time value and plot it
 
 def Time_vector(data, frames, dT):
+    """
+    Get the vector of times for the image sequence loaded
+
+    Parameters
+    ----------
+    data : dictionary
+        dictionary with the R G B data of all images
+
+    frames : 
+    dT : 
+    """
+
     _,_,st=data['R'].shape
     T=np.zeros((st))
     for i in range(0,st):
@@ -138,7 +150,7 @@ def Time_vector(data, frames, dT):
 
 def row_transect(Data, row, imCount, frame = -1):
     """
-    get the background value of a transect in a frame and plot it
+    Plot the value of a transect (row of pixels) in a frame and plot it
 
     Parameters
     ----------
@@ -221,7 +233,7 @@ def BG_Val(X1,X2,Y1,Y2,data, imCount):
     ax.add_patch(rect)
 
 
-    #get the background time value and plot it
+    #get the mean background value at each time and plot it
     bg={}
 
     for chan in channels:
@@ -320,15 +332,15 @@ def smoothDat(data,sigma):
     Data: dictionary
         4 dimensional matrix with the data
     sigma: double
-        filter parameter (standard deviation)
+        Filter parameter (standard deviation)
 
     Returns
     -------
     nsims: dictionary
-        smooth data of each channel sum over time
+        Smooth data of each channel sum over time
 
     nsimsAll: array_like
-        matrix with sum of each channels of nsims
+        Matrix with sum of each channels of nsims
 
     """
 
@@ -364,25 +376,25 @@ def colonyBlob(data,thresh,ImName):
 
     Parameters
     ----------
-    data: dictionary
-        rectangle area limits: (X1,Y1)-- left-up corner. (X2,Y2) --- rigth-bottom corner
+    data: array of single channel image data
+
     thresh:
-
+        Pixel values > thresh are included in the analysis, range (0,1)
     ImName:
-
+        Name of an image on which to overlay colony positions and sizes
 
     Returns
     -------
-    A: dictionary
-        Sum data over time for each pixel on each channel of the dictionary
+    A: array (Nx3)
+        Contains the (x,y) position and size of each blob for each of N colonies detected
+        """
 
-    """
     A = skfeat.blob_log(data, min_sigma=1.0, max_sigma=10.0, num_sigma=100, threshold=thresh, overlap=0.8)
 
     plt.figure(figsize=(8,8))
     plt.imshow(data, cmap='gray')
     plt.hold(True)
-    plt.title('sumarized Image')
+    plt.title('Sumarized Image')
     for i in range(len(A)):
         circle = plt.Circle((A[i,1], A[i,0]), 2*A[i,2], color='r', fill=False , lw=0.5)
         fig = plt.gcf()
@@ -408,23 +420,22 @@ def obtain_rois(data,blobs):
 
     Parameters
     ----------
-    data: dictionary
-        rectangle area limits: (X1,Y1)-- left-up corner. (X2,Y2) --- rigth-bottom corner
+    data: array of single channel image data
+
     blobs:
+        Array of colony positions and sizes given by skimage in colonyBlob()
 
 
     Returns
     -------
-    A: dictionary
-        Sum data over time for each pixel on each channel of the dictionary
     all_rois:
-        asdf
+        The ROI array image data for square region around colony position of side 2*(colony size)
 
     all_rois_circle:
-        asdf
+        The ROI array image data only within circle (radius = width/2)
 
     nc:
-        asdgfa
+        Number of colonies analysed (size of returned arrays)
     """
 
  #inputs
@@ -484,6 +495,17 @@ def obtain_rois(data,blobs):
 # roisC['channel_name'][blob_number][y,x,timepoint]
 
 def rois_plt_Fdynam(rois,T,nc):
+    """
+    Plot the total fluorescence of each colony over time
+
+    Parameters:
+        rois: the ROI image array data
+
+        T: the vector of real time values
+
+        nc: the number of colonies
+    """
+
     plt.figure(figsize=(17,3))
     pvect = [131,132,133]
     count=0
@@ -501,10 +523,16 @@ def rois_plt_Fdynam(rois,T,nc):
 #plt.legend(['Colony %d'%i for i in range(len(A))])
 
 def channelSum(RData,nc):
- #input
-    # RData = RGB time-lapse image data of each ROIS
- #return
-    # ACdata = sum of channels for each time step
+    """
+    Compute the sum over the RGB channels for each image
+
+    Parameters:
+        RData: RGB time-lapse image data of each ROIS, from obtain_rois()
+
+    Returns:
+        ACrois: dictionary
+            Sum of channels for each time step
+    """
     ACrois = {}
     for i in range(nc):
             ACrois[i]=np.zeros((RData['R'][i].shape))
@@ -516,6 +544,20 @@ def channelSum(RData,nc):
     return(ACrois)
 
 def frame_colony_size(rois,nc,thr):
+    """
+    Get the colony size at each time step
+    
+    Parameters:
+        rois: ROI image data from obtain_rois()
+
+        nc: Number of colonies
+
+        thr: Threshold for skfeat.blob_log 
+
+    Returns:
+        R: dictionary
+            The time series of colony size, indexed by colony id number
+    """
     R = {}
     nt= rois[0].shape[2]
     for k in range(nc):
@@ -530,6 +572,9 @@ def frame_colony_size(rois,nc,thr):
     return(R)
 
 def plot_growth(R,t):
+    """
+    Plot the colony size data returned by frame_colony_size
+    """
     for i in range(len(R)):
         r = R[i]
         plt.plot(t,np.log(r*r), '.')
@@ -540,6 +585,9 @@ def plot_growth(R,t):
 
 
 def checkR(R,rois,idx,t):
+    """
+    Plot the colony radius estimate overlayed on an kymograph image slice
+    """
     plt.figure(figsize=(16,12))
     w,h,_ = rois[idx].shape
     plt.imshow(rois[idx][w/2+1,:,:], interpolation='none', cmap='gray') # use the x-middle transect (--> w/2+1)
@@ -549,3 +597,5 @@ def checkR(R,rois,idx,t):
     plt.plot(t,R[idx]*2+h/2+1,'r')
     plt.xlabel('Time')
     plt.ylabel('y-axis position')
+
+# End
