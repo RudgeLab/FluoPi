@@ -91,7 +91,7 @@ def get_im_data(xframes,imageCount,fname):
     Parameters
     ----------
     xframes : int
-        step frames (e.g 10 to ise only ten to ten images)
+        step frames (e.g 10 to use only ten to ten images)
 
     imageCount : int
         total number of files on the folder (can be obtained with count_files function)
@@ -130,7 +130,7 @@ def get_im_data(xframes,imageCount,fname):
 
 # get the background time value and plot it
 
-def Time_vector(data, frames, dT):
+def Time_vector(data, xframes, dT):
     """
     Get the vector of times for the image sequence loaded
 
@@ -139,16 +139,26 @@ def Time_vector(data, frames, dT):
     data : dictionary
         dictionary with the R G B data of all images
 
-    frames : 
-    dT : 
+    xframes : int
+        step frames used on the analysis (e.g 10 means you are using one every ten to ten images)
+    
+    dT : double
+        time step of the frames in hour units. It can be obtained from the file used to perform the timelapse.
+        
+    Returns
+    -------
+    T: array_like
+        Time vector for the used data (hour units)
     """
 
     _,_,st=data['R'].shape
     T=np.zeros((st))
     for i in range(0,st):
-        T[i]=(i+1)*frames*dT
+        T[i]=(i)*xframes*dT
+    
+    return(T)
 
-def row_transect(Data, row, imCount, frame = -1):
+def row_transect(Data, row, xframes, dataframe = -1):
     """
     Plot the value of a transect (row of pixels) in a frame and plot it
 
@@ -167,27 +177,35 @@ def row_transect(Data, row, imCount, frame = -1):
     #input:
     # row = the row where you want to see the transect  (integer)
     # frame = image frame to use  (integer)
-
+    
+    row=int(row)  #just in case a non integer number is given
+    
     plt.figure(figsize=(15,3))
     plt.subplot(131)
-    plt.plot(Data['R'][row,:,frame])
+    plt.plot(Data['R'][row,:,dataframe])
     plt.xlabel('pixels')
     plt.ylabel('value')
     plt.title('Red channel')
 
     plt.subplot(132)
-    plt.plot(Data['G'][row,:,frame])
+    plt.plot(Data['G'][row,:,dataframe])
     plt.xlabel('pixels')
     plt.title('Green channel')
 
     plt.subplot(133)
-    plt.plot(Data['B'][row,:,frame])
+    plt.plot(Data['B'][row,:,dataframe])
     plt.xlabel('pixels')
     plt.title('Blue channel')
 
     #plot selected line transect on the image (allways show it on the last frame)
-
-    im = plt.imread(Data['Im']%(imCount-1))
+    if dataframe > 0:
+        imFrame = xframes*(dataframe)
+    else:
+        _,_,st=Data['R'].shape
+        imFrame=(st-1)*xframes
+        
+    
+    im = plt.imread(Data['Im']%(imFrame))
     s1,s2,_=im.shape
     plt.figure(figsize=(6,6))
     fig = plt.gcf()
