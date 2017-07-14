@@ -815,5 +815,82 @@ def fit_radio(xdata,Rdata,cv,init,end):
         R_fit[i]=Function_fit(xdata,Rdata[i],init,end,i)
     return(R_fit)
 
+def CRoiInt_frames(data,blobs,R,cv):
+    """
+    compute the mean intensity values on each CROI and channel, redefining the ROIS based on Rdata values
+    
+    Parameters
+    ----------
+        data: dictionary
+             RGB dictionary with the ianges data
+        
+        blobs: array like
+            contains the information of identified blobs
+        
+        R: dictionary
+            contains the radio for each colony on each time step
+        
+        cv: vector
+            contain the ID of the colonies to analyse
+        
+    Return
+    ----------
+        AllC_CRois_meanVal: dictionary
+            contain the mean pixel value of each channel for each time step of each colony.
+            call it as: AllC_CRois_meanVal['channel_name'][blob_number][timepoint]
+
+    
+    """
+    AllC_CRois_meanVal = {}
+    
+    for char in channels:
+        CRois_meanVal = {}
+        
+        for i in cv:
+            #x and y are the colony center pixel stored on blobs
+            x = blobs[i,0]
+            y = blobs[i,1]
+            CRoiInt=0
+            count=0
+            meanInt=np.zeros((len(R[i][0])))
+            
+            for j in range(len(R[i][0])): 
+####### this lines is to eliminate the out of image bounds error
+                r=R[i][0][j]
+    
+                x1=x-r
+                x2=x+r
+                y1=y-r
+                y2=y+r
+
+                if x1 <= 0:
+                    x1 = 0
+                if x2 >= data[char].shape[0]:
+                    x2 = data[char].shape[0]
+                if y1 <= 0:
+                    y1 = 0
+                if y2 >= data[char].shape[1]:
+                    y2 = data[char].shape[1]
+
+                SRoi = data[char][x1:x2,y1:y2,j]
+
+#######            
+                xr=int((SRoi.shape[0]+1)/2)
+                yr=int((SRoi.shape[1]+1)/2)
+                
+                for n in range(SRoi.shape[0]):
+                    for m in range(SRoi.shape[1]):
+                        if ((n-xr)**2+(m-yr)**2) <= (r**2):
+                            CRoiInt += SRoi[n,m]
+                            count+=1
+                if count != 0:
+                    meanInt[j]=CRoiInt/count
+            CRois_meanVal[i]=meanInt
+        AllC_CRois_meanVal[char] = CRois_meanVal
+    
+    return(AllC_CRois_meanVal)
+
+
+
 
 # End
