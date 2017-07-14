@@ -425,7 +425,7 @@ def colonyBlob(data,thresh,ImName,filename='null'):
     plt.figure(figsize=(8,8))
     plt.imshow(plt.imread(ImName))
     #plt.hold(True)
-    plt.title('Original Image')
+    plt.title('Over '+ ImName)
     for i in range(len(A)):
         # plot the circle area identified for each colony
         circle = plt.Circle((A[i,1], A[i,0]), 2*A[i,2], color='w', fill=False , lw=0.5)
@@ -447,36 +447,32 @@ def colonyBlob(data,thresh,ImName,filename='null'):
 
 def obtain_rois(data,blobs):
     """
-    Use skimage to identify the position of each colony and define the circular region
-    used by each of them
-
+    Based on the information of each identified colony, create arrays to contain
+    the regions of interest (ROI) around each one.
+    
+    
     Parameters
     ----------
-    data: array of single channel image data
+    data: dictionary
+        R G B image data per frame
 
-    blobs:
+    blobs: array like
         Array of colony positions and sizes given by skimage in colonyBlob()
-
 
     Returns
     -------
     all_rois:
         The ROI array image data for square region around colony position of side 2*(colony size)
-
+        to call it: all_rois['channel_name'][blob_number][y,x,timepoint]
+    
     all_rois_circle:
-        The ROI array image data only within circle (radius = width/2)
+        The ROI array image data only within circle (radius = width/2), with the data outside the circle equal to zero.
+        The size of the array is equal to square ROIS (all_rois) size.
+        to call it: all_rois_circle['channel_name'][blob_number][y,x,timepoint]
 
     nc:
-        Number of colonies analysed (size of returned arrays)
+        Number of colonies analysed (length of returned arrays)
     """
-
- #inputs
-    # data = matrix with sum in channels and time of the images
-    # blobs = matrix with all the information of the obtainesd blobls (output from colonyBlob function)
- #return
-    # all_rois = array with the information of the region of interest (square arund the colony)
-    # all_rois_circle = array with the information inside the area of the colony (makes the values outside the colony equals to zero)
-    # nc = number of colonies ( equals to the length of rois vector)
 
     all_rois = {}
     all_rois_circle = {}
@@ -491,7 +487,7 @@ def obtain_rois(data,blobs):
             y = blobs[i,1]
             r = 2*blobs[i,2] #blobs[i,2] is the std deviation of the radious --> r=2*std implies 95% confidence
 
-####### this lines is to eliminate the out of image bounds error
+####### this lines are to eliminate the out of image bounds error
             x1=x-r
             x2=x+r
             y1=y-r
@@ -521,21 +517,26 @@ def obtain_rois(data,blobs):
     return(all_rois,all_rois_circle,nc)
 
 # rois contains a square arund the colony
-# roisC makes the values outside the colony equals to zero
+# rois_circle makes the values outside the colony boundaries equals to zero
 
-# to call it:
-# roisC['channel_name'][blob_number][y,x,timepoint]
 
-def rois_plt_Fdynam(rois,T,nc):
+def rois_plt_Fdynam(rois,T,nc,filename='null'):
     """
     Plot the total fluorescence of each colony over time
 
-    Parameters:
-        rois: the ROI image array data
+    Parameters
+    ----------
+        rois: dictionary
+            the ROI image array data (is better to use circular ROIS, obtained with obtain_rois() function)
 
-        T: the vector of real time values
+        T: vector
+            the vector of real time values
 
-        nc: the number of colonies
+        nc: int
+            the number of colonies analysed
+        
+        filename: string
+            filename with whom save the output image with fluorescence dynamics
     """
 
     plt.figure(figsize=(17,3))
@@ -545,12 +546,16 @@ def rois_plt_Fdynam(rois,T,nc):
         plt.subplot(pvect[count])
         for i in range(nc):
             plt.plot(T,rois[c][i].sum(axis=(0,1)))   #sum the value
-            plt.hold(True)
+            #plt.hold(True)
 
         plt.xlabel('Time [hrs]')
         plt.ylabel('Fluorescence intensity')
         plt.title(c+' channel')
         count+=1
+        
+    if filename != 'null':
+        #plt.savefig("FluorIntRGB.pdf", transparent=True)
+        plt.savefig(str(filename) + ".pdf", transparent=True)
 
 #plt.legend(['Colony %d'%i for i in range(len(A))])
 
@@ -558,12 +563,18 @@ def channelSum(RData,nc):
     """
     Compute the sum over the RGB channels for each image
 
-    Parameters:
-        RData: RGB time-lapse image data of each ROIS, from obtain_rois()
+    Parameters
+    ----------
+    RData: dictionary
+            RGB time-lapse image data of each ROIS, from obtain_rois()
+    
+    nc: int
+        number of colonies analysed
 
     Returns:
+    ----------
         ACrois: dictionary
-            Sum of channels for each time step
+            Sum of channels for each time step and ROI
     """
     ACrois = {}
     for i in range(nc):
@@ -575,18 +586,32 @@ def channelSum(RData,nc):
 
     return(ACrois)
 
-def frame_colony_size(rois,nc,thr):
+def frame_colony_size(rois,nc,thr, minS=0.5, maxS=10,numS=200):
     """
     Get the colony size at each time step
     
     Parameters:
-        rois: ROI image data from obtain_rois()
+    ----------
+        rois: dictionary
+            ROI image data from obtain_rois()
 
-        nc: Number of colonies
+        nc: int
+            Number of colonies
 
-        thr: Threshold for skfeat.blob_log 
+        thr: double
+            Threshold for skfeat.blob_log 
+        
+        minS: double
+            minimum value of sigma used on skfeat.blob_log
+        
+        maxS: double
+            maximum value of sigma used on skfeat.blob_log
+        
+        numS: int
+            number of sigma values used between minS and maxS on skfeat.blob_log
 
     Returns:
+    ----------
         R: dictionary
             The time series of colony size, indexed by colony id number
     """
@@ -598,36 +623,97 @@ def frame_colony_size(rois,nc,thr):
             troi = rois[k][:,:,i].astype(np.float32)
             if len(troi):
                 ntroi = (troi-troi.min())/(troi.max()-troi.min())
-                AA = skfeat.blob_log(ntroi, min_sigma=1.0, max_sigma=10.0, num_sigma=200, threshold=thr, overlap=0.8)
+                AA = skfeat.blob_log(ntroi, min_sigma=minS, max_sigma=maxS, num_sigma=numS, threshold=thr, overlap=0.8)
+                #AA = skfeat.blob_log(ntroi, min_sigma=0.1, max_sigma=6.0, num_sigma=150, threshold=thr, overlap=0.8)
                 if len(AA)>0:
                     R[k][i] = AA[0,2]
     return(R)
 
-def plot_growth(R,t):
+def logplot_growth(R,t,filename='null'):
     """
-    Plot the colony size data returned by frame_colony_size
+    Plot the log of the square of the radious for each colony
+    
+    Parameters
+    ----------
+        R: dictionary
+            colony radio at each time step of each colony at each time step (obtained with frame_colony_size() function) 
+        T: vector
+            the vector of real time values
+        filename: string
+            filename to save the plot generated
     """
     for i in range(len(R)):
         r = R[i]
         plt.plot(t,np.log(r*r), '.')
-        plt.hold(True)
+        #plt.hold(True)
         plt.xlabel('Time [hrs]')
         plt.ylabel('log(Radius^2) [pixels]')
         plt.title('Colony size')
+     
+    if filename != 'null':    
+        #plt.savefig("Radio.pdf", transparent=True)
+        plt.savefig(str(filename)+".pdf", transparent=True)
+
+def plot_growth(R,t,filename='null'):
+    """
+    Plot the radious for each colony at each time step
+    
+    Parameters
+    ----------
+        R: dictionary
+            colony radio at each time step of each colony (obtained with frame_colony_size() function) 
+        t: vector
+            the vector of real time values
+        filename: string
+            filename to save the plot generated
+    """
+    for i in range(len(R)):
+        r = R[i]
+        plt.plot(t,r, '.')
+        #plt.hold(True)
+        plt.xlabel('Time [hrs]')
+        plt.ylabel('log(Radius^2) [pixels]')
+        plt.title('Colony size')
+     
+    if filename != 'null':    
+        #plt.savefig("Radio.pdf", transparent=True)
+        plt.savefig(str(filename)+".pdf", transparent=True)
 
 
-def checkR(R,rois,idx,t):
+def checkR(R,rois,idx,t, filename='null'):
     """
     Plot the colony radius estimate overlayed on an kymograph image slice
+    
+    Parameters
+    ----------
+        R: dictionary
+            colony radio at each time step of each colony (obtained with frame_colony_size() function) 
+        
+        rois: dictionary
+            ROI image of each colony (obtained with obtain_rois() function)
+        
+        idx: int
+            id of the colony to check
+            
+        t: vector
+            the vector of real time values
+        
+        filename: string
+            filename to save the plot generated
     """
     plt.figure(figsize=(16,12))
     w,h,_ = rois[idx].shape
     plt.imshow(rois[idx][w/2+1,:,:], interpolation='none', cmap='gray') # use the x-middle transect (--> w/2+1)
     plt.colorbar()
-    plt.hold(True)
+    #plt.hold(True)
     plt.plot(t,-R[idx]*2+h/2+1,'r')
     plt.plot(t,R[idx]*2+h/2+1,'r')
     plt.xlabel('Time')
     plt.ylabel('y-axis position')
+    
+    if filename != 'null':    
+        #plt.savefig("KymoGraph.pdf", transparent=True) 
+        plt.savefig(str(filename)+".pdf", transparent=True)
+    
 
 # End
