@@ -522,7 +522,7 @@ def obtain_rois(data,blobs):
 # rois_circle makes the values outside the colony boundaries equals to zero
 
 
-def rois_plt_Fdynam(rois,T,nc,filename='null'):
+def rois_plt_Fdynam(rois,T,cv,filename='null'):
     """
     Plot the total fluorescence of each colony over time
 
@@ -534,8 +534,8 @@ def rois_plt_Fdynam(rois,T,nc,filename='null'):
         T: vector
             the vector of real time values
 
-        nc: int
-            the number of colonies analysed
+        cv: vector
+            contain the ID of the of colonies analysed
         
         filename: string
             filename with whom save the output image with fluorescence dynamics
@@ -546,7 +546,7 @@ def rois_plt_Fdynam(rois,T,nc,filename='null'):
     count=0
     for c in channels:
         plt.subplot(pvect[count])
-        for i in range(nc):
+        for i in cv:
             plt.plot(T,rois[c][i].sum(axis=(0,1)))   #sum the value
             #plt.hold(True)
 
@@ -561,7 +561,7 @@ def rois_plt_Fdynam(rois,T,nc,filename='null'):
 
 #plt.legend(['Colony %d'%i for i in range(len(A))])
 
-def channelSum(RData,nc):
+def channelSum(RData,cv):
     """
     Compute the sum over the RGB channels for each image
 
@@ -570,8 +570,8 @@ def channelSum(RData,nc):
     RData: dictionary
             RGB time-lapse image data of each ROIS, from obtain_rois()
     
-    nc: int
-        number of colonies analysed
+    cv: vector
+            contain the ID of the of colonies analysed
 
     Returns:
     ----------
@@ -579,16 +579,16 @@ def channelSum(RData,nc):
             Sum of channels for each time step and ROI
     """
     ACrois = {}
-    for i in range(nc):
+    for i in cv:
             ACrois[i]=np.zeros((RData['R'][i].shape))
 
     for c in channels:
-        for i in range(nc):
+        for i in cv:
             ACrois[i]+=RData[c][i][:,:,:]
 
     return(ACrois)
 
-def frame_colony_size(rois,nc,thr, minS=0.5, maxS=10,numS=200):
+def frame_colony_size(rois,cv,thr, minS=0.5, maxS=10,numS=200):
     """
     Get the colony size at each time step
     
@@ -597,8 +597,8 @@ def frame_colony_size(rois,nc,thr, minS=0.5, maxS=10,numS=200):
         rois: dictionary
             ROI image data from obtain_rois()
 
-        nc: int
-            Number of colonies
+        cv: vector
+            contain the ID of the of colonies analysed
 
         thr: double
             Threshold for skfeat.blob_log 
@@ -619,7 +619,7 @@ def frame_colony_size(rois,nc,thr, minS=0.5, maxS=10,numS=200):
     """
     R = {}
     nt= rois[0].shape[2]
-    for k in range(nc):
+    for k in cv:
         R[k] = np.zeros((nt,))
         for i in range(nt):
             troi = rois[k][:,:,i].astype(np.float32)
