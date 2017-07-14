@@ -376,7 +376,7 @@ def smoothDat(data,sigma):
             Maux[:,:,fr]=gaussian(data[c][:,:,fr], sigma) 
             
         simsT[c]=Maux
-        # make plot
+        # make plot of the sum over time of smoothed data per channel
     
         plt.subplot(pvect[count])
         plt.imshow(nsims[c])
@@ -387,7 +387,7 @@ def smoothDat(data,sigma):
     
     return(nsims,nsimsAll,simsT)
 
-def colonyBlob(data,thresh,ImName):
+def colonyBlob(data,thresh,ImName,filename='null'):
     """
     Use skimage to identify the position of each colony and define the circular region
     used by each of them
@@ -400,6 +400,9 @@ def colonyBlob(data,thresh,ImName):
         Pixel values > thresh are included in the analysis, range (0,1)
     ImName:
         Name of an image on which to overlay colony positions and sizes
+    
+    filename: string
+        filename with whom save the output image+blobs+ID
 
     Returns
     -------
@@ -411,7 +414,7 @@ def colonyBlob(data,thresh,ImName):
 
     plt.figure(figsize=(8,8))
     plt.imshow(data, cmap='gray')
-    plt.hold(True)
+    #plt.hold(True)
     plt.title('Sumarized Image')
     for i in range(len(A)):
         circle = plt.Circle((A[i,1], A[i,0]), 2*A[i,2], color='r', fill=False , lw=0.5)
@@ -421,13 +424,24 @@ def colonyBlob(data,thresh,ImName):
 
     plt.figure(figsize=(8,8))
     plt.imshow(plt.imread(ImName))
-    plt.hold(True)
+    #plt.hold(True)
     plt.title('Original Image')
     for i in range(len(A)):
+        # plot the circle area identified for each colony
         circle = plt.Circle((A[i,1], A[i,0]), 2*A[i,2], color='w', fill=False , lw=0.5)
         fig = plt.gcf()
         ax = fig.gca()
         ax.add_artist(circle)
+        ax.axes.get_xaxis().set_visible(False)
+        ax.axes.get_yaxis().set_visible(False)
+        
+        # attach the ID label to each colony
+        plt.annotate(
+        i,
+        xy=(A[i,1], A[i,0]), xytext=(-2, 2),
+        textcoords='offset points', ha='right', va='bottom',color='white')
+    if filename != 'null':
+        plt.savefig(str(filename) + ".pdf", transparent=True)
 
     return(A)
 
