@@ -815,7 +815,7 @@ def fit_radio(xdata,Rdata,cv,init,end):
         R_fit[i]=Function_fit(xdata,Rdata[i],init,end,i)
     return(R_fit)
 
-def CRoiInt_frames(data,blobs,R,cv):
+def CRoiMeanInt_frames(data,blobs,R,cv):
     """
     compute the mean intensity values on each CROI and channel, redefining the ROIS based on Rdata values
     
@@ -890,7 +890,29 @@ def CRoiInt_frames(data,blobs,R,cv):
     
     return(AllC_CRois_meanVal)
 
+def F_mu (t,b,c):
+    """
+    compute the grwoth rate (mu) function value
+    
+    Parameters
+    ----------
+        t: int or vector
+             independent variable values (suposed to be time vector)
+        
+        b: double
+            functon parameter
+        
+        c: double
+           function parameter
+        
+        
+    Return
+    ----------
+        evaluated "mu" fucntion with the givven parameters
 
+    
+    """
+    return((2 *c /(np.exp(c*(t+b))+1)))
 
 
 # End
