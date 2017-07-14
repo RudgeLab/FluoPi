@@ -217,8 +217,8 @@ def row_transect(Data, row, xframes, dataframe = -1):
 def BG_Val(X1,X2,Y1,Y2,data, imCount):
     """
     compute the background mean value for each channel and frame based on a rectagle
-    defined by the use. Plot the rectangle over the image and makes plots of each channel
-    background value over time
+    defined by the user. Plot the rectangle over the image and makes plots of each channel
+    mean background value over time
 
     Parameters
     ----------
@@ -234,7 +234,7 @@ def BG_Val(X1,X2,Y1,Y2,data, imCount):
     Returns
     -------
     bg: dictionary
-        Background  value of each channel for every time frame
+        Background mean value of each channel for every time frame
 
     """
 
@@ -251,7 +251,7 @@ def BG_Val(X1,X2,Y1,Y2,data, imCount):
     ax.add_patch(rect)
 
 
-    #get the mean background value at each time and plot it
+    #get the mean background value at each time for each channel and plot it
     bg={}
 
     for chan in channels:
@@ -259,7 +259,7 @@ def BG_Val(X1,X2,Y1,Y2,data, imCount):
 
     plt.figure()
     plt.plot(bg['R'][:],'r')
-    plt.hold(True)
+    #plt.hold(True)
     plt.plot(bg['G'][:],'g')
     plt.plot(bg['B'][:],'b')
 
@@ -272,30 +272,20 @@ def BG_Val(X1,X2,Y1,Y2,data, imCount):
 
 def BG_subst(Data,bg):
     """
-    compute the background mean value for each channel and frame based on a rectagle
-    defined by the use. Plot the rectangle over the image and makes plots of each channel
-    background value over time
-
-    Parameters
-    ----------
+    Substract the mean background value for each channel and frame obtained with BG_Val function.
+    
     Data: dictionary
-        rectangle area limits: (X1,Y1)-- left-up corner. (X2,Y2) --- rigth-bottom corner
-
+        R G B images data
     bg : array
-        total number of files on the folder (can be obtained with count_files function)
+        ackground mean value of each channel for every time frame (can be obtained with BG_Val function)
 
 
     Returns
     -------
     Data: dictionary
-        Background  value of each channel for every time frame
+        R G B images data with the background substracted
 
     """
- #inputs
-    # Data = image Data
-    # bg = Background mean value for each channel and time step
- #return
-    # Data = original matrix with the bacground substracted
 
     l=bg['R'].shape[0]
     s1=Data['R'].shape[0]
@@ -323,12 +313,12 @@ def dataOT(Data):
     Parameters
     ----------
     Data: dictionary
-        rectangle area limits: (X1,Y1)-- left-up corner. (X2,Y2) --- rigth-bottom corner
+        R G B images data
 
     Returns
     -------
-    SData: dictionary
-        Sum data over time for each pixel on each channel of the dictionary
+    SData: array like
+        Sum data over time and over channels for each pixel of the Data
 
     """
     SData=Data['R'][:,:,:].sum(axis=(2))+Data['G'][:,:,:].sum(axis=(2))+Data['B'][:,:,:].sum(axis=(2))
@@ -348,25 +338,29 @@ def smoothDat(data,sigma):
     Parameters
     ----------
     Data: dictionary
-        4 dimensional matrix with the data
+        4 dimensional (R,G,B, and Time) matrix with the data 
     sigma: double
         Filter parameter (standard deviation)
 
     Returns
     -------
     nsims: dictionary
-        Smooth data of each channel sum over time
+        Sum over time of Smoothed data per channel (call it nsims[channel][r,c])
 
     nsimsAll: array_like
-        Matrix with sum of each channels of nsims
+        Matrix with sum of nsims over the channels (call it nsimsAll[r,c])
+    
+    simsT: dictionary
+        Smoothed data per channel per frame (call it as simsT[channel][r,c,f])
 
     """
 
     nsims={}
     nsimsAll=np.zeros((data['R'].shape[0],data['R'].shape[1]))
-
+    simsT={}
+    
     plt.figure(figsize=(17,3))
-    pvect = [131,132,133]
+    pvect = [131,132,133]           #figure position vector
     count=0
 
     for c in channels:
@@ -376,16 +370,22 @@ def smoothDat(data,sigma):
         nsims [c]= (sims-sims.min())/(sims.max()-sims.min())
 
         nsimsAll += nsims[c]
+        
+        Maux=np.zeros((data['R'].shape))
+        for fr in range(data[c].shape[-1]):
+            Maux[:,:,fr]=gaussian(data[c][:,:,fr], sigma) 
+            
+        simsT[c]=Maux
         # make plot
-
+    
         plt.subplot(pvect[count])
         plt.imshow(nsims[c])
         plt.colorbar()
         plt.title(c+' channel')
-
+    
         count+=1
-
-    return(nsims,nsimsAll)
+    
+    return(nsims,nsimsAll,simsT)
 
 def colonyBlob(data,thresh,ImName):
     """
