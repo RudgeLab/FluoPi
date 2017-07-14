@@ -15,6 +15,8 @@ from skimage import io, filters
 from skimage.filters import gaussian
 import skimage.feature as skfeat
 
+from scipy.optimize import curve_fit
+
 #Define the image channels
 channels=['R','G','B']
 
@@ -714,6 +716,104 @@ def checkR(R,rois,idx,t, filename='null'):
     if filename != 'null':    
         #plt.savefig("KymoGraph.pdf", transparent=True) 
         plt.savefig(str(filename)+".pdf", transparent=True)
+
+def F_sigma(t, a, b, c):
+    """
+    Compute the sigmoide function value using the given input values
     
+    Parameters
+    ----------
+        t: vector
+            independent variable ( "x axis", suposed to be time) 
+        
+        a: double
+            maximum value parameter
+        
+        b: double
+            function parameter
+            
+        c: double
+            delay parameter
+        
+    Return
+    ----------
+    function evaluation
+    
+    """
+    return((a /(1+np.exp(-(t+b)*c))))
+    #return((a /(1+np.exp(-(t+b)*c)))+d)    
+
+def Function_fit(xdata,ydata,init,end,ID):
+    """
+    Fit a given function to given data
+    
+    Parameters
+    ----------
+        xdata: vector
+            independent variable ( "x axis", suposed to be time vector) 
+        
+        ydata: vector
+            dependent variable (suposed to be radious data vector)
+        
+        init: double
+            point on the time vector to init the fitting
+            
+        end: double
+            point on the time vector to end the fitting
+        
+        ID: int
+            colony ID number
+        
+    Return
+    ----------
+        evalF: vector
+            result vector of the fitted function:  evalF=FittedFunction(xdata)
+        z: vector
+            fitted parameters
+    
+    """
+
+    z,_=curve_fit(F_sigma,xdata[init:end], ydata[init:end],bounds=([1,-np.inf,0.1],[np.inf,-1,1]))
+    print(z)
+    evalF=F_sigma(xdata,z[0],z[1],z[2])
+    plt.plot(xdata, ydata, '.',xdata, evalF, '-')
+    plt.title('Colony '+str(ID))
+    plt.show()
+    return(evalF,z)
+
+def fit_radio(xdata,Rdata,cv,init,end):
+    """
+    Perform the function fitting to each vector on Rdata (to each colony)
+    
+    Parameters
+    ----------
+        xdata: vector
+            independent variable ( "x axis", suposed to be time vector) 
+        
+        Rdata: array like
+            array of dependent variable vectors (suposed to be the array of radious data vector)
+        
+        init: double
+            point on the time vector to init the fitting
+            
+        end: double
+            point on the time vector to end the fitting
+        
+        cv: vector
+            contain the ID of the colonies to analyse
+        
+    Return
+    ----------
+        Rfit: dictionary
+            contain the fitting result for each colony
+
+    
+    """
+    
+    R_fit={}
+    for i in cv:
+        R_fit[i]=Function_fit(xdata,Rdata[i],init,end,i)
+    return(R_fit)
+
 
 # End
