@@ -153,7 +153,7 @@ def Time_vector(data, xframes, dT):
         Time vector for the used data (hour units)
     """
 
-    _,_,st=data['R'].shape
+    _,_,st=data[channels[0]].shape
     T=np.zeros((st))
     for i in range(0,st):
         T[i]=(i)*xframes*dT
@@ -167,7 +167,7 @@ def row_transect(Data, row, xframes, dataframe = -1):
     Parameters
     ----------
     Data : dictionary
-        dictionary with the R G B data of all images
+        dictionary with the R G B data of all images, and his names on Data['Im']
 
     row : int
         row where you want to see the transect
@@ -184,18 +184,18 @@ def row_transect(Data, row, xframes, dataframe = -1):
     
     plt.figure(figsize=(15,3))
     plt.subplot(131)
-    plt.plot(Data['R'][row,:,dataframe])
+    plt.plot(Data[channels[0]][row,:,dataframe])
     plt.xlabel('pixels')
     plt.ylabel('value')
     plt.title('Red channel')
 
     plt.subplot(132)
-    plt.plot(Data['G'][row,:,dataframe])
+    plt.plot(Data[channels[1]][row,:,dataframe])
     plt.xlabel('pixels')
     plt.title('Green channel')
 
     plt.subplot(133)
-    plt.plot(Data['B'][row,:,dataframe])
+    plt.plot(Data[channels[2]][row,:,dataframe])
     plt.xlabel('pixels')
     plt.title('Blue channel')
 
@@ -203,7 +203,7 @@ def row_transect(Data, row, xframes, dataframe = -1):
     if dataframe > 0:
         imFrame = xframes*(dataframe)
     else:
-        _,_,st=Data['R'].shape
+        _,_,st=Data[channels[0]].shape
         imFrame=(st-1)*xframes
         
     
@@ -231,7 +231,7 @@ def BG_Val(X1,X2,Y1,Y2,data, imCount):
         total number of files on the folder (can be obtained with count_files function)
 
     data : dictionary
-        R G B images data to get the background
+        R G B images data to get the background, and his names on data['Im']
 
     Returns
     -------
@@ -255,20 +255,17 @@ def BG_Val(X1,X2,Y1,Y2,data, imCount):
 
     #get the mean background value at each time for each channel and plot it
     bg={}
-
+    L_colors=['r','g','b']
+    count=0
+    
+    plt.figure()
     for chan in channels:
         bg[chan]= data[chan][X1:X2,Y1:Y2,:].mean(axis=(0,1))
-
-    plt.figure()
-    plt.plot(bg['R'][:],'r')
-    #plt.hold(True)
-    plt.plot(bg['G'][:],'g')
-    plt.plot(bg['B'][:],'b')
+        plt.plot(bg[chan][:],L_colors[count])
+        count+=1
 
     plt.xlabel('Time step')
     plt.ylabel('Fluorescence intensity')
-
-
 
     return(bg)
 
@@ -289,9 +286,9 @@ def BG_subst(Data,bg):
 
     """
 
-    l=bg['R'].shape[0]
-    s1=Data['R'].shape[0]
-    s2=Data['R'].shape[1]
+    l=bg[channels[0]].shape[0]
+    s1,s2,_=Data[channels[0]].shape
+
     for c in channels:
         for i in range(0,l):
             bgm=np.ones((s1,s2))
@@ -323,7 +320,7 @@ def dataOT(Data):
         Sum data over time and over channels for each pixel of the Data
 
     """
-    SData=Data['R'][:,:,:].sum(axis=(2))+Data['G'][:,:,:].sum(axis=(2))+Data['B'][:,:,:].sum(axis=(2))
+    SData=Data[channels[0]][:,:,:].sum(axis=(2))+Data[channels[1]][:,:,:].sum(axis=(2))+Data[channels[2]][:,:,:].sum(axis=(2))
     plt.imshow(SData)
     plt.colorbar()
     plt.title('All channels')
@@ -358,7 +355,7 @@ def smoothDat(data,sigma):
     """
 
     nsims={}
-    nsimsAll=np.zeros((data['R'].shape[0],data['R'].shape[1]))
+    nsimsAll=np.zeros((data[channels[0]].shape[0],data[channels[0]].shape[1]))
     simsT={}
     
     plt.figure(figsize=(17,3))
@@ -373,7 +370,7 @@ def smoothDat(data,sigma):
 
         nsimsAll += nsims[c]
         
-        Maux=np.zeros((data['R'].shape))
+        Maux=np.zeros((data[channels[0]].shape))
         for fr in range(data[c].shape[-1]):
             Maux[:,:,fr]=gaussian(data[c][:,:,fr], sigma) 
             
@@ -490,10 +487,10 @@ def obtain_rois(data,blobs):
             r = 2*blobs[i,2] #blobs[i,2] is the std deviation of the radious --> r=2*std implies 95% confidence
 
 ####### this lines are to eliminate the out of image bounds error
-            x1=x-r
-            x2=x+r
-            y1=y-r
-            y2=y+r
+            x1=round(x-r)
+            x2=round(x+r)
+            y1=round(y-r)
+            y2=round(y+r)
 
             if x1 <= 0:
                 x1 = 0
@@ -580,7 +577,7 @@ def channelSum(RData,cv):
     """
     ACrois = {}
     for i in cv:
-            ACrois[i]=np.zeros((RData['R'][i].shape))
+            ACrois[i]=np.zeros((RData[channels[0]][i].shape))
 
     for c in channels:
         for i in cv:
@@ -618,7 +615,7 @@ def frame_colony_size(rois,cv,thr, minS=0.5, maxS=10,numS=200):
             The time series of colony size, indexed by colony id number
     """
     R = {}
-    nt= rois[0].shape[2]
+    nt= rois[cv[0]].shape[2]
     for k in cv:
         R[k] = np.zeros((nt,))
         for i in range(nt):
@@ -631,7 +628,7 @@ def frame_colony_size(rois,cv,thr, minS=0.5, maxS=10,numS=200):
                     R[k][i] = AA[0,2]
     return(R)
 
-def logplot_growth(R,t,filename='null'):
+def logplot_growth(R,cv,t,filename='null'):
     """
     Plot the log of the square of the radious for each colony
     
@@ -639,12 +636,16 @@ def logplot_growth(R,t,filename='null'):
     ----------
         R: dictionary
             colony radio at each time step of each colony at each time step (obtained with frame_colony_size() function) 
+                
+        cv: vector
+            colonies ID vector to plot
+        
         T: vector
             the vector of real time values
         filename: string
             filename to save the plot generated
     """
-    for i in range(len(R)):
+    for i in cv:
         r = R[i]
         plt.plot(t,np.log(r*r), '.')
         #plt.hold(True)
@@ -656,7 +657,7 @@ def logplot_growth(R,t,filename='null'):
         #plt.savefig("Radio.pdf", transparent=True)
         plt.savefig(str(filename)+".pdf", transparent=True)
 
-def plot_growth(R,t,filename='null'):
+def plot_growth(R,cv,t,filename='null'):
     """
     Plot the radious for each colony at each time step
     
@@ -664,12 +665,17 @@ def plot_growth(R,t,filename='null'):
     ----------
         R: dictionary
             colony radio at each time step of each colony (obtained with frame_colony_size() function) 
+        
+        cv: vector
+            colonies ID vector to plot
+            
         t: vector
             the vector of real time values
+            
         filename: string
             filename to save the plot generated
     """
-    for i in range(len(R)):
+    for i in cv:
         r = R[i]
         plt.plot(t,r, '.')
         #plt.hold(True)
@@ -705,7 +711,7 @@ def checkR(R,rois,idx,t, filename='null'):
     """
     plt.figure(figsize=(16,12))
     w,h,_ = rois[idx].shape
-    plt.imshow(rois[idx][w/2+1,:,:], interpolation='none', cmap='gray') # use the x-middle transect (--> w/2+1)
+    plt.imshow(rois[idx][round(w/2+1),:,:], interpolation='none', cmap='gray') # use the x-middle transect (--> w/2+1)
     plt.colorbar()
     #plt.hold(True)
     plt.plot(t,-R[idx]*2+h/2+1,'r')
@@ -858,10 +864,10 @@ def CRoiMeanInt_frames(data,blobs,R,cv):
 ####### this lines is to eliminate the out of image bounds error
                 r=R[i][0][j]
     
-                x1=x-r
-                x2=x+r
-                y1=y-r
-                y2=y+r
+                x1=round(x-r)
+                x2=round(x+r)
+                y1=round(y-r)
+                y2=round(y+r)
 
                 if x1 <= 0:
                     x1 = 0
