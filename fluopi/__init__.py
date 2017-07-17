@@ -585,6 +585,78 @@ def channelSum(RData,cv):
 
     return(ACrois)
 
+
+def TL_ROI(ROIs,idx,Times,fname,gridsize=[0,0]):
+    """
+    Save images of selected time steps on "Times" vector, for a selected ROI (idx).
+    This images can be used to make timelapse videos of isolated colonies.
+    
+    If you specify a gridsize of a proper size, then it display the ROI frames on the notebook
+
+    Parameters
+    ----------
+    ROIs: dictionary
+            RGB time-lapse image data of each ROIS, from obtain_rois()
+    
+    idx: intr
+            contain the ID of the of the selected colony
+    Times: vector
+        conitains the selected frames times
+    
+    fname: string
+        the complete filename to save the images of ROIs
+        e.g. fname=('ROIs/Col'+str(idx)+'_ROI_step%d.png')
+    
+    gridsize: vector
+        size of the subplot grid 
+
+    Returns:
+    ----------
+    Save the images of the selected frames of a ROI.
+    
+    """
+    
+    if type(idx)==int:      #Check that ID is only one colony
+        if len(Times)>0:        #Check time vector have some value
+            
+            ROIa=channelSum(ROIs,[idx])  # sum the three channels
+            ROI=ROIa[idx][:,:,:]
+    
+            mx=np.max(ROI[:,:,:])
+            
+        # make the plot of each frame and save it
+            for i in Times :
+    
+                plt.figure(figsize=(8,8))        
+                roi = ROI[:,:,i]
+                plt.imshow(roi, interpolation='none',vmin=0, vmax=mx)
+                plt.colorbar()
+                plt.savefig(fname%(i+1))
+                plt.close()
+            
+            # display the plots in the notebook
+            n=gridsize[0]
+            m=gridsize[1]
+            if n and m >0:
+                if (n*m)<(len(Times)):
+                    print('the subplot grid is smaller than the number of plots. Increase x or y, and try again')
+                else:
+                    plt.figure(figsize=(4*m,4*n))
+                    count=1
+                    for i in Times :
+                        plt.subplot(int(str(n)+str(m)+str(count)))
+                        roi = ROI[:,:,i]
+                        plt.imshow(roi, interpolation='none',vmin=0, vmax=mx)
+                        plt.colorbar()
+                        plt.title(str(i+1)+' Hours')
+                        count+=1
+        else:
+            print('ERROR: Time vector have to be of lenght higher than zero')
+    else:
+        print('ERROR: use an integer value for the colony ID')    
+        
+        
+
 def frame_colony_size(rois,cv,thr, minS=0.5, maxS=10,numS=200):
     """
     Get the colony size at each time step
