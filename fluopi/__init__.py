@@ -488,9 +488,9 @@ def obtain_rois(data,blobs):
 
 ####### this lines are to eliminate the out of image bounds error
             x1=round(x-r)
-            x2=round(x+r)
+            x2=round(x+r+1)  #plus 1 because slice working
             y1=round(y-r)
-            y2=round(y+r)
+            y2=round(y+r+1)  #plus 1 because slice working
 
             if x1 <= 0:
                 x1 = 0
@@ -766,8 +766,8 @@ def checkR(R,rois,idx,t, filename='null'):
     
     Parameters
     ----------
-        R: dictionary
-            colony radio at each time step of each colony (obtained with frame_colony_size() function) 
+        R: vector
+            colony radio at each time step of the selected colony (obtained with frame_colony_size() function) 
         
         rois: dictionary
             ROI image of each colony (obtained with obtain_rois() function)
@@ -783,13 +783,14 @@ def checkR(R,rois,idx,t, filename='null'):
     """
     plt.figure(figsize=(16,12))
     w,h,_ = rois[idx].shape
-    plt.imshow(rois[idx][round(w/2+1),:,:], interpolation='none', cmap='gray') # use the x-middle transect (--> w/2+1)
+    plt.imshow(rois[idx][round(w/2),:,:], interpolation='none', cmap='gray') # use the x-middle transect (--> w/2)
     plt.colorbar()
     #plt.hold(True)
-    plt.plot(t,-R[idx]*2+h/2+1,'r')
-    plt.plot(t,R[idx]*2+h/2+1,'r')
+    plt.plot(t,-R*2+h/2,'r')
+    plt.plot(t,R*2+h/2,'r')
     plt.xlabel('Time')
     plt.ylabel('y-axis position')
+    plt.title('Colony '+str(idx))
     
     if filename != 'null':    
         #plt.savefig("KymoGraph.pdf", transparent=True) 
@@ -895,7 +896,9 @@ def fit_radio(xdata,Rdata,cv,init,end):
 
 def CRoiMeanInt_frames(data,blobs,R,cv):
     """
-    compute the mean intensity values on each CROI and channel, redefining the ROIS based on Rdata values
+    compute the mean intensity values for each time and channels for each CROI (circular ROI), redefining the ROIS based on Rdata values
+    it takes the fit r value at each time (Rdata), with it defines a circular ROI, sum all the pixel values inside them and 
+    divide this value  for the number of pixel considered. --> obtain the intensity mean value inside the colony limits on each time.
     
     Parameters
     ----------
@@ -937,9 +940,9 @@ def CRoiMeanInt_frames(data,blobs,R,cv):
                 r=R[i][0][j]
     
                 x1=round(x-r)
-                x2=round(x+r)
+                x2=round(x+r+1)
                 y1=round(y-r)
-                y2=round(y+r)
+                y2=round(y+r+1)
 
                 if x1 <= 0:
                     x1 = 0
