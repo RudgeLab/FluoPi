@@ -752,7 +752,7 @@ def plot_growth(R,cv,t,filename='null'):
         plt.plot(t,r, '.')
         #plt.hold(True)
         plt.xlabel('Time [hrs]')
-        plt.ylabel('log(Radius^2) [pixels]')
+        plt.ylabel('Radius [pixels]')
         plt.title('Colony size')
      
     if filename != 'null':    
