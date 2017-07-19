@@ -547,7 +547,7 @@ def rois_plt_Fdynam(rois,T,cv,filename='null'):
             plt.plot(T,rois[c][i].sum(axis=(0,1)))   #sum the value
             #plt.hold(True)
 
-        plt.xlabel('Time [hrs]')
+        plt.xlabel('Time [h]')
         plt.ylabel('Fluorescence intensity')
         plt.title(c+' channel')
         count+=1
@@ -721,9 +721,9 @@ def logplot_growth(R,cv,t,filename='null'):
         r = R[i]
         plt.plot(t,np.log(r*r), '.')
         #plt.hold(True)
-        plt.xlabel('Time [hrs]')
+        plt.xlabel('Time [h]')
         plt.ylabel('log(Radius^2) [pixels]')
-        plt.title('Colony size')
+        plt.title('Colony radio')
      
     if filename != 'null':    
         #plt.savefig("Radio.pdf", transparent=True)
@@ -751,9 +751,9 @@ def plot_growth(R,cv,t,filename='null'):
         r = R[i]
         plt.plot(t,r, '.')
         #plt.hold(True)
-        plt.xlabel('Time [hrs]')
-        plt.ylabel('log(Radius^2) [pixels]')
-        plt.title('Colony size')
+        plt.xlabel('Time [h]')
+        plt.ylabel('Radius [pixels]')
+        plt.title('Colony radius')
      
     if filename != 'null':    
         #plt.savefig("Radio.pdf", transparent=True)
