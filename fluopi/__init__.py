@@ -751,9 +751,11 @@ def plot_growth(R,cv,t,filename='null'):
         r = R[i]
         plt.plot(t,r, '.')
         #plt.hold(True)
+
         plt.xlabel('Time [h]')
         plt.ylabel('Radius [pixels]')
         plt.title('Colony radius')
+
      
     if filename != 'null':    
         #plt.savefig("Radio.pdf", transparent=True)
