@@ -898,7 +898,7 @@ def Function_fit(xdata,ydata,init,end,cv,func=F_sigma,ParamBounds=([1,-np.inf,0.
     
     Y_fit={}
     for i in cv:
-        z,_=curve_fit(func,xdata[init:end], ydata[i][init:end],ParamBounds)
+        z,_=curve_fit(func,xdata[init:end], ydata[i][init:end],bounds=ParamBounds)
         print(z)
         evalF=func(xdata,z[0],z[1],z[2])
         plt.plot(xdata, ydata[i], '.',xdata, evalF, '-')
