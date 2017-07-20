@@ -14,6 +14,7 @@ import skimage
 from skimage import io, filters
 from skimage.filters import gaussian
 import skimage.feature as skfeat
+from math import pi
 
 from scipy.optimize import curve_fit
 
@@ -657,9 +658,9 @@ def TL_ROI(ROIs,idx,Times,fname,gridsize=[0,0]):
         
         
 
-def frame_colony_size(rois,cv,thr, minS=0.5, maxS=10,numS=200):
+def frame_colony_radius(rois,cv,thr, minS=0.5, maxS=10,numS=200):
     """
-    Get the colony size at each time step
+    Get the colony radius at each time step
     
     Parameters:
     ----------
@@ -700,7 +701,7 @@ def frame_colony_size(rois,cv,thr, minS=0.5, maxS=10,numS=200):
                     R[k][i] = AA[0,2]
     return(R)
 
-def logplot_growth(R,cv,t,filename='null'):
+def logplot_radius(R,cv,t,filename='null'):
     """
     Plot the log of the square of the radious for each colony
     
@@ -729,7 +730,7 @@ def logplot_growth(R,cv,t,filename='null'):
         #plt.savefig("Radio.pdf", transparent=True)
         plt.savefig(str(filename)+".pdf", transparent=True)
 
-def plot_growth(R,cv,t,filename='null'):
+def plot_radius(R,cv,t,filename='null'):
     """
     Plot the radious for each colony at each time step
     
@@ -760,7 +761,6 @@ def plot_growth(R,cv,t,filename='null'):
     if filename != 'null':    
         #plt.savefig("Radio.pdf", transparent=True)
         plt.savefig(str(filename)+".pdf", transparent=True)
-
 
 def checkR(R,rois,idx,t, filename='null'):
     """
@@ -798,6 +798,43 @@ def checkR(R,rois,idx,t, filename='null'):
         #plt.savefig("KymoGraph.pdf", transparent=True) 
         plt.savefig(str(filename)+".pdf", transparent=True)
 
+def Area(R,cv,T,filename='null'):
+    """
+    Compute and plot the colonies area over time as a perfect circle using the input radius value
+    
+    Parameters
+    ----------
+        R: dictionary
+            colony radio at each time step of the selected colony (obtained with frame_colony_size() function) 
+        
+        cv: vector
+            colonies ID vector to plot
+
+            
+        T: vector
+            the vector of real time values
+        
+        filename: string
+            filename to save the plot generated
+    
+    Return
+    ----------
+        A: dictionary
+         colony area at each time step of the selected colony. call as: A[colonyID][time step]
+    """
+    plt.figure()
+    A = {}
+    for i in cv:
+        r=R[i]
+        A[i] = pi*r*r
+        plt.plot(T,A[i],'.',label='colony '+str(i))  
+
+    if filename != 'null':    
+        #plt.savefig("KymoGraph.pdf", transparent=True) 
+        plt.savefig(str(filename)+".pdf", transparent=True)
+    
+    return(A)
+    
 def F_sigma(t, a, b, c):
     """
     Compute the sigmoide function value using the given input values
@@ -824,7 +861,7 @@ def F_sigma(t, a, b, c):
     return((a /(1+np.exp(-(t+b)*c))))
     #return((a /(1+np.exp(-(t+b)*c)))+d)    
 
-def Function_fit(xdata,ydata,init,end,ID):
+def Function_fit(xdata,ydata,init,end,cv,func=F_sigma,ParamBounds=([1,-np.inf,0.1],[np.inf,-1,1])):
     """
     Fit a given function to given data
     
@@ -833,46 +870,8 @@ def Function_fit(xdata,ydata,init,end,ID):
         xdata: vector
             independent variable ( "x axis", suposed to be time vector) 
         
-        ydata: vector
-            dependent variable (suposed to be radious data vector)
-        
-        init: double
-            point on the time vector to init the fitting
-            
-        end: double
-            point on the time vector to end the fitting
-        
-        ID: int
-            colony ID number
-        
-    Return
-    ----------
-        evalF: vector
-            result vector of the fitted function:  evalF=FittedFunction(xdata)
-        z: vector
-            fitted parameters
-    
-    """
-
-    z,_=curve_fit(F_sigma,xdata[init:end], ydata[init:end],bounds=([1,-np.inf,0.1],[np.inf,-1,1]))
-    print(z)
-    evalF=F_sigma(xdata,z[0],z[1],z[2])
-    plt.plot(xdata, ydata, '.',xdata, evalF, '-')
-    plt.title('Colony '+str(ID))
-    plt.show()
-    return(evalF,z)
-
-def fit_radio(xdata,Rdata,cv,init,end):
-    """
-    Perform the function fitting to each vector on Rdata (to each colony)
-    
-    Parameters
-    ----------
-        xdata: vector
-            independent variable ( "x axis", suposed to be time vector) 
-        
-        Rdata: array like
-            array of dependent variable vectors (suposed to be the array of radious data vector)
+        ydict: array like
+            array of dependent variable vectors 
         
         init: double
             point on the time vector to init the fitting
@@ -885,16 +884,30 @@ def fit_radio(xdata,Rdata,cv,init,end):
         
     Return
     ----------
-        Rfit: dictionary
-            contain the fitting result for each colony
-
+        Y_fit: dictionay
+            contain the fitting result for each colony in the dictionary. Contains:
+            
+            Y_fit[col ID][evalF z]:
+                
+                evalF: vector
+                    result vector of the fitted function:  evalF=FittedFunction(xdata)
+                z: vector
+                    fitted parameters
     
     """
     
-    R_fit={}
+    Y_fit={}
     for i in cv:
-        R_fit[i]=Function_fit(xdata,Rdata[i],init,end,i)
-    return(R_fit)
+        z,_=curve_fit(func,xdata[init:end], ydata[i][init:end],ParamBounds)
+        print(z)
+        evalF=func(xdata,z[0],z[1],z[2])
+        plt.plot(xdata, ydata[i], '.',xdata, evalF, '-')
+        plt.title('Colony '+str(i))
+        plt.show()
+        Y_fit[i]=evalF,z
+    return(Y_fit)
+
+
 
 def CRoiMeanInt_frames(data,blobs,R,cv):
     """
