@@ -1,0 +1,797 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xml" href="docubricks.xsl"?>
+<docubricks>
+  <part id="183034043">
+    <name>PCB</name>
+    <description />
+    <supplier>China</supplier>
+    <supplier_part_num />
+    <manufacturer_part_num />
+    <url />
+    <material_amount>1.0</material_amount>
+    <material_unit>NONE</material_unit>
+    <media>
+      <file url="././././././usdata/Gerbers.zip" />
+      <file url="././././././usdata/MF63 PCB for Kicad.zip" />
+    </media>
+    <manufacturing_instruction />
+  </part>
+  <part id="1042364403">
+    <name>Bottom Module Acrylic Plates</name>
+    <description>The drawings for the bottom module. To be cut in a 3 mm thick black acrylic sheet.</description>
+    <supplier />
+    <supplier_part_num />
+    <manufacturer_part_num />
+    <url />
+    <material_amount />
+    <material_unit>NONE</material_unit>
+    <media>
+      <file url="././././././usdata/MF6-3 Final Cut - Bot Mod.dxf" />
+      <file url="././././././usdata/0-MF6-3 Final Cut - Bottom Module Black Acrilic.dxf" />
+    </media>
+    <manufacturing_instruction />
+  </part>
+  <part id="994128746">
+    <name>Blue LED</name>
+    <description />
+    <supplier />
+    <supplier_part_num />
+    <manufacturer_part_num />
+    <url />
+    <material_amount />
+    <material_unit>NONE</material_unit>
+    <media>
+      <file url="./././././usdata/5mm Blue LED.pdf" />
+    </media>
+    <manufacturing_instruction />
+  </part>
+  <part id="70936562">
+    <name>Switch</name>
+    <description>Rocker Switch SPST 19x13 mm cutout.</description>
+    <supplier />
+    <supplier_part_num />
+    <manufacturer_part_num />
+    <url />
+    <material_amount />
+    <material_unit>NONE</material_unit>
+    <media>
+      <file url="././././././usdata/ENG_CD_1571076_J5.pdf" />
+    </media>
+    <manufacturing_instruction />
+  </part>
+  <part id="1821538376">
+    <name>Power Plug</name>
+    <description>5.5 mm outside diameter and 2.1 mm inside diameter.</description>
+    <supplier />
+    <supplier_part_num />
+    <manufacturer_part_num />
+    <url>https://www.sparkfun.com/products/119</url>
+    <material_amount />
+    <material_unit>NONE</material_unit>
+    <media>
+      <file url="././././././usdata/EJ508A-datasheet.pdf" />
+    </media>
+    <manufacturing_instruction />
+  </part>
+  <part id="1987957635">
+    <name>24V Power Source</name>
+    <description>Any power source max 24v. The plug must be a 5.5 mm outside diameter and 2.1 mm inside diameter.</description>
+    <supplier />
+    <supplier_part_num />
+    <manufacturer_part_num />
+    <url />
+    <material_amount />
+    <material_unit>NONE</material_unit>
+    <media />
+    <manufacturing_instruction />
+  </part>
+  <part id="359867311">
+    <name>M4 - 50 mm Length Screw</name>
+    <description />
+    <supplier>Tecbolt S.A.</supplier>
+    <supplier_part_num />
+    <manufacturer_part_num />
+    <url>http://www.fijaciones.com/mr/pernos_tuercas_golillas/perno_cocina_cabeza_binding.asp</url>
+    <material_amount />
+    <material_unit>NONE</material_unit>
+    <media />
+    <manufacturing_instruction />
+  </part>
+  <part id="1808085912">
+    <name>M4 - 25 mm Length Screw</name>
+    <description />
+    <supplier>Tecbolt S.A.</supplier>
+    <supplier_part_num />
+    <manufacturer_part_num />
+    <url>http://www.fijaciones.com/mr/pernos_tuercas_golillas/perno_cocina_cabeza_binding.asp</url>
+    <material_amount />
+    <material_unit>NONE</material_unit>
+    <media />
+    <manufacturing_instruction />
+  </part>
+  <part id="720509204">
+    <name>M4 Hex Nut</name>
+    <description />
+    <supplier>Tecbolt S.A.</supplier>
+    <supplier_part_num />
+    <manufacturer_part_num />
+    <url>http://www.tecbolt.cl/mr/pernos_tuercas_golillas/pdf/tuerca_cocina_hexagonal.pdf</url>
+    <material_amount />
+    <material_unit>NONE</material_unit>
+    <media />
+    <manufacturing_instruction />
+  </part>
+  <part id="518152820">
+    <name>M3 - 20 mm Length Screw</name>
+    <description />
+    <supplier>Tecbolt S.A.</supplier>
+    <supplier_part_num />
+    <manufacturer_part_num />
+    <url>http://www.fijaciones.com/mr/pernos_tuercas_golillas/perno_cocina_cabeza_binding.asp</url>
+    <material_amount />
+    <material_unit>NONE</material_unit>
+    <media />
+    <manufacturing_instruction />
+  </part>
+  <part id="2033437844">
+    <name>M3 - 15 mm Length Screw</name>
+    <description />
+    <supplier>Tecbolt S.A.</supplier>
+    <supplier_part_num />
+    <manufacturer_part_num />
+    <url>http://www.fijaciones.com/mr/pernos_tuercas_golillas/perno_cocina_cabeza_binding.asp</url>
+    <material_amount />
+    <material_unit>NONE</material_unit>
+    <media />
+    <manufacturing_instruction />
+  </part>
+  <part id="1568637320">
+    <name>M3 Hex Nut</name>
+    <description />
+    <supplier>Tecbolt S.A.</supplier>
+    <supplier_part_num />
+    <manufacturer_part_num />
+    <url>http://www.tecbolt.cl/mr/pernos_tuercas_golillas/pdf/tuerca_cocina_hexagonal.pdf</url>
+    <material_amount />
+    <material_unit>NONE</material_unit>
+    <media />
+    <manufacturing_instruction />
+  </part>
+  <part id="1922121091">
+    <name>Resistor 330 ohm</name>
+    <description>Limiting resistor for the leds. If there are not 330 Ohm available, it could be used the closest value.</description>
+    <supplier />
+    <supplier_part_num />
+    <manufacturer_part_num />
+    <url />
+    <material_amount />
+    <material_unit>NONE</material_unit>
+    <media>
+      <file url="././././././usdata/SEI-CF_CFM.pdf" />
+    </media>
+    <manufacturing_instruction />
+  </part>
+  <part id="190865487">
+    <name>Resistor 1 kohm</name>
+    <description>If there are not 1 Kohm available, it could be used the closest value.</description>
+    <supplier />
+    <supplier_part_num />
+    <manufacturer_part_num />
+    <url />
+    <material_amount />
+    <material_unit>NONE</material_unit>
+    <media>
+      <file url="././././././usdata/0-SEI-CF_CFM.pdf" />
+    </media>
+    <manufacturing_instruction />
+  </part>
+  <part id="1664451894">
+    <name>Transistor Tip-122</name>
+    <description>Transistor for the digital control of the lighting system.</description>
+    <supplier />
+    <supplier_part_num />
+    <manufacturer_part_num />
+    <url />
+    <material_amount />
+    <material_unit>NONE</material_unit>
+    <media>
+      <file url="././././././usdata/TIP122.pdf" />
+    </media>
+    <manufacturing_instruction />
+  </part>
+  <part id="1034454968">
+    <name>Spacer R</name>
+    <description>Spacer for the Right side.</description>
+    <supplier />
+    <supplier_part_num />
+    <manufacturer_part_num />
+    <url />
+    <material_amount />
+    <material_unit>NONE</material_unit>
+    <media>
+      <file url="././././././usdata/0-MF6-3 Final Cut - Spacer R.stl" />
+    </media>
+    <manufacturing_instruction />
+  </part>
+  <part id="2140407553">
+    <name>Top Module Acrylic Plates</name>
+    <description>The drawings for the 3 mm acrylic parts to be cut with the laser cutter.</description>
+    <supplier />
+    <supplier_part_num />
+    <manufacturer_part_num />
+    <url />
+    <material_amount />
+    <material_unit>NONE</material_unit>
+    <media>
+      <file url="././././././usdata/0-MF6-3 Final Cut - Top Module Black Acrilic.dxf" />
+      <file url="././././././usdata/0-MF6-3 Final Cut - Top Module Transparent Acrilic.dxf" />
+    </media>
+    <manufacturing_instruction />
+  </part>
+  <part id="1101847624">
+    <name>Spacer L</name>
+    <description>Spacer for the Left side.</description>
+    <supplier />
+    <supplier_part_num />
+    <manufacturer_part_num />
+    <url />
+    <material_amount />
+    <material_unit>NONE</material_unit>
+    <media>
+      <file url="././././././usdata/0-MF6-3 Final Cut - Spacer L.stl" />
+    </media>
+    <manufacturing_instruction />
+  </part>
+  <part id="1411255579">
+    <name>Vertical Movement Bed Acrylic Plates</name>
+    <description>The  parts for the Vertical Movement Bed. 3 mm black acrylic.</description>
+    <supplier />
+    <supplier_part_num />
+    <manufacturer_part_num />
+    <url />
+    <material_amount />
+    <material_unit>NONE</material_unit>
+    <media>
+      <file url="././././././usdata/0-MF6-3 Final Cut - Vert Bed Module Black Acrilic.dxf" />
+    </media>
+    <manufacturing_instruction />
+  </part>
+  <part id="1159025638">
+    <name>Camera Adaptor</name>
+    <description>Adaptor for the camera module.</description>
+    <supplier />
+    <supplier_part_num />
+    <manufacturer_part_num />
+    <url />
+    <material_amount />
+    <material_unit>NONE</material_unit>
+    <media>
+      <file url="././././././usdata/MF6-3 Final Cut - Cam Adapt.stl" />
+    </media>
+    <manufacturing_instruction />
+  </part>
+  <part id="223274906">
+    <name>Blue Acrylic Filter</name>
+    <description>Drawing for the excitation filter in 3 mm blue acrylic sheet.</description>
+    <supplier />
+    <supplier_part_num />
+    <manufacturer_part_num />
+    <url>https://www.acrylite-shop.com/US/us/extruded-f0p5v3qaql1/acrylite-extruded-ff-blue-5c028-gt-lxhoo6bdbi~p.html</url>
+    <material_amount />
+    <material_unit>NONE</material_unit>
+    <media>
+      <file url="././././././usdata/MF6-3 Final Cut - Filter Blue Acrilic.dxf" />
+    </media>
+    <manufacturing_instruction />
+  </part>
+  <part id="1227046179">
+    <name>Amber Acrylic Filter</name>
+    <description>Drawing for the visualization filter in 3 mm amber acrylic sheet.</description>
+    <supplier />
+    <supplier_part_num />
+    <manufacturer_part_num />
+    <url>https://www.acrylite-shop.com/US/us/extruded-f0p5v3qaql1/acrylite-extruded-ff-blue-5c028-gt-lxhoo6bdbi~p.html</url>
+    <material_amount />
+    <material_unit>NONE</material_unit>
+    <media>
+      <file url="././././././usdata/MF6-3 Final Cut - Filter Amber Acrilic.dxf" />
+    </media>
+    <manufacturing_instruction />
+  </part>
+  <part id="905973129">
+    <name>Camera</name>
+    <description>The camera to take the images.</description>
+    <supplier>Waveshare</supplier>
+    <supplier_part_num />
+    <manufacturer_part_num />
+    <url>http://www.waveshare.com/RPi-Camera-B.htm</url>
+    <material_amount />
+    <material_unit>NONE</material_unit>
+    <media>
+      <file url="././././././usdata/RPi-Camera-User-Manual.pdf" />
+    </media>
+    <manufacturing_instruction />
+  </part>
+  <part id="1655921293">
+    <name>Ribbon Cable</name>
+    <description>30cm ffc 1.0mm pitch Flat Ribbon Flex Cable 15pin 20624 AWM 80C VW-1 60V
+
+The 30 cm ribbon cable connects the camera with the raspberry. The cable supplied with the Rpi Camera B is too short.
+
+This cable has the contacts in the opposite side (one for each side). This has to do with the orientation of the camera in the camera adaptor.</description>
+    <supplier />
+    <supplier_part_num />
+    <manufacturer_part_num />
+    <url>https://www.aliexpress.com/item/Free-shipping-30cm-ffc-15-pins-1-0mm-pitch-Flat-Ribbon-Flex-Cable-15pin-20624-AWM/32356644307.html?spm=2114.01010208.3.9.eggHMX&amp;ws_ab_test=searchweb0_0,searchweb201602_3_10152_10065_10151_10068_436_10136_10137_10157_10060_10138_10155_10062_10156_10154_10056_10055_10054_10059_10099_10103_10102_10096_10147_10052_10053_10142_10107_10050_10051_10173_10084_10083_10080_10082_10081_10110_10111_10112_10113_10114_10181_10183_10182_10078_10079_10073_10070_10123,searchweb201603_4,ppcSwitch_3&amp;btsid=cb15b74f-9886-4bcf-98d0-7ec9a3877610&amp;algo_expid=0109b982-dcb8-4e9b-a1b2-64e8f2f136d9-1&amp;algo_pvid=0109b982-dcb8-4e9b-a1b2-64e8f2f136d9</url>
+    <material_amount />
+    <material_unit>NONE</material_unit>
+    <media>
+      <file url="././././././usdata/A5W0_1_20150102132854130.jpeg" />
+    </media>
+    <manufacturing_instruction />
+  </part>
+  <part id="505321402">
+    <name>Paper Diffusor</name>
+    <description>Paper diffusor for the Imaging Station.</description>
+    <supplier />
+    <supplier_part_num />
+    <manufacturer_part_num />
+    <url />
+    <material_amount />
+    <material_unit>NONE</material_unit>
+    <media>
+      <file url="././././././usdata/0-MF6-3 Final Cut - Paper Diffusor.dxf" />
+    </media>
+    <manufacturing_instruction />
+  </part>
+  <part id="50837192">
+    <name>Locking Knob</name>
+    <description>Knob to lock the vertical movement of the bed and regulate camera heigth.</description>
+    <supplier />
+    <supplier_part_num />
+    <manufacturer_part_num />
+    <url />
+    <material_amount />
+    <material_unit>NONE</material_unit>
+    <media>
+      <file url="././././././usdata/MF6-3 Final Cut - Lock Knob.stl" />
+    </media>
+    <manufacturing_instruction />
+  </part>
+  <part id="1447635538">
+    <name>Focus Knob</name>
+    <description>Knob to focus the camera.</description>
+    <supplier />
+    <supplier_part_num />
+    <manufacturer_part_num />
+    <url />
+    <material_amount />
+    <material_unit>NONE</material_unit>
+    <media>
+      <file url="././././././usdata/MF6-3 Final Cut - Focus Knob.stl" />
+    </media>
+    <manufacturing_instruction />
+  </part>
+  <part id="1938147897">
+    <name>Digital Control Cable</name>
+    <description>Cable for connecting the transiluminator to the GPIO pins on the Raspberry Pi.</description>
+    <supplier />
+    <supplier_part_num />
+    <manufacturer_part_num />
+    <url />
+    <material_amount />
+    <material_unit>NONE</material_unit>
+    <media />
+    <manufacturing_instruction>
+      <step>
+        <description>Cut a 400 mm, two strings cable.</description>
+        <media />
+      </step>
+      <step>
+        <description>Peel the tips and sodder one side with a header that fits the Gpio pins in the Raspberry Pi (or the controller you are using).</description>
+        <media />
+      </step>
+      <step>
+        <description>Sodder the other end to the PCB.</description>
+        <media />
+      </step>
+    </manufacturing_instruction>
+  </part>
+  <part id="2024643738">
+    <name>M4 - 40 mm Length Screw</name>
+    <description />
+    <supplier>Tecbolt S.A.</supplier>
+    <supplier_part_num />
+    <manufacturer_part_num />
+    <url>http://www.fijaciones.com/mr/pernos_tuercas_golillas/perno_cocina_cabeza_binding.asp</url>
+    <material_amount />
+    <material_unit>NONE</material_unit>
+    <media />
+    <manufacturing_instruction />
+  </part>
+  <part id="1475164034">
+    <name>M3 - 10 mm Length Screw</name>
+    <description />
+    <supplier>Tecbolt S.A.</supplier>
+    <supplier_part_num />
+    <manufacturer_part_num />
+    <url>http://www.fijaciones.com/mr/pernos_tuercas_golillas/perno_cocina_cabeza_binding.asp</url>
+    <material_amount />
+    <material_unit>NONE</material_unit>
+    <media />
+    <manufacturing_instruction />
+  </part>
+  <part id="1024570103">
+    <name>Raspberry Adaptor Acrylic Plates</name>
+    <description />
+    <supplier />
+    <supplier_part_num />
+    <manufacturer_part_num />
+    <url />
+    <material_amount />
+    <material_unit>NONE</material_unit>
+    <media>
+      <file url="././././././usdata/0-MF6-3 Final Cut - Raspberry Adaptor Acrilic.dxf" />
+    </media>
+    <manufacturing_instruction />
+  </part>
+  <brick id="1285016594">
+    <name>Fluorescence Imaging Station</name>
+    <abstract />
+    <long_description />
+    <notes />
+    <license>CERN Open Hardware License</license>
+    <media>
+      <file url="././././././usdata/MF6-3 Final Cut - Assembly Instructions - 1.jpg" />
+      <file url="././././././usdata/DSC_7622.jpg" />
+    </media>
+    <assembly_instruction>
+      <step>
+        <description>Slide the top module in the bottom module sloths.</description>
+        <media>
+          <file url="././././././usdata/MF6-3 Final Cut - Assembly Instructions17.jpg" />
+        </media>
+        <component quantity="1" id="5139781" />
+        <component quantity="1" id="302705598" />
+      </step>
+    </assembly_instruction>
+    <function id="5139781">
+      <description>Structure for the support of the imaging devices and the working sample.</description>
+      <implementation type="brick" quantity="1" id="841560362" />
+    </function>
+    <function id="302705598">
+      <description>Support for the electronics and lighting system.</description>
+      <implementation type="brick" quantity="1" id="1980583220" />
+    </function>
+  </brick>
+  <brick id="841560362">
+    <name>Top Module (Imaging Station)</name>
+    <abstract />
+    <long_description />
+    <notes />
+    <license />
+    <media>
+      <file url="././././././usdata/MF6-3 Final Cut - Assembly Instructions2.jpg" />
+      <file url="././././././usdata/MF6-3 Final Cut - Assembly Instructions3.jpg" />
+    </media>
+    <assembly_instruction>
+      <step>
+        <description>Place the M3 10 mm screws and nuts loosely in the holes on the vertical plates (T5, T6, T7, T9) as shown in the picture.
+
+Be aware of the front side of the lateral plates (T6 and T7).</description>
+        <media>
+          <file url="././././././usdata/MF6-3 Final Cut - Assembly Instructions4.jpg" />
+        </media>
+      </step>
+      <step>
+        <description>Slide the spacers up until they fit completely and the tighten the screws to form the vertical structure of the top module.</description>
+        <media>
+          <file url="././././././usdata/MF6-3 Final Cut - Assembly Instructions5.jpg" />
+        </media>
+      </step>
+      <step>
+        <description>With the vertical structure fastened, place T11 between the three vertical plates before placing T10 and fastening the screws.
+
+Place the paper diffusor on top of T11 before use.</description>
+        <media>
+          <file url="././././././usdata/MF6-3 Final Cut - Assembly Instructions6.jpg" />
+        </media>
+      </step>
+      <step>
+        <description>Slide down the frontal plate (T9) until the screws fit in the spacers and tighten.
+
+Make sure the front spacers are in the correct position (as in picture).
+
+Slide down the back plate of the vertical movement bed. Must fit in the rail formed by the spacers.</description>
+        <media>
+          <file url="././././././usdata/MF6-3 Final Cut - Assembly Instructions7.jpg" />
+        </media>
+      </step>
+      <step>
+        <description>Place T4 in the sloth of the vertical plates before putting the rest of the plates (T1, T2, T3).</description>
+        <media>
+          <file url="././././././usdata/MF6-3 Final Cut - Assembly Instructions8.jpg" />
+        </media>
+      </step>
+      <step>
+        <description>Fully Assembled Main Structure</description>
+        <media>
+          <file url="././././././usdata/MF6-3 Final Cut - Assembly Instructions9.jpg" />
+        </media>
+      </step>
+    </assembly_instruction>
+    <function id="1714776649">
+      <description>Main Structure and Casing</description>
+      <implementation type="part" quantity="4" id="2033437844" />
+      <implementation type="part" quantity="1" id="2140407553" />
+      <implementation type="part" quantity="4" id="1034454968" />
+      <implementation type="part" quantity="4" id="1101847624" />
+      <implementation type="part" quantity="1" id="505321402" />
+      <implementation type="part" quantity="20" id="1475164034" />
+      <implementation type="part" quantity="24" id="1568637320" />
+    </function>
+    <function id="1778717303">
+      <description>Vertical movement bed for the camera module</description>
+      <implementation type="brick" quantity="1" id="2041180246" />
+    </function>
+    <function id="149084280">
+      <description>Support for the Camera Module</description>
+      <implementation type="brick" quantity="1" id="2127622170" />
+    </function>
+    <function id="48601694">
+      <description>Raspberry Pi mounting adaptor</description>
+      <implementation type="brick" quantity="1" id="321642884" />
+    </function>
+    <instruction name="Final Top Module Assembly">
+      <step>
+        <description>Install Vertical Movement Bed.</description>
+        <media>
+          <file url="././././././usdata/MF6-3 Final Cut - Assembly Instructions - 22.jpg" />
+        </media>
+        <component quantity="1" id="1778717303" />
+        <component quantity="1" id="1714776649" />
+      </step>
+      <step>
+        <description>Install camera adaptor and camera module.</description>
+        <media>
+          <file url="././././././usdata/MF6-3 Final Cut - Assembly Instructions - 24.jpg" />
+        </media>
+        <component quantity="1" id="1778717303" />
+        <component quantity="1" id="149084280" />
+      </step>
+    </instruction>
+  </brick>
+  <brick id="1980583220">
+    <name>Bottom Module (Transilluminator)</name>
+    <abstract />
+    <long_description />
+    <notes />
+    <license />
+    <media>
+      <file url="././././././usdata/MF6-3 Final Cut - Assembly Instructions10.jpg" />
+      <file url="././././././usdata/MF6-3 Final Cut - Assembly Instructions11.jpg" />
+    </media>
+    <assembly_instruction>
+      <step>
+        <description>Assembly top cover. Put together B1, B2, B3, B4 and B5. Make sure you place the M4 Hex nut inbetween B2 and B3. You can place the parts upside down to make it easier.
+
+Fasten with the 4 M3 20 mm screws and nuts.</description>
+        <media>
+          <file url="././././././usdata/MF6-3 Final Cut - Assembly Instructions12.jpg" />
+        </media>
+      </step>
+      <step>
+        <description>Assembly B7 with the PCB using the 4 M4 22 mm screws and nuts and 2 spacers R and 2 Spacers L as shown in the picture.
+
+Make sure the front spacer are in the same position as in picture.</description>
+        <media>
+          <file url="././././././usdata/MF6-3 Final Cut - Assembly Instructions13.jpg" />
+        </media>
+        <component quantity="1" id="1543741363" />
+      </step>
+      <step>
+        <description>Assembly the on/off switch by snaping it to the back plate (B11), then solder into the pcb.
+
+Make sure the cable for the digital control goes through the little sloth on top of B11.
+
+With all the electronics in place, put the rest of the plates in (B9, B10 and B12).</description>
+        <media>
+          <file url="././././././usdata/MF6-3 Final Cut - Assembly Instructions14.jpg" />
+        </media>
+        <component quantity="1" id="1543741363" />
+      </step>
+      <step>
+        <description>Assembly the top cover in the lateral plates. fasten with the 4 M4 50 mm long screws in the nuts inside the top cover. Place B8 on the bottom before puting the screws.
+
+Don’t tighten the screws too hard, you will need them loose to slide in the top module and the filter.</description>
+        <media>
+          <file url="././././././usdata/MF6-3 Final Cut - Assembly Instructions15.jpg" />
+        </media>
+      </step>
+      <step>
+        <description>Slide in the blue filter (B6) on the bottom sloth.</description>
+        <media>
+          <file url="././././././usdata/MF6-3 Final Cut - Assembly Instructions16.jpg" />
+        </media>
+      </step>
+    </assembly_instruction>
+    <function id="426955116">
+      <description>Structure and Casing</description>
+      <implementation type="part" quantity="1" id="223274906" />
+      <implementation type="part" quantity="1" id="1042364403" />
+      <implementation type="part" quantity="4" id="359867311" />
+      <implementation type="part" quantity="4" id="720509204" />
+      <implementation type="part" quantity="4" id="518152820" />
+      <implementation type="part" quantity="4" id="1568637320" />
+    </function>
+    <function id="1543741363">
+      <description>Support for the light source, digital control and analog controls.</description>
+      <implementation type="brick" quantity="1" id="158044724" />
+      <implementation type="part" quantity="2" id="1034454968" />
+      <implementation type="part" quantity="2" id="1101847624" />
+    </function>
+  </brick>
+  <brick id="158044724">
+    <name>Electronics</name>
+    <abstract />
+    <long_description>The electronics for the illumination and digital control.</long_description>
+    <notes />
+    <license />
+    <media>
+      <file url="././././././usdata/pcb.jpg" />
+    </media>
+    <assembly_instruction>
+      <step>
+        <description />
+        <media>
+          <file url="././././././usdata/MF6-3 Final Cut - Assembly Instructions28.jpg" />
+        </media>
+      </step>
+    </assembly_instruction>
+    <function id="1277099381">
+      <description>Electronics for the illumination system</description>
+      <implementation type="part" quantity="1" id="183034043" />
+      <implementation type="part" quantity="100" id="994128746" />
+      <implementation type="part" quantity="1" id="70936562" />
+      <implementation type="part" quantity="1" id="1821538376" />
+      <implementation type="part" quantity="1" id="1987957635" />
+      <implementation type="part" quantity="20" id="1922121091" />
+      <implementation type="part" quantity="1" id="190865487" />
+      <implementation type="part" quantity="4" id="1808085912" />
+      <implementation type="part" quantity="4" id="720509204" />
+      <implementation type="part" quantity="1" id="1938147897" />
+    </function>
+  </brick>
+  <brick id="2041180246">
+    <name>Vertical Movemente Bed</name>
+    <abstract />
+    <long_description />
+    <notes />
+    <license />
+    <media>
+      <file url="././././././usdata/MF6-3 Final Cut - Assembly Instructions18.jpg" />
+      <file url="././././././usdata/MF6-3 Final Cut - Assembly Instructions19.jpg" />
+    </media>
+    <assembly_instruction>
+      <step>
+        <description>Place C2, C3, C4, C5 and C6 together and slide in C8 and C9 (with the M4 Nut inside).</description>
+        <media>
+          <file url="././././././usdata/MF6-3 Final Cut - Assembly Instructions20.jpg" />
+        </media>
+      </step>
+      <step>
+        <description>Place the M4 40 mm screw with the nut all the way to the head of the screw inside the knob.
+
+Put a little glue (cianoacrilate) under the head of the screw so the nut doesn’t unscrew and some glue inside the knob to fix the screw.</description>
+        <media>
+          <file url="././././././usdata/MF6-3 Final Cut - Assembly Instructions21.jpg" />
+        </media>
+      </step>
+    </assembly_instruction>
+    <function id="2139316752">
+      <description />
+      <implementation type="part" quantity="1" id="1411255579" />
+      <implementation type="part" quantity="2" id="1808085912" />
+      <implementation type="part" quantity="3" id="720509204" />
+      <implementation type="part" quantity="1" id="50837192" />
+      <implementation type="part" quantity="1" id="2024643738" />
+    </function>
+  </brick>
+  <brick id="2127622170">
+    <name>Camera Support</name>
+    <abstract />
+    <long_description />
+    <notes />
+    <license />
+    <media />
+    <assembly_instruction>
+      <step>
+        <description>Mount the focus knob to the camera as in the picture, press the camera lens down on the knob until it fits. Use a drop of glue to fix. 
+Mount the camera on the adaptor by sliding it in. Focus Knob and Camera Module Mount.
+Slide in the amber filter (C10) in the camera adaptor as shown in the picture.</description>
+        <media>
+          <file url="././././././usdata/MF6-3 Final Cut - Assembly Instructions - 23.jpg" />
+        </media>
+      </step>
+    </assembly_instruction>
+    <function id="269090723">
+      <description />
+      <implementation type="part" quantity="1" id="1159025638" />
+      <implementation type="part" quantity="1" id="1227046179" />
+      <implementation type="part" quantity="1" id="905973129" />
+      <implementation type="part" quantity="1" id="1655921293" />
+      <implementation type="part" quantity="1" id="1447635538" />
+    </function>
+  </brick>
+  <brick id="321642884">
+    <name>Raspberry Adaptor</name>
+    <abstract />
+    <long_description />
+    <notes />
+    <license />
+    <media>
+      <file url="././././././usdata/MF6-3 Final Cut - Assembly Instructions25.jpg" />
+    </media>
+    <assembly_instruction>
+      <step>
+        <description>The mounting holes on the Raspberry are sligthly smaller than the screws. Use one of the screws to make it bigger by screwing it in and then out of the board. 
+
+Place the 3 plates together R1, R2, R3, R4, R5, R6 and R7 with the Raspberry Pi, as shown in the picture.
+
+Fasten with the screws and nuts.</description>
+        <media>
+          <file url="././././././usdata/MF6-3 Final Cut - Assembly Instructions26.jpg" />
+        </media>
+      </step>
+    </assembly_instruction>
+    <function id="572913798">
+      <description>Main Structure</description>
+      <implementation type="part" quantity="1" id="1024570103" />
+      <implementation type="part" quantity="2" id="2033437844" />
+      <implementation type="part" quantity="4" id="1568637320" />
+      <implementation type="part" quantity="2" id="518152820" />
+    </function>
+  </brick>
+  <author id="1043368666">
+    <name>Roberto Herrera Pellizzari</name>
+    <email>roberto@backyardbrains.com</email>
+    <orcid />
+    <affiliation>Backyard Brains Chile</affiliation>
+  </author>
+  <author id="965421475">
+    <name>Tim Marzullo</name>
+    <email />
+    <orcid />
+    <affiliation>Backyard Brains</affiliation>
+  </author>
+  <author id="1495177737">
+    <name>Isaac Nuñez</name>
+    <email />
+    <orcid />
+    <affiliation>Department of Chemical and Bioprocess Engineering, School of Engineering, Pontificia Universidad Católica de Chile, 7820436, Santiago, Chile</affiliation>
+  </author>
+  <author id="1306305356">
+    <name>Tamara Matute</name>
+    <email />
+    <orcid />
+    <affiliation>Department of Chemical and Bioprocess Engineering, School of Engineering, Pontificia Universidad Católica de Chile, 7820436, Santiago, Chile</affiliation>
+  </author>
+  <author id="1561749638">
+    <name>Juan Keymer</name>
+    <email />
+    <orcid />
+    <affiliation>Departamento Ecología, Facultad Ciencias Biológicas; Instituto de Física, Facultad de Física, Pontificia Universidad Católica de Chile, Santiago, Chile</affiliation>
+  </author>
+  <author id="2026604948">
+    <name>Tim Rudge</name>
+    <email />
+    <orcid />
+    <affiliation>Department of Chemical and Bioprocess Engineering, School of Engineering, Pontificia Universidad Católica de Chile, 7820436, Santiago, Chile</affiliation>
+  </author>
+  <author id="334684057">
+    <name>Fernán Federici</name>
+    <email />
+    <orcid />
+    <affiliation>Departamento de Genética Molecular y Microbiología, Facultad de Ciencias Biológicas, Pontificia Universidad Católica de Chile, 8331150, Santiago, Chile</affiliation>
+  </author>
+</docubricks>
