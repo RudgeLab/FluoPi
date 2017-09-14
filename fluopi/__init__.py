@@ -18,52 +18,60 @@ from math import pi
 
 from scipy.optimize import curve_fit
 
-#Define the image channels
+# Define the image channels
 channels=['R','G','B']
 
-def plotImFrame(Fname,Frame):
-  #inputs:
-    # Fname = Filename where the images are stored
-    # Frame = frame number to plot
-
-    plt.figure()
-    im1 = plt.imread(Fname%Frame)
-    plt.imshow(im1)
-    plt.title('frame '+str(Frame)+' image')
-    
-def pltImFrameChannels(Fname,Frame):
+def plot_im_frame(f_path,frame):
 
     """
     To perform separated plots of each channel of image frame
 
     Parameters
     ----------
-    Fname : string_like
+    f_path : string_like
+        path directory where the images are stored
+    frame : int
+        frame number to plot
+
+    """
+    plt.figure()
+    Im = plt.imread(f_path%frame)
+    plt.imshow(Im)
+    plt.title('frame '+str(frame)+' image')
+    
+def plt_im_frame_channels(f_path,frame):
+
+    """
+    To perform separated plots of each channel of an image frame
+
+    Parameters
+    ----------
+    f_path : string_like
         folder name where the images are stored
-    Frame : int
+    frame : int
         Frame number to plot
 
     """
-    im1 = plt.imread(Fname%Frame)
+    Im = plt.imread(f_path%frame)
 
     plt.figure(figsize=(15,3))
     plt.subplot(131)
-    plt.imshow(im1[:,:,0])
+    plt.imshow(Im[:,:,0])
     plt.colorbar()
     plt.title('Red channel')
 
     plt.subplot(132)
-    plt.imshow(im1[:,:,1])
+    plt.imshow(Im[:,:,1])
     plt.colorbar()
     plt.title('Green channel')
 
     plt.subplot(133)
-    plt.imshow(im1[:,:,2])
+    plt.imshow(Im[:,:,2])
     plt.colorbar()
     plt.title('Blue channel')
 
 
-def count_files(path,filetype):
+def count_files(path,file_type):
     """
     To count the number of files of a defined extension (filetype on a certain folder (path)
 
@@ -72,68 +80,60 @@ def count_files(path,filetype):
     path : string
         folder name where the images are stored
 
-    filetype : string
+    file_type : string
         extension of the files to count (e.g. tif, png, jpg)
 
     Returns
     -------
-    imageCount : int
+    ImageCount : int
         number of defined filetype files on the path folder
 
     """
 
-    imageCount = len(glob.glob1(path,"*."+filetype))
-    print(path.split('\\')[-1]+' = '+str(imageCount) + ' files')
-    return(imageCount)
+    ImageCount = len(glob.glob1(path,"*."+file_type))
+    print(path.split('\\')[-1]+' = '+str(ImageCount) + ' files')
+    return(ImageCount)
 
 
-def get_im_data(xframes,imageCount,fname):
+def get_im_data(x_frames,image_count,f_name):
     """
     Load image data from a sequence of files
 
     Parameters
     ----------
-    xframes : int
+    x_frames : int
         step frames (e.g 10 to use only ten to ten images)
 
-    imageCount : int
+    image_count : int
         total number of files on the folder (can be obtained with count_files function)
 
-    fname : string
+    f_name : string
         file name pattern including full path where images are stored, e.g. "/folder/image-%04d"
 
     Returns
     -------
-    imsR,imsG,imsB: array_like
-        data per channel of each image (imsR -> matrix size = (w,h,imagecount/xframes))
+    ImsR,ImsG,ImsB: array_like
+        data per channel of each image (ImsR -> matrix size = (W,H,image_count/x_frames))
 
     """
- #inputs:
-  #xframes = step frames (e.g. 10 to use only ten to ten images)
-  #imageCount = total number of files
-  #fname = folder name
+    
+    W,H,_ = plt.imread(f_name%1).shape      # Measure the image size based on the first image on the folder
+    NT = int(image_count/x_frames)
+    ImsR = np.zeros((W,H,NT))
+    ImsG = np.zeros((W,H,NT))
+    ImsB = np.zeros((W,H,NT))
+    for i in range(0,NT):
+        im = plt.imread(f_name%(i*x_frames))
+        ImsR[:,:,i] = im[:,:,0]              # Last number code the channel: 0=red, 1=green, 2=blue
+        ImsG[:,:,i] = im[:,:,1]
+        ImsB[:,:,i] = im[:,:,2]
+    return(ImsR,ImsG,ImsB)
 
- #outputs:
-   #imsR,imsG,imsB: data per channel of each image (imsR=matrix size (w,h,imagecount/xframes))
-
-    w,h,_ = plt.imread(fname%1).shape      #measure the image size based on the first image on the folder
-    nt = int(imageCount/xframes)
-    imsR = np.zeros((w,h,nt))
-    imsG = np.zeros((w,h,nt))
-    imsB = np.zeros((w,h,nt))
-    for i in range(0,nt):
-        im = plt.imread(fname%(i*xframes))
-        imsR[:,:,i] = im[:,:,0]              #last number code the channel: 0=red, 1=green, 2=blue
-        imsG[:,:,i] = im[:,:,1]
-        imsB[:,:,i] = im[:,:,2]
-    return(imsR,imsG,imsB)
-
-# when call you can take only the channels you are interested in (e.g.):
+# at call you can take only the channels you are interested in (e.g.):
 # red,_,blue=get_im_data(xframes,imageCount)  ---> this only takes the red and blue channels
 
-# get the background time value and plot it
 
-def Time_vector(data, xframes, dT):
+def time_vector(data, x_frames, dT):
     """
     Get the vector of times for the image sequence loaded
 
@@ -154,70 +154,70 @@ def Time_vector(data, xframes, dT):
         Time vector for the used data (hour units)
     """
 
-    _,_,st=data[channels[0]].shape
-    T=np.zeros((st))
-    for i in range(0,st):
-        T[i]=(i)*xframes*dT
+    _,_,LT=data[channels[0]].shape     # Length of time vector
+    T=np.zeros((LT))
+    for i in range(0,LT):
+        T[i]=(i)*x_frames*dT
     
     return(T)
 
-def row_transect(Data, row, xframes, dataframe = -1):
+def row_transect(data, row, x_frames, data_frame = -1):
     """
     Plot the value of a transect (row of pixels) in a frame and plot it
 
     Parameters
     ----------
-    Data : dictionary
+    data : dictionary
         dictionary with the R G B data of all images, and his names on Data['Im']
 
     row : int
         row where you want to see the transect
 
-    frame : int
+    x_frames : int
+        step frames used on the analysis (e.g 10 means you are using one every ten to ten images)
+    
+    data_frame: int
         frame number of the image of interest, default = last one
 
     """
-    #input:
-    # row = the row where you want to see the transect  (integer)
-    # frame = image frame to use  (integer)
     
     row=int(row)  #just in case a non integer number is given
     
     plt.figure(figsize=(15,3))
     plt.subplot(131)
-    plt.plot(Data[channels[0]][row,:,dataframe])
+    plt.plot(data[channels[0]][row,:,data_frame])
     plt.xlabel('pixels')
     plt.ylabel('value')
     plt.title('Red channel')
 
     plt.subplot(132)
-    plt.plot(Data[channels[1]][row,:,dataframe])
+    plt.plot(data[channels[1]][row,:,data_frame])
     plt.xlabel('pixels')
     plt.title('Green channel')
 
     plt.subplot(133)
-    plt.plot(Data[channels[2]][row,:,dataframe])
+    plt.plot(data[channels[2]][row,:,data_frame])
     plt.xlabel('pixels')
     plt.title('Blue channel')
 
-    #plot selected line transect on the image (allways show it on the last frame)
-    if dataframe > 0:
-        imFrame = xframes*(dataframe)
+    #plot selected line transect on the image
+    if data_frame > 0:
+        ImFrame = x_frames*(data_frame)   # The corresponding image on the path
     else:
-        _,_,st=Data[channels[0]].shape
-        imFrame=(st-1)*xframes
+        _,_,ST=data[channels[0]].shape
+        ImFrame=(ST-1)*x_frames
         
     
-    im = plt.imread(Data['Im']%(imFrame))
-    s1,s2,_=im.shape
+    Im = plt.imread(data['Im']%(ImFrame))
+    S1,S2,_=Im.shape
     plt.figure(figsize=(6,6))
     fig = plt.gcf()
     ax = fig.gca()
-    ax.imshow(im)
-    rect = matplotlib.patches.Rectangle((0,row),s2,0,linewidth=1,edgecolor='r',facecolor='none')
+    ax.imshow(Im)
+    rect = matplotlib.patches.Rectangle((0,row),S2,0,linewidth=1,edgecolor='r',facecolor='none')
     ax.add_patch(rect)
     
-def BG_Val(X1,X2,Y1,Y2,data, imCount):
+def bg_value(x1, x2, y1, y2, data, im_count):
     """
     compute the background mean value for each channel and frame based on a rectagle
     defined by the user. Plot the rectangle over the image and makes plots of each channel
@@ -225,14 +225,14 @@ def BG_Val(X1,X2,Y1,Y2,data, imCount):
 
     Parameters
     ----------
-    X1,X2,Y1,Y2: int values
-        rectangle area limits: (X1,Y1) = left-up corner. (X2,Y2) = rigth-bottom corner
-
-    Y1,Y2 : int
-        total number of files on the folder (can be obtained with count_files function)
-
+    x1,x2,x1,x2: int values
+        rectangle area limits: (x1,y1) = left-up corner. (x2,y2) = rigth-bottom corner
+    
     data : dictionary
         R G B images data to get the background, and his names on data['Im']
+    
+    im_count : int
+        total number of files on the folder (can be obtained with count_files function)
 
     Returns
     -------
@@ -241,40 +241,40 @@ def BG_Val(X1,X2,Y1,Y2,data, imCount):
 
     """
 
-    X2R=X2-X1 #convert on steps because the rectangle patch definition
-    Y2R=Y2-Y1
+    X2R=x2-x1 #convert on steps because the rectangle patch definition
+    Y2R=y2-y1
 
     #plot the defined area
     plt.figure(figsize=(8,8))
     fig = plt.gcf()
     ax = fig.gca()
-    im = plt.imread(data['Im']%(imCount-1))
-    ax.imshow(im)
-    rect = matplotlib.patches.Rectangle((Y1,X1),Y2R,X2R,linewidth=1,edgecolor='r',facecolor='none')
+    Im = plt.imread(data['Im']%(im_count-1))
+    ax.imshow(Im)
+    rect = matplotlib.patches.Rectangle((y1,x1),Y2R,X2R,linewidth=1,edgecolor='r',facecolor='none')
     ax.add_patch(rect)
 
 
     #get the mean background value at each time for each channel and plot it
-    bg={}
-    L_colors=['r','g','b']
+    BG={}
+    LColors=['r','g','b']    # each color will be for each line in the plot
     count=0
     
     plt.figure()
     for chan in channels:
-        bg[chan]= data[chan][X1:X2,Y1:Y2,:].mean(axis=(0,1))
-        plt.plot(bg[chan][:],L_colors[count])
+        BG[chan]= data[chan][x1:x2,y1:y2,:].mean(axis=(0,1))
+        plt.plot(BG[chan][:],LColors[count])
         count+=1
 
     plt.xlabel('Time step')
     plt.ylabel('Fluorescence intensity')
 
-    return(bg)
+    return(BG)
 
-def BG_subst(Data,bg):
+def bg_subst(data, bg):
     """
     Substract the mean background value for each channel and frame obtained with BG_Val function.
     
-    Data: dictionary
+    data: dictionary
         R G B images data
     bg : array
         ackground mean value of each channel for every time frame (can be obtained with BG_Val function)
@@ -287,26 +287,26 @@ def BG_subst(Data,bg):
 
     """
 
-    l=bg[channels[0]].shape[0]
-    s1,s2,_=Data[channels[0]].shape
+    L=bg[channels[0]].shape[0]
+    S1,S2,_=data[channels[0]].shape
 
     for c in channels:
-        for i in range(0,l):
-            bgm=np.ones((s1,s2))
-            bgm= bgm*bg[c][i]         #create a matrix with bg to substract it to the frame
+        for i in range(0,L):
+            BGM=np.ones((S1,S2))
+            BGM= BGM*bg[c][i]         #create a matrix with bg to substract it to the frame
 
-            data=Data[c][:,:,i]
+            Data=data[c][:,:,i]
 
-            data=data-bgm         #perform the substraction
+            Data=Data-BGM         #perform the substraction
 
-            data[data<0]=0        # values < 0 are not allowed --> transform it to 0
+            Data[Data<0]=0        # values < 0 are not allowed --> transform it to 0
 
-            Data[c][:,:,i]=data   #actualize Data
+            data[c][:,:,i]=Data   #actualize Data
 
 
-    return(Data)
+    return(data)
 
-def dataOT(Data):
+def data_sum_time(data):
     """
     Sum the data for each pixel over time
 
@@ -321,7 +321,7 @@ def dataOT(Data):
         Sum data over time and over channels for each pixel of the Data
 
     """
-    SData=Data[channels[0]][:,:,:].sum(axis=(2))+Data[channels[1]][:,:,:].sum(axis=(2))+Data[channels[2]][:,:,:].sum(axis=(2))
+    SData=data[channels[0]][:,:,:].sum(axis=(2))+data[channels[1]][:,:,:].sum(axis=(2))+data[channels[2]][:,:,:].sum(axis=(2))
     plt.imshow(SData)
     plt.colorbar()
     plt.title('All channels')
