@@ -587,7 +587,7 @@ def channelSum(RData,cv):
     return(ACrois)
 
 
-def TL_ROI(ROIs,idx,Times,fname,gridsize=[0,0]):
+def TL_ROI(ROIs,idx,Times,fname,radius='null',ChanSum=False,gridsize=[0,0]):
     """
     Save images of selected time steps on "Times" vector, for a selected ROI (idx).
     This images can be used to make timelapse videos of isolated colonies.
@@ -608,8 +608,12 @@ def TL_ROI(ROIs,idx,Times,fname,gridsize=[0,0]):
         the complete filename to save the images of ROIs
         e.g. fname=('ROIs/Col'+str(idx)+'_ROI_step%d.png')
     
+    ChanSum: boolean
+        True to perfom the sum of the three channels of the ROI.
+        False to show the image original colors.
+    
     gridsize: vector
-        size of the subplot grid 
+        size of the subplot grid. if gridsize=[0,0] the figure will not be shown on the notebook.
 
     Returns:
     ----------
@@ -620,25 +624,53 @@ def TL_ROI(ROIs,idx,Times,fname,gridsize=[0,0]):
     if type(idx)==int:      #Check that ID is only one colony
         if len(Times)>0:        #Check time vector have some value
             
-            ROIa=channelSum(ROIs,[idx])  # sum the three channels
-            ROI=ROIa[idx][:,:,:]
-    
-            mx=np.max(ROI[:,:,:])
+            w1=ROIs[channels[0]][idx].shape[0]      #cambiar todas las n y m por w y h
+            h1=ROIs[channels[0]][idx].shape[1]
+            
+            if ChanSum == True:
+                ROIa=channelSum(ROIs,[idx])  # sum the three channels 
+                ROI=ROIa[idx][:,:,:]
+                mx=np.max(ROI[:,:,:])
+            else:  #Reconstruct an image file for each time
+                ROI=np.zeros((w1,h1,3))
+           
             
         # make the plot of each frame and save it
             for i in Times :
     
                 plt.figure(figsize=(8,8))        
-                roi = ROI[:,:,i]
-                plt.imshow(roi, interpolation='none',vmin=0, vmax=mx)
-                plt.colorbar()
-                plt.savefig(fname%(i+1))
+                                
+                if ChanSum == True:   #Plot the ROI os sum with a colorbar
+                    roi = ROI[:,:,i]
+                    plt.imshow(roi, interpolation='none',vmin=0, vmax=mx)
+                    plt.colorbar()
+                    plt.xticks([])
+                    plt.yticks([])
+                    
+                    if radius != 'null':
+                        circle = plt.Circle((round((w1-1)/2), round((h1-1)/2)), 2*radius[i], color='r', fill=False , lw=2)
+                        fig = plt.gcf()
+                        ax = fig.gca()
+                        ax.add_artist(circle)
+                        #ax.axes.get_xaxis().set_visible(False)
+                        #ax.axes.get_yaxis().set_visible(False)
+                        
+                else:                #Plot the ROI original image
+                    ROI[:,:,0]=ROIs[channels[0]][idx][:,:,i]      #RED layer
+                    ROI[:,:,1]=ROIs[channels[1]][idx][:,:,i]      #GREEN layer
+                    ROI[:,:,2]=ROIs[channels[2]][idx][:,:,i]      #BlUE layer
+                    roi=ROI.astype('uint8')
+                    plt.imshow(roi)
+                    plt.xticks([])
+                    plt.yticks([])
+                
+                plt.savefig(fname%(i+1), transparent=True)
                 plt.close()
             
             # display the plots in the notebook
             n=gridsize[0]
             m=gridsize[1]
-            if n and m >0:
+            if n and m >0:              # make n or m equal to zero to not display the figure in the notebook.
                 if (n*m)<(len(Times)):
                     print('the subplot grid is smaller than the number of plots. Increase x or y, and try again')
                 else:
@@ -646,15 +678,18 @@ def TL_ROI(ROIs,idx,Times,fname,gridsize=[0,0]):
                     count=1
                     for i in Times :
                         plt.subplot(int(str(n)+str(m)+str(count)))
-                        roi = ROI[:,:,i]
-                        plt.imshow(roi, interpolation='none',vmin=0, vmax=mx)
-                        plt.colorbar()
+                        if ChanSum == True:
+                            roi = ROI[:,:,i]
+                            plt.imshow(roi, interpolation='none',vmin=0, vmax=mx)
+                            plt.colorbar()
+                        else:
+                            plt.imshow(roi)
                         plt.title(str(i+1)+' Hours')
                         count+=1
         else:
             print('ERROR: Time vector have to be of lenght higher than zero')
     else:
-        print('ERROR: use an integer value for the colony ID')    
+        print('ERROR: use an integer value for the colony ID') 
         
         
 
@@ -762,15 +797,16 @@ def plot_radius(R,cv,t,filename='null'):
         #plt.savefig("Radio.pdf", transparent=True)
         plt.savefig(str(filename)+".pdf", transparent=True)
 
-def checkR(R,rois,idx,t, filename='null'):
+def checkR(rois,idx,t,Rfit='null',Rdots='null', filename='null'):
     """
     Plot the colony radius estimate overlayed on an kymograph image slice
     
     Parameters
     ----------
-        R: vector
-            colony radio at each time step of the selected colony (obtained with frame_colony_size() function) 
-        
+        Rfit: vector
+            colony fited radius at each time step of the selected colony (obtained from a model) 
+        Rdots:
+            colony radius at each time step of the selected colony (obtained with frame_colony_size() function) 
         rois: dictionary
             ROI image of each colony (obtained with obtain_rois() function)
         
@@ -783,13 +819,18 @@ def checkR(R,rois,idx,t, filename='null'):
         filename: string
             filename to save the plot generated
     """
-    plt.figure(figsize=(16,12))
+    plt.figure(figsize=(18,7))
     w,h,_ = rois[idx].shape
-    plt.imshow(rois[idx][round(w/2),:,:], interpolation='none', cmap='gray') # use the x-middle transect (--> w/2)
+    #plt.imshow(rois[idx][round(w/2),:,:], interpolation='none', cmap='gray') # use the x-middle transect (--> w/2)
+    plt.imshow(rois[idx][round((w-1)/2),:,:], interpolation='none') 
     plt.colorbar()
-    #plt.hold(True)
-    plt.plot(t,-R*2+h/2,'r')
-    plt.plot(t,R*2+h/2,'r')
+    if Rfit != 'null':
+        plt.plot(t,-Rfit*2+(h-1)/2,'r-')
+        plt.plot(t,Rfit*2+(h-1)/2,'r-')
+    if Rdots != 'null':
+        plt.plot(t,-Rdots*2+(h-1)/2,'rx',ms=9)
+        plt.plot(t,Rdots*2+(h-1)/2,'rx',ms=9)             
+    
     plt.xlabel('Time')
     plt.ylabel('y-axis position')
     plt.title('Colony '+str(idx))
@@ -948,11 +989,11 @@ def CRoiMeanInt_frames(data,blobs,R,cv):
             y = blobs[i,1]
             CRoiInt=0
             count=0
-            meanInt=np.zeros((len(R[i][0])))
+            meanInt=np.zeros((len(R[i])))
             
-            for j in range(len(R[i][0])): 
+            for j in range(len(R[i])): 
 ####### this lines is to eliminate the out of image bounds error
-                r=R[i][0][j]
+                r=R[i][j]
     
                 x1=round(x-r)
                 x2=round(x+r+1)
@@ -986,7 +1027,7 @@ def CRoiMeanInt_frames(data,blobs,R,cv):
     
     return(AllC_CRois_meanVal)
 
-def F_mu (t,b,c):
+def F_mu (t,b,d):
     """
     compute the grwoth rate (mu) function value
     
@@ -1008,7 +1049,7 @@ def F_mu (t,b,c):
 
     
     """
-    return((2 *c /(np.exp(c*(t+b))+1)))
+    return((d /(np.exp(d*(t+b))+1)))
 
 
 # End
