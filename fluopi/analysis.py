@@ -493,7 +493,7 @@ def area(r, cv, T, filename='null'):
     Parameters
     ----------
         r: dictionary
-            colony radius at each time step of the selected colony (obtained with frame_colony_size() function) 
+            colony radius at each time step of the selected colony (obtained with frame_colony_radius() function) 
         
         cv: vector
             colonies ID vector to plot

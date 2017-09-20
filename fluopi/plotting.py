@@ -168,6 +168,7 @@ def tl_roi(rois, idx, times, fname, radius='null', chan_sum=False,
     
     idx: intr
             contain the ID of the of the selected colony
+            
     times: vector
         conitains the selected frames times
     
@@ -187,6 +188,7 @@ def tl_roi(rois, idx, times, fname, radius='null', chan_sum=False,
     Save the images of the selected frames of a ROI.
     
     """
+    from analysis import channels_sum
     
     if type(idx) == int:      #Check that ID is only one colony
         if len(times)>0:        #Check time vector have some value
@@ -334,7 +336,7 @@ def check_radius(rois, idx, t, r_fit='null', r_dots='null', filename='null'):
         
         r_dots:
             colony radius at each time step of the selected colony 
-            (obtained with frame_colony_size() function) 
+            (obtained with frame_colony_radius() function) 
         
         rois: dictionary
             ROI image of each colony (obtained with obtain_rois() function)
