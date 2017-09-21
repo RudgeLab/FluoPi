@@ -370,6 +370,75 @@ def check_radius(rois, idx, t, r_fit='null', r_dots='null', filename='null'):
     if filename != 'null':    
         #plt.savefig("KymoGraph.pdf", transparent=True) 
         plt.savefig(str(filename)+".pdf", transparent=True)
+        
+def rois_last_frame_2chan_plt(rois_data, channel_x, channel_y, serie_name):
+    """
+    Sum all the pixel values for channel_x and channel_y (e.g.channel G and 
+    channel R) separately for the last frame of each ROI and make a plot where 
+    channel_x sum value is on the X axis and channel_y sum value is on the Y 
+    axis.
+    Each dot correspond to one ROI values and represent the ratio of the two
+    channels for that colony.    
+    
+    Parameters
+    ----------
+        rois_data : dictionary
+            RGB time-lapse image data of each ROI, obtained with obtain_rois()
+        
+        channel_x: string
+            channel name (e.g. 'G') to be on the x axis
+        
+        channel_y: string
+            channel name (e.g. 'R') to be on the y axis
 
+        serie_name: string
+            name of the the data serie in analysis (used as title of the plot)
+    """
+      
+    # variable inicialization
+    chanx=np.zeros((len(rois_data[channel_x]),1))
+    chany=np.zeros((len(rois_data[channel_x]),1))
+    
+    # perform the sum of selected channels for the last frame of each ROI
+    for i in range(len(rois_data[channel_x])):
+        chanx[i]=rois_data[channel_x][i][:,:,-1].sum(axis=(0,1))
+        chany[i]=rois_data[channel_y][i][:,:,-1].sum(axis=(0,1))
+    
+    # size the plot dimentions
+    axisMax=np.max([np.max(chanx),np.max(chany)])
+    axisMin=np.min([np.min(chanx),np.min(chany)])
+    #print(axisMax,axisMin)
+    
+    #plt.figure(figsize=(8,8))
+    plt.plot(chanx,chany,'bo')
+    plt.title(serie_name)
+    plt.xlabel(channel_x+' Channel')
+    plt.ylabel(channel_y+' Channel')
+    plt.axis([axisMin, axisMax, axisMin, axisMax])
+    return(chanx,chany)
+
+def plt_lin_fit(x_min, x_max, l_fit, color):
+    """
+    Make a plot of an already linear fit, being posible to define the function
+    evaluation limits (x independient variable limits) and the color of the 
+    dots and fitted line.
+    
+    Parameters
+    ----------
+        x_min : int
+            RGB time-lapse image data of each ROI, obtained with obtain_rois()
+        
+        x_max: int
+            channel name (e.g. 'G') to be on the x axis
+        
+        l_fit: vector
+            linear fitted parameters. Obtained with linear_fit function
+
+        color: char
+            char of the color to be used on the dots and line (e.g. 'r')
+    """ 
+    p = np.poly1d(l_fit)
+    xp = np.linspace(x_min, x_max, 2)
+    plt.plot(xp, p(xp), color +'-')
 # End
 

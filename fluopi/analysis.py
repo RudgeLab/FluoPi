@@ -713,6 +713,148 @@ def f_mu (t, b, d):
     """
     return((d /(np.exp(d*(t+b))+1)))
 
+def f_linear(x, a, b):
+    """
+    compute the linear function value with given parameters
+    
+    Parameters
+    ----------
+        x: int or vector
+            independent variable values
+        
+        a: double
+            slope parameter
+        
+        b: double
+           y-intercept parameter
+        
+        
+    Return
+    ----------
+        evaluated linear fucntion with the given parameters for the given x
+    """
+    
+    return(a * x + b)
+
+def linear_fit(data1, data2, filename='null'):
+    """
+    Fit linear function (f_linear) to given data, display the fited function
+    and make a plot of the result. You are able to save the resulting plot by
+    given as input the "filename" to save it.
+    
+    Parameters
+    ----------
+        data1: vector
+            independent variable ( "x axis") to be used as input of f_linear 
+        
+        data2: vector
+            "y-data values" used as reference to peform the fitting
+        
+        filename: string
+            name of the image file if it is desired to save it.
+
+        
+    Return
+    ----------                 
+        z: vector
+            fitted parameters
+    
+    """
+    
+    z,_=curve_fit(f_linear,data1, data2,bounds=([0,-np.inf], np.inf))
+    #print(z)           #first component is the slope
+    p = np.poly1d(z)
+    print(np.poly1d(p))
+    xp = np.linspace(data1.min(), data1.max(), 2)
+    #plt.plot(timeC[init:end], ratio[init:end,i], '.', xp, p(xp), '-')
+    plt.figure()
+    axisMax=np.max([np.max(data1),np.max(data2)])
+    axisMin=np.min([np.min(data1),np.min(data2)])
+    plt.axis([axisMin, axisMax, axisMin, axisMax])
+    plt.plot(data1, data2, '.', xp, p(xp), '-')
+    
+    if filename != 'null':
+        #plt.savefig("FluorIntRGB.pdf", transparent=True)
+        plt.savefig(str(filename) + ".pdf", transparent=True)
+    return(z)
+
+def colony_classifier(fit, classes, chanx_dat, chany_dat): 
+    """
+    Classify chanx_dat and chany_dat (which correspond to the data serie being
+    classified) on the classes names given as inputs. The classification is 
+    on the small chany_dat distance value with the value computed with the
+    chanx_dat and each fitted function (that are on "fit").
+    
+    Parameters
+    ----------
+        fit: array like
+            each position on the array cointains the parameters of the linear
+            fit of each categorie. fit = [z1, z2, z3] where z is the return of 
+            linear_fit.
+        
+        classes: string array
+            contain the names of the defined categories (its length have to be
+            same long as fit)
+        
+        chanx_dat: vector
+            data of the channel on x axis for the data to be classified
+        
+        chany_dat: vector
+            data of the channel on y axis for the data to be classified
+
+        
+    Return
+    ----------                 
+        clas: vector
+            contain the category of each classified colony in order. 
+            e.g. clas=['cat3', 'cat1, 'cat1', 'cat1', 'cat2', etc ...]
+            
+        clas_dict: dictionary
+            contain the channel value of the colonies of each category in the
+            corresponding dictinary class. clas_dict=['class'][chan_xdat,
+            chany_dat, boolean]. The boolean vector have the length of the 
+            total colony analyzed, and indicate (with True) which colonies
+            correspond to that category.
+    
+    """
+    CAT_NUM=len(fit)      # number of categories
+    y=np.zeros(CAT_NUM)
+    d=np.zeros(CAT_NUM)
+    clas=np.zeros(len(chanx_dat))
+    clas_dict={}
+    
+    # evaluate if have same number of classes as linear fits
+    if CAT_NUM == len(classes):
+       
+        # compute the difference between the straight lines categories and the 
+        # colonies being classified
+        for i in range(len(chanx_dat)):
+            for j in range(CAT_NUM):
+                y[j]=fit[j][0]*chanx_dat[i]+fit[j][1]
+                d[j]=(y[j]-chany_dat[i])*(y[j]-chany_dat[i])
+            
+            # find the minimal difference value
+            mindif=np.min(d)
+            
+            # perform the classification
+            
+            if mindif == d[0]:
+                clas[i]=classes[0]
+                
+            elif mindif == d[1]:
+                clas[i]=classes[1]
+                
+            elif mindif == d[2]:
+                clas[i]=classes[2]
+        
+        # store the data in a dictionary of categories
+        for cat in classes:
+            clas_dict[cat]=[chanx_dat[clas==cat],chany_dat[clas==cat],clas==cat]
+        
+        return(clas, clas_dict)
+    
+    else:
+        print('EROR: classes have to be same length as fits')
 
 # End
 
