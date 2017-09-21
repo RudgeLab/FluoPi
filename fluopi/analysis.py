@@ -761,15 +761,15 @@ def linear_fit(data1, data2, filename='null'):
     
     """
     
-    z,_=curve_fit(f_linear,data1, data2,bounds=([0,-np.inf], np.inf))
+    z,_ = curve_fit(f_linear, data1, data2, bounds=([0,-np.inf], np.inf))
     #print(z)           #first component is the slope
     p = np.poly1d(z)
     print(np.poly1d(p))
     xp = np.linspace(data1.min(), data1.max(), 2)
     #plt.plot(timeC[init:end], ratio[init:end,i], '.', xp, p(xp), '-')
     plt.figure()
-    axisMax=np.max([np.max(data1),np.max(data2)])
-    axisMin=np.min([np.min(data1),np.min(data2)])
+    axisMax = np.max([np.max(data1), np.max(data2)])
+    axisMin = np.min([np.min(data1), np.min(data2)])
     plt.axis([axisMin, axisMax, axisMin, axisMax])
     plt.plot(data1, data2, '.', xp, p(xp), '-')
     
@@ -805,23 +805,23 @@ def colony_classifier(fit, classes, chanx_dat, chany_dat):
         
     Return
     ----------                 
-        clas: vector
+        clas: list
             contain the category of each classified colony in order. 
-            e.g. clas=['cat3', 'cat1, 'cat1', 'cat1', 'cat2', etc ...]
+            e.g. clas = ['cat3', 'cat1, 'cat1', 'cat1', 'cat2', etc ...]
             
         clas_dict: dictionary
             contain the channel value of the colonies of each category in the
-            corresponding dictinary class. clas_dict=['class'][chan_xdat,
+            corresponding dictinary class. clas_dict = ['class'][chan_xdat,
             chany_dat, boolean]. The boolean vector have the length of the 
             total colony analyzed, and indicate (with True) which colonies
             correspond to that category.
     
     """
-    CAT_NUM=len(fit)      # number of categories
-    y=np.zeros(CAT_NUM)
-    d=np.zeros(CAT_NUM)
-    clas=np.zeros(len(chanx_dat))
-    clas_dict={}
+    CAT_NUM = len(fit)      # number of categories
+    y = np.zeros(CAT_NUM)
+    d = np.zeros(CAT_NUM)
+    clas = np.zeros(len(chanx_dat))
+    clas_dict = {}
     
     # evaluate if have same number of classes as linear fits
     if CAT_NUM == len(classes):
@@ -830,31 +830,35 @@ def colony_classifier(fit, classes, chanx_dat, chany_dat):
         # colonies being classified
         for i in range(len(chanx_dat)):
             for j in range(CAT_NUM):
-                y[j]=fit[j][0]*chanx_dat[i]+fit[j][1]
-                d[j]=(y[j]-chany_dat[i])*(y[j]-chany_dat[i])
+                y[j] = fit[j][0]*chanx_dat[i]+fit[j][1]
+                d[j] = (y[j]-chany_dat[i])*(y[j]-chany_dat[i])
             
             # find the minimal difference value
-            mindif=np.min(d)
+            mindif = np.min(d)
             
             # perform the classification
-            
-            if mindif == d[0]:
-                clas[i]=classes[0]
+            TOKEN = 0
+            count = 0
+            while TOKEN == 0:
+                if mindif == d[count]:
+                    clas[i] = count
+                    TOKEN = 1
+                count += 1
                 
-            elif mindif == d[1]:
-                clas[i]=classes[1]
-                
-            elif mindif == d[2]:
-                clas[i]=classes[2]
         
         # store the data in a dictionary of categories
-        for cat in classes:
-            clas_dict[cat]=[chanx_dat[clas==cat],chany_dat[clas==cat],clas==cat]
+        for n in range(len(classes)):
+            clas_dict[classes[n]]=[chanx_dat[clas==n],chany_dat[clas==n],clas[:]==n]
         
-        return(clas, clas_dict)
+        # save a list with the corresponding string category name of each element in clas 
+        roi_clas = []
+        for i in range(len(clas)):
+            roi_clas.append(classes[int(clas[i])])
+        
+        return(roi_clas, clas_dict)
     
     else:
-        print('EROR: classes have to be same length as fits')
+        print('\nERROR: classes have to be same length as fits\n')
 
 # End
 

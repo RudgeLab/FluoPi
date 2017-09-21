@@ -361,7 +361,7 @@ def check_radius(rois, idx, t, r_fit='null', r_dots='null', filename='null'):
         plt.plot(t, r_fit*2+(h-1)/2, 'r-')
     if r_dots != 'null':
         plt.plot(t, -r_dots*2+(h-1)/2, 'rx', ms=9)
-        plt.plot(t, r_dots*2+(h-1)/2,'rx', ms=9)             
+        plt.plot(t, r_dots*2+(h-1)/2, 'rx', ms=9)             
     
     plt.xlabel('Time')
     plt.ylabel('y-axis position')
@@ -396,17 +396,17 @@ def rois_last_frame_2chan_plt(rois_data, channel_x, channel_y, serie_name):
     """
       
     # variable inicialization
-    chanx=np.zeros((len(rois_data[channel_x]),1))
-    chany=np.zeros((len(rois_data[channel_x]),1))
+    chanx = np.zeros((len(rois_data[channel_x]),1))
+    chany = np.zeros((len(rois_data[channel_x]),1))
     
     # perform the sum of selected channels for the last frame of each ROI
     for i in range(len(rois_data[channel_x])):
-        chanx[i]=rois_data[channel_x][i][:,:,-1].sum(axis=(0,1))
-        chany[i]=rois_data[channel_y][i][:,:,-1].sum(axis=(0,1))
+        chanx[i] = rois_data[channel_x][i][:,:,-1].sum(axis=(0,1))
+        chany[i] = rois_data[channel_y][i][:,:,-1].sum(axis=(0,1))
     
     # size the plot dimentions
-    axisMax=np.max([np.max(chanx),np.max(chany)])
-    axisMin=np.min([np.min(chanx),np.min(chany)])
+    axisMax = np.max([np.max(chanx), np.max(chany)])
+    axisMin = np.min([np.min(chanx), np.min(chany)])
     #print(axisMax,axisMin)
     
     #plt.figure(figsize=(8,8))
