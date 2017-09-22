@@ -783,7 +783,8 @@ def colony_classifier(fit, classes, chanx_dat, chany_dat):
     Classify chanx_dat and chany_dat (which correspond to the data serie being
     classified) on the classes names given as inputs. The classification is 
     on the small chany_dat distance value with the value computed with the
-    chanx_dat and each fitted function (that are on "fit").
+    chanx_dat and each fitted function (that are on "fit"). In other words,
+    accord the minimal y-coordinate distance between each dot and fitted lines.
     
     Parameters
     ----------
