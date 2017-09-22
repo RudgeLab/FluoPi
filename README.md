@@ -28,7 +28,7 @@ All the installation instructions are available on the [wiki page][wiki]
 ### Running the equipment
 
 The equipment has a manual swith and also you can control the camera with [_camera module commands_](https://www.raspberrypi.org/documentation/usage/camera/raspicam/README.md). 
-To perform further experimentation and process automation the project include some python codes (based on [camera python module](https://www.raspberrypi.org/documentation/usage/camera/python/) to control the hardarware:  
+To perform further experimentation and process automation the project include some python codes (based on [camera python module](https://www.raspberrypi.org/documentation/usage/camera/python/))to control the hardarware:  
 * _timelapse.py_ --> to perform timelapse experiments
 * _turnON.py_ --> to turn ON the transilluminator
 * _turnOFF.py_ --> to turn OFF the transilluminator
@@ -49,15 +49,15 @@ for further information see the [wiki page][wiki]
 
 ## Authors
 
-Universidad Catolica de Chile: 
-* Isaac Nuñez [Prosimio](https://github.com/Prosimio)
-* Tamara Matute [tfmatute](https://github.com/tfmatute)
-* Juan Keymner
-* Tim Rudge [timrudge](https://github.com/timrudge)
-* Fernan Federici [FernanFederici](https://github.com/FernanFederici)
+**Universidad Catolica de Chile** 
+* Isaac Nuñez - [Prosimio](https://github.com/Prosimio)
+* Tamara Matute - [tfmatute](https://github.com/tfmatute)
+* Juan Keymner - [Keymer Lab](http://keymerlab.nl/www/?page_id=26)
+* Tim Rudge - [timrudge](https://github.com/timrudge)
+* Fernan Federici - [FernanFederici](https://github.com/FernanFederici)
 
-Backyard Brains Chile
-* Roberto Pellizzari [RoHPellizzari](https://github.com/RoHPellizzari)
+[**Backyard Brains Chile**](http://www.backyardbrains.cl/)
+* Roberto Pellizzari - [RoHPellizzari](https://github.com/RoHPellizzari)
 * Tim Marzullo 
 
 
