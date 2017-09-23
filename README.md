@@ -67,10 +67,10 @@ This project is licensed under the MIT License - see the [LICENSE.txt](LICENSE.t
 
 ## Acknowledgments
 
-* Toby Wenzel for guidance on Docubricks documentation
-* Tom Baden for feedback and advice on camera
-* Bernardo Pollak for helping with sequences
-* Douglas Densmore for the CIDAR MoClo Parts Kit
+* _Toby Wenzel_ for guidance on Docubricks documentation
+* _Tom Baden_ for feedback and advice on camera
+* _Bernardo Pollak_ for helping with sequences
+* _Douglas Densmore_ for the CIDAR MoClo Parts Kit
 
 
 [wiki]: https://github.com/SynBioUC/FluoPi/wiki
