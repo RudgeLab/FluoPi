@@ -1,0 +1,544 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>fluopi.plotting &#8212; FluoPi Module 1.0.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for fluopi.plotting</h1><div class="highlight"><pre>
+<span></span>
+<span class="kn">import</span> <span class="nn">matplotlib</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="c1"># Define the image channels</span>
+<span class="n">CHANNELS</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;R&#39;</span><span class="p">,</span><span class="s1">&#39;G&#39;</span><span class="p">,</span><span class="s1">&#39;B&#39;</span><span class="p">]</span>
+
+<div class="viewcode-block" id="plot_im_frame"><a class="viewcode-back" href="../../source/fluopi.html#fluopi.plotting.plot_im_frame">[docs]</a><span class="k">def</span> <span class="nf">plot_im_frame</span><span class="p">(</span><span class="n">f_path</span><span class="p">,</span><span class="n">frame</span><span class="p">):</span>
+
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    To perform separated plots of each channel of image frame</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    f_path : string_like</span>
+<span class="sd">        path directory where the images are stored</span>
+<span class="sd">    frame : int</span>
+<span class="sd">        frame number to plot</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+    <span class="n">Im</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="n">f_path</span><span class="o">%</span><span class="n">frame</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">Im</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;frame &#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">frame</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39; image&#39;</span><span class="p">)</span></div>
+    
+    
+<div class="viewcode-block" id="plt_im_frame_channels"><a class="viewcode-back" href="../../source/fluopi.html#fluopi.plotting.plt_im_frame_channels">[docs]</a><span class="k">def</span> <span class="nf">plt_im_frame_channels</span><span class="p">(</span><span class="n">f_path</span><span class="p">,</span><span class="n">frame</span><span class="p">):</span>
+
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    To perform separated plots of each channel of an image frame</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    f_path : string_like</span>
+<span class="sd">        folder name where the images are stored</span>
+<span class="sd">    frame : int</span>
+<span class="sd">        Frame number to plot</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">Im</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="n">f_path</span><span class="o">%</span><span class="n">frame</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">131</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">Im</span><span class="p">[:,:,</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Red channel&#39;</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">132</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">Im</span><span class="p">[:,:,</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Green channel&#39;</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">133</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">Im</span><span class="p">[:,:,</span><span class="mi">2</span><span class="p">])</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Blue channel&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="row_transect"><a class="viewcode-back" href="../../source/fluopi.html#fluopi.plotting.row_transect">[docs]</a><span class="k">def</span> <span class="nf">row_transect</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">x_frames</span><span class="p">,</span> <span class="n">data_frame</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Plot the value of a transect (row of pixels) in a frame and plot it</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    data : dictionary</span>
+<span class="sd">        dictionary with the R G B data of all images, and his names on Data[&#39;Im&#39;]</span>
+
+<span class="sd">    row : int</span>
+<span class="sd">        row where you want to see the transect</span>
+
+<span class="sd">    x_frames : int</span>
+<span class="sd">        step frames used on the analysis (e.g 10 means you are using one every ten to ten images)</span>
+<span class="sd">    </span>
+<span class="sd">    data_frame: int</span>
+<span class="sd">        frame number of the image of interest, default = last one</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">row</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>  <span class="c1">#just in case a non integer number is given</span>
+    
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">131</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">CHANNELS</span><span class="p">[</span><span class="mi">0</span><span class="p">]][</span><span class="n">row</span><span class="p">,:,</span><span class="n">data_frame</span><span class="p">])</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;pixels&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;value&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Red channel&#39;</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">132</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">CHANNELS</span><span class="p">[</span><span class="mi">1</span><span class="p">]][</span><span class="n">row</span><span class="p">,:,</span><span class="n">data_frame</span><span class="p">])</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;pixels&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Green channel&#39;</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">133</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">CHANNELS</span><span class="p">[</span><span class="mi">2</span><span class="p">]][</span><span class="n">row</span><span class="p">,:,</span><span class="n">data_frame</span><span class="p">])</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;pixels&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Blue channel&#39;</span><span class="p">)</span>
+
+    <span class="c1">#plot selected line transect on the image</span>
+    <span class="k">if</span> <span class="n">data_frame</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">ImFrame</span> <span class="o">=</span> <span class="n">x_frames</span><span class="o">*</span><span class="p">(</span><span class="n">data_frame</span><span class="p">)</span>   <span class="c1"># The corresponding image on the path</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">_</span><span class="p">,</span><span class="n">_</span><span class="p">,</span><span class="n">ST</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">CHANNELS</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span><span class="o">.</span><span class="n">shape</span>
+        <span class="n">ImFrame</span> <span class="o">=</span> <span class="p">(</span><span class="n">ST</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">x_frames</span>
+        
+    
+    <span class="n">Im</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;Im&#39;</span><span class="p">]</span><span class="o">%</span><span class="p">(</span><span class="n">ImFrame</span><span class="p">))</span>
+    <span class="n">S1</span><span class="p">,</span><span class="n">S2</span><span class="p">,</span><span class="n">_</span> <span class="o">=</span> <span class="n">Im</span><span class="o">.</span><span class="n">shape</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span>
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">Im</span><span class="p">)</span>
+    <span class="n">rect</span> <span class="o">=</span> <span class="n">matplotlib</span><span class="o">.</span><span class="n">patches</span><span class="o">.</span><span class="n">Rectangle</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span><span class="n">row</span><span class="p">),</span> <span class="n">S2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">add_patch</span><span class="p">(</span><span class="n">rect</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="rois_plt_fluo_dynam"><a class="viewcode-back" href="../../source/fluopi.html#fluopi.plotting.rois_plt_fluo_dynam">[docs]</a><span class="k">def</span> <span class="nf">rois_plt_fluo_dynam</span><span class="p">(</span><span class="n">rois</span><span class="p">,</span> <span class="n">time_v</span><span class="p">,</span> <span class="n">cv</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s1">&#39;null&#39;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Plot the total fluorescence of each colony over time</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">        rois: dictionary</span>
+<span class="sd">            the ROI image array data (is better to use circular ROIS, obtained with obtain_rois() function)</span>
+
+<span class="sd">        time_v: vector</span>
+<span class="sd">            the vector of real time values</span>
+
+<span class="sd">        cv: vector</span>
+<span class="sd">            contain the ID of the of colonies analysed</span>
+<span class="sd">        </span>
+<span class="sd">        filename: string</span>
+<span class="sd">            filename with whom save the output image with fluorescence dynamics</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">17</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+    <span class="n">POS_VECT</span> <span class="o">=</span> <span class="p">[</span><span class="mi">131</span><span class="p">,</span><span class="mi">132</span><span class="p">,</span><span class="mi">133</span><span class="p">]</span>
+    <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">CHANNELS</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="n">POS_VECT</span><span class="p">[</span><span class="n">count</span><span class="p">])</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">cv</span><span class="p">:</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">time_v</span><span class="p">,</span><span class="n">rois</span><span class="p">[</span><span class="n">c</span><span class="p">][</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)))</span>   <span class="c1">#sum the value</span>
+            <span class="c1">#plt.hold(True)</span>
+
+        <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Time [h]&#39;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Fluorescence intensity&#39;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">c</span><span class="o">+</span><span class="s1">&#39; channel&#39;</span><span class="p">)</span>
+        <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+        
+    <span class="k">if</span> <span class="n">filename</span> <span class="o">!=</span> <span class="s1">&#39;null&#39;</span><span class="p">:</span>
+        <span class="c1">#plt.savefig(&quot;FluorIntRGB.pdf&quot;, transparent=True)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;.pdf&quot;</span><span class="p">,</span> <span class="n">transparent</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+
+<span class="c1">#plt.legend([&#39;Colony %d&#39;%i for i in range(len(A))])</span>
+
+
+<div class="viewcode-block" id="tl_roi"><a class="viewcode-back" href="../../source/fluopi.html#fluopi.plotting.tl_roi">[docs]</a><span class="k">def</span> <span class="nf">tl_roi</span><span class="p">(</span><span class="n">rois</span><span class="p">,</span> <span class="n">idx</span><span class="p">,</span> <span class="n">times</span><span class="p">,</span> <span class="n">fname</span><span class="p">,</span> <span class="n">radius</span><span class="o">=</span><span class="s1">&#39;null&#39;</span><span class="p">,</span> <span class="n">chan_sum</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> 
+           <span class="n">gridsize</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Save images of selected time steps on &quot;times&quot; vector, for a selected ROI (idx).</span>
+<span class="sd">    This images can be used to make timelapse videos of isolated colonies.</span>
+<span class="sd">    </span>
+<span class="sd">    If you specify a gridsize of a proper size, then it display the ROI frames on the notebook</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    rois: dictionary</span>
+<span class="sd">            RGB time-lapse image data of each rois, from obtain_rois()</span>
+<span class="sd">    </span>
+<span class="sd">    idx: intr</span>
+<span class="sd">            contain the ID of the of the selected colony</span>
+<span class="sd">            </span>
+<span class="sd">    times: vector</span>
+<span class="sd">        conitains the selected frames times</span>
+<span class="sd">    </span>
+<span class="sd">    fname: string</span>
+<span class="sd">        the complete filename to save the images of ROIs</span>
+<span class="sd">        e.g. fname=(&#39;rois/Col&#39;+str(idx)+&#39;_ROI_step%d.png&#39;)</span>
+<span class="sd">    </span>
+<span class="sd">    chan_sum: boolean</span>
+<span class="sd">        True to perfom the sum of the three channels of the ROI.</span>
+<span class="sd">        False to show the image original colors.</span>
+<span class="sd">    </span>
+<span class="sd">    gridsize: vector</span>
+<span class="sd">        size of the subplot grid. if gridsize=[0,0] the figure will not be shown on the notebook.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">    ----------</span>
+<span class="sd">    Save the images of the selected frames of a ROI.</span>
+<span class="sd">    </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">analysis</span> <span class="k">import</span> <span class="n">channels_sum</span>
+    
+    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span> <span class="o">==</span> <span class="nb">int</span><span class="p">:</span>      <span class="c1">#Check that ID is only one colony</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">times</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span>        <span class="c1">#Check time vector have some value</span>
+            
+            <span class="n">w1</span> <span class="o">=</span> <span class="n">rois</span><span class="p">[</span><span class="n">CHANNELS</span><span class="p">[</span><span class="mi">0</span><span class="p">]][</span><span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">h1</span> <span class="o">=</span> <span class="n">rois</span><span class="p">[</span><span class="n">CHANNELS</span><span class="p">[</span><span class="mi">0</span><span class="p">]][</span><span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            
+            <span class="k">if</span> <span class="n">chan_sum</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+                <span class="n">ROIa</span> <span class="o">=</span> <span class="n">channels_sum</span><span class="p">(</span><span class="n">rois</span><span class="p">,[</span><span class="n">idx</span><span class="p">])</span>  <span class="c1"># sum the three channels </span>
+                <span class="n">ROI</span> <span class="o">=</span> <span class="n">ROIa</span><span class="p">[</span><span class="n">idx</span><span class="p">][:,:,:]</span>
+                <span class="n">mx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">ROI</span><span class="p">[:,:,:])</span>
+            <span class="k">else</span><span class="p">:</span>  
+                <span class="c1">#Reconstruct an image file for each time</span>
+                <span class="n">ROI</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">w1</span><span class="p">,</span><span class="n">h1</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+           
+            
+        <span class="c1"># make the plot of each frame and save it</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">times</span> <span class="p">:</span>
+    
+                <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>        
+                                
+                <span class="k">if</span> <span class="n">chan_sum</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>   <span class="c1">#Plot the ROI os sum with a colorbar</span>
+                    <span class="n">roi</span> <span class="o">=</span> <span class="n">ROI</span><span class="p">[:,:,</span><span class="n">i</span><span class="p">]</span>
+                    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">roi</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">,</span><span class="n">vmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="n">mx</span><span class="p">)</span>
+                    <span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">()</span>
+                    <span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">([])</span>
+                    <span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">([])</span>
+                    
+                    <span class="k">if</span> <span class="n">radius</span> <span class="o">!=</span> <span class="s1">&#39;null&#39;</span><span class="p">:</span>
+                        <span class="n">circle</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">Circle</span><span class="p">((</span><span class="nb">round</span><span class="p">((</span><span class="n">w1</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">),</span> <span class="nb">round</span><span class="p">((</span><span class="n">h1</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">)),</span> <span class="mi">2</span><span class="o">*</span><span class="n">radius</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="kc">False</span> <span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+                        <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span>
+                        <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span>
+                        <span class="n">ax</span><span class="o">.</span><span class="n">add_artist</span><span class="p">(</span><span class="n">circle</span><span class="p">)</span>
+                        <span class="c1">#ax.axes.get_xaxis().set_visible(False)</span>
+                        <span class="c1">#ax.axes.get_yaxis().set_visible(False)</span>
+                        
+                <span class="k">else</span><span class="p">:</span>                <span class="c1">#Plot the ROI original image</span>
+                    <span class="n">ROI</span><span class="p">[:,:,</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">rois</span><span class="p">[</span><span class="n">CHANNELS</span><span class="p">[</span><span class="mi">0</span><span class="p">]][</span><span class="n">idx</span><span class="p">][:,:,</span><span class="n">i</span><span class="p">]</span>      <span class="c1">#RED layer</span>
+                    <span class="n">ROI</span><span class="p">[:,:,</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">rois</span><span class="p">[</span><span class="n">CHANNELS</span><span class="p">[</span><span class="mi">1</span><span class="p">]][</span><span class="n">idx</span><span class="p">][:,:,</span><span class="n">i</span><span class="p">]</span>      <span class="c1">#GREEN layer</span>
+                    <span class="n">ROI</span><span class="p">[:,:,</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">rois</span><span class="p">[</span><span class="n">CHANNELS</span><span class="p">[</span><span class="mi">2</span><span class="p">]][</span><span class="n">idx</span><span class="p">][:,:,</span><span class="n">i</span><span class="p">]</span>      <span class="c1">#BlUE layer</span>
+                    <span class="n">roi</span> <span class="o">=</span> <span class="n">ROI</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;uint8&#39;</span><span class="p">)</span>
+                    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">roi</span><span class="p">)</span>
+                    <span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">([])</span>
+                    <span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">([])</span>
+                
+                <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">fname</span><span class="o">%</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span> <span class="n">transparent</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+            
+            <span class="c1"># display the plots in the notebook</span>
+            <span class="n">n</span> <span class="o">=</span> <span class="n">gridsize</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">m</span> <span class="o">=</span> <span class="n">gridsize</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">n</span> <span class="ow">and</span> <span class="n">m</span> <span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span>              <span class="c1"># make n or m equal to zero to not display the figure in the notebook.</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">n</span><span class="o">*</span><span class="n">m</span><span class="p">)</span><span class="o">&lt;</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">times</span><span class="p">)):</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;the subplot grid is smaller than the number of plots. Increase x or y, and try again&#39;</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">4</span><span class="o">*</span><span class="n">m</span><span class="p">,</span><span class="mi">4</span><span class="o">*</span><span class="n">n</span><span class="p">))</span>
+                    <span class="n">count</span> <span class="o">=</span> <span class="mi">1</span>
+                    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">times</span> <span class="p">:</span>
+                        <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">m</span><span class="p">)</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">count</span><span class="p">)))</span>
+                        <span class="k">if</span> <span class="n">chan_sum</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+                            <span class="n">roi</span> <span class="o">=</span> <span class="n">ROI</span><span class="p">[:,:,</span><span class="n">i</span><span class="p">]</span>
+                            <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">roi</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">,</span><span class="n">vmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="n">mx</span><span class="p">)</span>
+                            <span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">()</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">roi</span><span class="p">)</span>
+                        <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39; Hours&#39;</span><span class="p">)</span>
+                        <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;ERROR: Time vector have to be of lenght higher than zero&#39;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;ERROR: use an integer value for the colony ID&#39;</span><span class="p">)</span> </div>
+        
+
+<div class="viewcode-block" id="logplot_radius"><a class="viewcode-back" href="../../source/fluopi.html#fluopi.plotting.logplot_radius">[docs]</a><span class="k">def</span> <span class="nf">logplot_radius</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">cv</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s1">&#39;null&#39;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Plot the log of the square of the radius for each colony</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">        r: dictionary</span>
+<span class="sd">            colony radius at each time step of each colony at each time step (obtained with frame_colony_size() function) </span>
+<span class="sd">                </span>
+<span class="sd">        cv: vector</span>
+<span class="sd">            colonies ID vector to plot</span>
+<span class="sd">        </span>
+<span class="sd">        T: vector</span>
+<span class="sd">            the vector of real time values</span>
+<span class="sd">        filename: string</span>
+<span class="sd">            filename to save the plot generated</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">cv</span><span class="p">:</span>
+        <span class="n">R</span> <span class="o">=</span> <span class="n">r</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">R</span><span class="o">*</span><span class="n">R</span><span class="p">),</span> <span class="s1">&#39;.&#39;</span><span class="p">)</span>
+        <span class="c1">#plt.hold(True)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Time [h]&#39;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;log(Radius^2) [pixels]&#39;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Colony radius&#39;</span><span class="p">)</span>
+     
+    <span class="k">if</span> <span class="n">filename</span> <span class="o">!=</span> <span class="s1">&#39;null&#39;</span><span class="p">:</span>    
+        <span class="c1">#plt.savefig(&quot;Radius.pdf&quot;, transparent=True)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span><span class="o">+</span><span class="s2">&quot;.pdf&quot;</span><span class="p">,</span> <span class="n">transparent</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="plot_radius"><a class="viewcode-back" href="../../source/fluopi.html#fluopi.plotting.plot_radius">[docs]</a><span class="k">def</span> <span class="nf">plot_radius</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">cv</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s1">&#39;null&#39;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Plot the radius for each colony at each time step</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">        r: dictionary</span>
+<span class="sd">            colony radius at each time step of each colony (obtained with frame_colony_size() function) </span>
+<span class="sd">        </span>
+<span class="sd">        cv: vector</span>
+<span class="sd">            colonies ID vector to plot</span>
+<span class="sd">            </span>
+<span class="sd">        t: vector</span>
+<span class="sd">            the vector of real time values</span>
+<span class="sd">            </span>
+<span class="sd">        filename: string</span>
+<span class="sd">            filename to save the plot generated</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">cv</span><span class="p">:</span>
+        <span class="n">R</span> <span class="o">=</span> <span class="n">r</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">R</span><span class="p">,</span> <span class="s1">&#39;.&#39;</span><span class="p">)</span>
+        <span class="c1">#plt.hold(True)</span>
+
+        <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Time [h]&#39;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Radius [pixels]&#39;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Colony radius&#39;</span><span class="p">)</span>
+
+     
+    <span class="k">if</span> <span class="n">filename</span> <span class="o">!=</span> <span class="s1">&#39;null&#39;</span><span class="p">:</span>    
+        <span class="c1">#plt.savefig(&quot;Radius.pdf&quot;, transparent=True)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span><span class="o">+</span><span class="s2">&quot;.pdf&quot;</span><span class="p">,</span> <span class="n">transparent</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="check_radius"><a class="viewcode-back" href="../../source/fluopi.html#fluopi.plotting.check_radius">[docs]</a><span class="k">def</span> <span class="nf">check_radius</span><span class="p">(</span><span class="n">rois</span><span class="p">,</span> <span class="n">idx</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">r_fit</span><span class="o">=</span><span class="s1">&#39;null&#39;</span><span class="p">,</span> <span class="n">r_dots</span><span class="o">=</span><span class="s1">&#39;null&#39;</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s1">&#39;null&#39;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Plot the colony radius estimate overlayed on an kymograph image slice</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">        r_fit: vector</span>
+<span class="sd">            colony fited radius at each time step of the selected colony </span>
+<span class="sd">            (obtained from a model) </span>
+<span class="sd">        </span>
+<span class="sd">        r_dots:</span>
+<span class="sd">            colony radius at each time step of the selected colony </span>
+<span class="sd">            (obtained with frame_colony_radius() function) </span>
+<span class="sd">        </span>
+<span class="sd">        rois: dictionary</span>
+<span class="sd">            ROI image of each colony (obtained with obtain_rois() function)</span>
+<span class="sd">        </span>
+<span class="sd">        idx: int</span>
+<span class="sd">            id of the colony to check</span>
+<span class="sd">            </span>
+<span class="sd">        t: vector</span>
+<span class="sd">            the vector of real time values</span>
+<span class="sd">        </span>
+<span class="sd">        filename: string</span>
+<span class="sd">            filename to save the plot generated</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span><span class="mi">7</span><span class="p">))</span>
+    <span class="n">w</span><span class="p">,</span><span class="n">h</span><span class="p">,</span><span class="n">_</span> <span class="o">=</span> <span class="n">rois</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span>
+    <span class="c1"># use the x-middle transect (--&gt; (w-1)/2)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">rois</span><span class="p">[</span><span class="n">idx</span><span class="p">][</span><span class="nb">round</span><span class="p">((</span><span class="n">w</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">),:,:],</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">)</span>
+    <span class="c1"># plt.imshow(rois[idx][round(w/2),:,:], interpolation=&#39;none&#39;, cmap=&#39;gray&#39;) </span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">r_fit</span> <span class="o">!=</span> <span class="s1">&#39;null&#39;</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="o">-</span><span class="n">r_fit</span><span class="o">*</span><span class="mi">2</span><span class="o">+</span><span class="p">(</span><span class="n">h</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;r-&#39;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">r_fit</span><span class="o">*</span><span class="mi">2</span><span class="o">+</span><span class="p">(</span><span class="n">h</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;r-&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">r_dots</span> <span class="o">!=</span> <span class="s1">&#39;null&#39;</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="o">-</span><span class="n">r_dots</span><span class="o">*</span><span class="mi">2</span><span class="o">+</span><span class="p">(</span><span class="n">h</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;rx&#39;</span><span class="p">,</span> <span class="n">ms</span><span class="o">=</span><span class="mi">9</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">r_dots</span><span class="o">*</span><span class="mi">2</span><span class="o">+</span><span class="p">(</span><span class="n">h</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;rx&#39;</span><span class="p">,</span> <span class="n">ms</span><span class="o">=</span><span class="mi">9</span><span class="p">)</span>             
+    
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Time&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;y-axis position&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Colony &#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">idx</span><span class="p">))</span>
+    
+    <span class="k">if</span> <span class="n">filename</span> <span class="o">!=</span> <span class="s1">&#39;null&#39;</span><span class="p">:</span>    
+        <span class="c1">#plt.savefig(&quot;KymoGraph.pdf&quot;, transparent=True) </span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span><span class="o">+</span><span class="s2">&quot;.pdf&quot;</span><span class="p">,</span> <span class="n">transparent</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+        
+<div class="viewcode-block" id="rois_last_frame_2chan_plt"><a class="viewcode-back" href="../../source/fluopi.html#fluopi.plotting.rois_last_frame_2chan_plt">[docs]</a><span class="k">def</span> <span class="nf">rois_last_frame_2chan_plt</span><span class="p">(</span><span class="n">rois_data</span><span class="p">,</span> <span class="n">channel_x</span><span class="p">,</span> <span class="n">channel_y</span><span class="p">,</span> <span class="n">serie_name</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Sum all the pixel values for channel_x and channel_y (e.g.channel G and </span>
+<span class="sd">    channel R) separately for the last frame of each ROI and make a plot where </span>
+<span class="sd">    channel_x sum value is on the X axis and channel_y sum value is on the Y </span>
+<span class="sd">    axis.</span>
+<span class="sd">    Each dot correspond to one ROI values and represent the ratio of the two</span>
+<span class="sd">    channels for that colony.    </span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">        rois_data : dictionary</span>
+<span class="sd">            RGB time-lapse image data of each ROI, obtained with obtain_rois()</span>
+<span class="sd">        </span>
+<span class="sd">        channel_x: string</span>
+<span class="sd">            channel name (e.g. &#39;G&#39;) to be on the x axis</span>
+<span class="sd">        </span>
+<span class="sd">        channel_y: string</span>
+<span class="sd">            channel name (e.g. &#39;R&#39;) to be on the y axis</span>
+
+<span class="sd">        serie_name: string</span>
+<span class="sd">            name of the the data serie in analysis (used as title of the plot)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+      
+    <span class="c1"># variable inicialization</span>
+    <span class="n">chanx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">rois_data</span><span class="p">[</span><span class="n">channel_x</span><span class="p">]),</span><span class="mi">1</span><span class="p">))</span>
+    <span class="n">chany</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">rois_data</span><span class="p">[</span><span class="n">channel_x</span><span class="p">]),</span><span class="mi">1</span><span class="p">))</span>
+    
+    <span class="c1"># perform the sum of selected channels for the last frame of each ROI</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">rois_data</span><span class="p">[</span><span class="n">channel_x</span><span class="p">])):</span>
+        <span class="n">chanx</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">rois_data</span><span class="p">[</span><span class="n">channel_x</span><span class="p">][</span><span class="n">i</span><span class="p">][:,:,</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
+        <span class="n">chany</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">rois_data</span><span class="p">[</span><span class="n">channel_y</span><span class="p">][</span><span class="n">i</span><span class="p">][:,:,</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
+    
+    <span class="c1"># size the plot dimentions</span>
+    <span class="n">axisMax</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">chanx</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">chany</span><span class="p">)])</span>
+    <span class="n">axisMin</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">chanx</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">chany</span><span class="p">)])</span>
+    <span class="c1">#print(axisMax,axisMin)</span>
+    
+    <span class="c1">#plt.figure(figsize=(8,8))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">chanx</span><span class="p">,</span><span class="n">chany</span><span class="p">,</span><span class="s1">&#39;bo&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">serie_name</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="n">channel_x</span><span class="o">+</span><span class="s1">&#39; Channel&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="n">channel_y</span><span class="o">+</span><span class="s1">&#39; Channel&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">([</span><span class="n">axisMin</span><span class="p">,</span> <span class="n">axisMax</span><span class="p">,</span> <span class="n">axisMin</span><span class="p">,</span> <span class="n">axisMax</span><span class="p">])</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">chanx</span><span class="p">,</span><span class="n">chany</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="plt_lin_fit"><a class="viewcode-back" href="../../source/fluopi.html#fluopi.plotting.plt_lin_fit">[docs]</a><span class="k">def</span> <span class="nf">plt_lin_fit</span><span class="p">(</span><span class="n">x_min</span><span class="p">,</span> <span class="n">x_max</span><span class="p">,</span> <span class="n">l_fit</span><span class="p">,</span> <span class="n">color</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Make a plot of an already linear fit, being posible to define the function</span>
+<span class="sd">    evaluation limits (x independient variable limits) and the color of the </span>
+<span class="sd">    dots and fitted line.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">        x_min : int</span>
+<span class="sd">            RGB time-lapse image data of each ROI, obtained with obtain_rois()</span>
+<span class="sd">        </span>
+<span class="sd">        x_max: int</span>
+<span class="sd">            channel name (e.g. &#39;G&#39;) to be on the x axis</span>
+<span class="sd">        </span>
+<span class="sd">        l_fit: vector</span>
+<span class="sd">            linear fitted parameters. Obtained with linear_fit function</span>
+
+<span class="sd">        color: char</span>
+<span class="sd">            char of the color to be used on the dots and line (e.g. &#39;r&#39;)</span>
+<span class="sd">    &quot;&quot;&quot;</span> 
+    <span class="n">p</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">poly1d</span><span class="p">(</span><span class="n">l_fit</span><span class="p">)</span>
+    <span class="n">xp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">x_min</span><span class="p">,</span> <span class="n">x_max</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xp</span><span class="p">,</span> <span class="n">p</span><span class="p">(</span><span class="n">xp</span><span class="p">),</span> <span class="n">color</span> <span class="o">+</span><span class="s1">&#39;-&#39;</span><span class="p">)</span></div>
+<span class="c1"># End</span>
+
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">FluoPi Module</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Code.html">Auto Generated Documentation</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, Isaac Nunez.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>
