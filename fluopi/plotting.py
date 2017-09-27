@@ -11,7 +11,7 @@ def plot_im_frame(f_path,frame):
     """
     To perform separated plots of each channel of image frame
 
-    Args
+    Parameters
     ----------
     f_path : string_like
         path directory where the images are stored
@@ -30,7 +30,7 @@ def plt_im_frame_channels(f_path,frame):
     """
     To perform separated plots of each channel of an image frame
 
-    Args
+    Parameters
     ----------
     f_path : string_like
         folder name where the images are stored
@@ -61,7 +61,7 @@ def row_transect(data, row, x_frames, data_frame=-1):
     """
     Plot the value of a transect (row of pixels) in a frame and plot it
 
-    Args
+    Parameters
     ----------
     data : dictionary
         dictionary with the R G B data of all images, and his names on Data['Im']
@@ -117,7 +117,7 @@ def rois_plt_fluo_dynam(rois, time_v, cv, filename='null'):
     """
     Plot the total fluorescence of each colony over time
 
-    Args
+    Parameters
     ----------
         rois: dictionary
             the ROI image array data (is better to use circular ROIS, obtained with obtain_rois() function)
@@ -161,7 +161,7 @@ def tl_roi(rois, idx, times, fname, radius='null', chan_sum=False,
     
     If you specify a gridsize of a proper size, then it display the ROI frames on the notebook
 
-    Args
+    Parameters
     ----------
     rois: dictionary
             RGB time-lapse image data of each rois, from obtain_rois()
@@ -266,7 +266,7 @@ def logplot_radius(r, cv, t, filename='null'):
     """
     Plot the log of the square of the radius for each colony
     
-    Args
+    Parameters
     ----------
         r: dictionary
             colony radius at each time step of each colony at each time step (obtained with frame_colony_size() function) 
@@ -295,7 +295,7 @@ def plot_radius(r, cv, t, filename='null'):
     """
     Plot the radius for each colony at each time step
     
-    Args
+    Parameters
     ----------
         r: dictionary
             colony radius at each time step of each colony (obtained with frame_colony_size() function) 
@@ -328,7 +328,7 @@ def check_radius(rois, idx, t, r_fit='null', r_dots='null', filename='null'):
     """
     Plot the colony radius estimate overlayed on an kymograph image slice
     
-    Args
+    Parameters
     ----------
         r_fit: vector
             colony fited radius at each time step of the selected colony 
@@ -380,7 +380,7 @@ def rois_last_frame_2chan_plt(rois_data, channel_x, channel_y, serie_name):
     Each dot correspond to one ROI values and represent the ratio of the two
     channels for that colony.    
     
-    Args
+    Parameters
     ----------
         rois_data : dictionary
             RGB time-lapse image data of each ROI, obtained with obtain_rois()
@@ -423,7 +423,7 @@ def plt_lin_fit(x_min, x_max, l_fit, color):
     evaluation limits (x independient variable limits) and the color of the 
     dots and fitted line.
     
-    Args
+    Parameters
     ----------
         x_min : int
             RGB time-lapse image data of each ROI, obtained with obtain_rois()
