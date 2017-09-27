@@ -18,7 +18,7 @@ def count_files(path,file_type):
     """
     To count the number of files of a defined extension (filetype on a certain folder (path)
 
-    Parameters
+    Args
     ----------
     path : string
         folder name where the images are stored
@@ -41,7 +41,7 @@ def get_im_data(x_frames,image_count,f_name):
     """
     Load image data from a sequence of files
 
-    Parameters
+    Args
     ----------
     x_frames : int
         step frames (e.g 10 to use only ten to ten images)
@@ -79,7 +79,7 @@ def time_vector(data, x_frames, dt):
     """
     Get the vector of times for the image sequence loaded
 
-    Parameters
+    Args
     ----------
     data : dictionary
         dictionary with the R G B data of all images
@@ -110,7 +110,7 @@ def bg_value(x1, x2, y1, y2, data, im_count):
     defined by the user. Plot the rectangle over the image and makes plots of each channel
     mean background value over time
 
-    Parameters
+    Args
     ----------
     x1,x2,x1,x2: int values
         rectangle area limits: (x1,y1) = left-up corner. (x2,y2) = rigth-bottom corner
@@ -197,7 +197,7 @@ def data_sum_time(data):
     """
     Sum the data for each pixel over time
 
-    Parameters
+    Args
     ----------
     Data: dictionary
         R G B images data
@@ -220,7 +220,7 @@ def smooth_data(data,sigma):
     """
     Apply gaussian filter to smooth each frame data
 
-    Parameters
+    Args
     ----------
     data: dictionary
         4 dimensional (R,G,B, and Time) matrix with the data 
@@ -279,7 +279,7 @@ def colony_blobs_id(data, thresh, im_name, filename='null'):
     Use skimage to identify the position of each colony and define the circular region
     used by each of them
 
-    Parameters
+    Args
     ----------
     data: array of single channel image data
 
@@ -341,7 +341,7 @@ def obtain_rois(data,blobs):
     the regions of interest (ROI) around each one.
     
     
-    Parameters
+    Args
     ----------
     data: dictionary
         R G B image data per frame
@@ -415,7 +415,7 @@ def channels_sum(rois_data, cv):
     """
     Compute the sum over the RGB channels for each image
 
-    Parameters
+    Args
     ----------
     rois_data: dictionary
             RGB time-lapse image data of each ROIS, from obtain_rois()
@@ -443,7 +443,7 @@ def frame_colony_radius(rois, cv, thr, min_sig=0.5, max_sig=10, num_sig=200):
     """
     Get the colony radius at each time step
     
-    Parameters:
+    Args:
     ----------
         rois: dictionary
             ROI image data from obtain_rois()
@@ -490,7 +490,7 @@ def area(r, cv, T, filename='null'):
     Compute and plot the colonies area over time as a perfect circle (using 
     the input radius value) around the colony position value 
     
-    Parameters
+    Args
     ----------
         r: dictionary
             colony radius at each time step of the selected colony (obtained with frame_colony_radius() function) 
@@ -527,7 +527,7 @@ def f_sigma(t, a, b, c):
     """
     Compute the sigmoide function value using the given input values
     
-    Parameters
+    Args
     ----------
         t: vector
             independent variable ( "x axis", suposed to be time) 
@@ -555,7 +555,7 @@ def function_fit(xdata, ydata, init, end, cv, func=f_sigma,
     """
     Fit a given function to given data
     
-    Parameters
+    Args
     ----------
         xdata: vector
             independent variable ( "x axis", suposed to be time vector) 
@@ -618,7 +618,7 @@ def croi_mean_int_frames(data, blobs, radii, cv):
     for the number of pixel considered. --> obtain the intensity mean value 
     inside the colony limits on each time.
     
-    Parameters
+    Args
     ----------
         data: dictionary
              RGB dictionary with the images data
@@ -693,7 +693,7 @@ def f_mu (t, b, d):
     """
     compute the grwoth rate (mu) function value
     
-    Parameters
+    Args
     ----------
         t: int or vector
              independent variable values (suposed to be time vector)
@@ -717,7 +717,7 @@ def f_linear(x, a, b):
     """
     compute the linear function value with given parameters
     
-    Parameters
+    Args
     ----------
         x: int or vector
             independent variable values
@@ -742,7 +742,7 @@ def linear_fit(data1, data2, filename='null'):
     and make a plot of the result. You are able to save the resulting plot by
     given as input the "filename" to save it.
     
-    Parameters
+    Args
     ----------
         data1: vector
             independent variable ( "x axis") to be used as input of f_linear 
@@ -786,7 +786,7 @@ def colony_classifier(fit, classes, chanx_dat, chany_dat):
     chanx_dat and each fitted function (that are on "fit"). In other words,
     accord the minimal y-coordinate distance between each dot and fitted lines.
     
-    Parameters
+    Args
     ----------
         fit: array like
             each position on the array cointains the parameters of the linear
