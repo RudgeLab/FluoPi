@@ -13,7 +13,6 @@ camera = PiCamera()
 
 
 # Parameters for the user to modify
-
 # Basic settings
 if len(argv)==5:
     folder = sys.argv[1]
@@ -21,7 +20,7 @@ if len(argv)==5:
     interval = sys.argv[3]
     steps = sys.argv[4]
 else:
-    print "Required parameters: folder name, filename, interval, number of steps."
+    print ("Required parameters: folder name, filename, interval, number of steps.")
     sys.exit()
 
 # Camera settings
@@ -49,9 +48,10 @@ camera.awb_mode = 'off'
 #camera.exposure_speed
 
 # Save this file with the data (to record settings etc.)
-copyfile(__FILE__, os.path.join(folder, 'script.py')
+copyfile(__FILE__, os.path.join(folder, 'script.py'))
 
 # Run the timelapse loop
+    
 for i in range(steps):
     
     t1 = time.time()
@@ -71,8 +71,8 @@ for i in range(steps):
     elapsed = time.time()-t1
 
     #camera._get_camera_settings()
-    print elapsed
-    print camera.shutter_speed
+    print(elapsed)
+    print(camera.shutter_speed)
     sleep(interval-elapsed) ##  loop wait time
     
 GPIO.cleanup()
