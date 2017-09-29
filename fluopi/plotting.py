@@ -183,8 +183,8 @@ def tl_roi(rois, idx, times, fname, radius='null', chan_sum=False,
     gridsize: vector
         size of the subplot grid. if gridsize=[0,0] the figure will not be shown on the notebook.
 
-    Returns:
-    ----------
+    Returns
+    -------
     Save the images of the selected frames of a ROI.
     
     """

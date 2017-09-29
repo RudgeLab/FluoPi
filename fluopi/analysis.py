@@ -161,8 +161,10 @@ def bg_subst(data, bg):
     """
     Substract the mean background value for each channel and frame obtained with BG_Val function.
     
+    Parameters
+    ----------
     data: dictionary
-        R G B images data
+      R G B images data
     bg : array
         ackground mean value of each channel for every time frame (can be obtained with BG_Val function)
 
@@ -423,8 +425,8 @@ def channels_sum(rois_data, cv):
     cv: vector
             contain the ID of the of colonies analysed
 
-    Returns:
-    ----------
+    Returns
+    -------
         sum_chan_rois: dictionary
             Sum of channels for each time step and ROI
     """
@@ -464,7 +466,7 @@ def frame_colony_radius(rois, cv, thr, min_sig=0.5, max_sig=10, num_sig=200):
             number of sigma values used between min_sig and max_sig on skfeat.blob_log
 
     Returns
-    ----------
+    -------
         R: dictionary
             The time series of colony size, indexed by colony id number
     """
@@ -505,10 +507,10 @@ def area(r, cv, T, filename='null'):
         filename: string
             filename to save the plot generated
     
-    Return
-    ----------
+    Returns
+    -------
         A: dictionary
-         colony area at each time step of the selected colony. call as: A[colonyID][time step]
+         colony area at each time step of the selected colony. Call it as: A[colonyID][time step]
     """
     plt.figure()
     A = {}
@@ -542,7 +544,7 @@ def f_sigma(t, a, b, c):
             delay parameter
         
     Returns
-    ----------
+    -------
     function evaluation
     
     """
@@ -580,7 +582,7 @@ def function_fit(xdata, ydata, init, end, cv, func=f_sigma,
             para_bounds=([lower bounds],[upper bounds])
         
     Returns
-    ----------
+    -------
         Y_fit: dictionay
             contain the fitting result for each colony in the dictionary. 
             It is:
@@ -633,17 +635,17 @@ def croi_mean_int_frames(data, blobs, radii, cv):
             contain the ID of the colonies to analyse
         
     Returns
-    ----------
-        AllC_CRois_mean_val: dictionary
+    -------
+        all_chan_crois_mean_val: dictionary
             contain the mean pixel value of each channel for each time step of each colony.
-            call it as: AllC_CRois_mean_val['channel_name'][blob_number][timepoint]
+            call it as: all_chan_crois_mean_val['channel_name'][blob_number][timepoint]
 
     
     """
-    AllC_CRois_mean_val = {}
+    all_chan_crois_mean_val = {}
     
     for char in CHANNELS:
-        CRois_mean_val = {}
+        crois_mean_val = {}
         
         for i in cv:
             #x and y are the colony center pixel stored on blobs
@@ -684,10 +686,10 @@ def croi_mean_int_frames(data, blobs, radii, cv):
                             count += 1
                 if count != 0:
                     meanInt[j] = CRoi_int/count
-            CRois_mean_val[i] = meanInt
-        AllC_CRois_mean_val[char] = CRois_mean_val
+            crois_mean_val[i] = meanInt
+        all_chan_crois_mean_val[char] = crois_mean_val
     
-    return(AllC_CRois_mean_val)
+    return(all_chan_crois_mean_val)
 
 def f_mu (t, b, d):
     """
@@ -706,7 +708,7 @@ def f_mu (t, b, d):
         
         
     Returns
-    ----------
+    -------
         evaluated "mu" fucntion with the given parameters
 
     
@@ -730,7 +732,7 @@ def f_linear(x, a, b):
         
         
     Returns
-    ----------
+    -------
         evaluated linear fucntion with the given parameters for the given x
     """
     
@@ -755,7 +757,7 @@ def linear_fit(data1, data2, filename='null'):
 
         
     Returns
-    ----------                 
+    -------                 
         z: vector
             fitted parameters
     
