@@ -54,11 +54,11 @@ for further information please see the [wiki page][wiki]
 ## Authors
 
 **Universidad Catolica de Chile**
-* Isaac Nu�ez - [Prosimio](https://github.com/Prosimio)
+* Isaac Nuñez - [Prosimio](https://github.com/Prosimio)
 * Tamara Matute - [tfmatute](https://github.com/tfmatute)
 * Juan Keymner - [Keymer Lab](http://keymerlab.nl/www/?page_id=26)
 * Tim Rudge - [timrudge](https://github.com/timrudge)
-* Fernan Federici - [FernanFederici](https://federicilab.org)
+* Fernan Federici - [Fernan´s labpage ](https://federicilab.org)
 
 [**Backyard Brains Chile**](http://www.backyardbrains.cl/)
 * Roberto Pellizzari - [RoHPellizzari](https://github.com/RoHPellizzari)
