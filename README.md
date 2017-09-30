@@ -26,7 +26,7 @@ with HDMI (or hdmi to VGA adaptor) to connect with the Raspberry pi (you can als
 
 All the installation instructions are available on the [wiki page][wiki]
 
-Full documentation and assembly instructions can be found at [Docubricks][http://docubricks.com/viewer.jsp?id=701517893260717056]
+Full documentation and assembly instructions can be found at [Docubricks](http://docubricks.com/viewer.jsp?id=701517893260717056)
 
 
 ### Running the equipment
