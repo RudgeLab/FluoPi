@@ -19,12 +19,14 @@ and a pre-print manuscript at [Biorxiv](https://www.biorxiv.org/content/early/20
 ### Prerequisites
 
 To assemble this device you need access to a laser cutter and a 3D printer. You also need a mouse, keyboard and a screen
-with HDMI (or hdmi to VGA adaptor) to connect the Raspberry pi (although you can manage the equipment through SSH or using programs such as [teamviewer](https://pages.teamviewer.com/published/raspberrypi/))
+with HDMI (or hdmi to VGA adaptor) to connect with the Raspberry pi (you can also manage the equipment through SSH or using programs such as [teamviewer](https://pages.teamviewer.com/published/raspberrypi/))
 
 
 ### Installing
 
 All the installation instructions are available on the [wiki page][wiki]
+
+Full documentation and assembly instructions can be found at [Docubricks][http://docubricks.com/viewer.jsp?id=701517893260717056]
 
 
 ### Running the equipment
@@ -37,7 +39,7 @@ The project includes some python codes (based on [camera python module](https://
 
 ### Running the notebooks
 
-To test the jupyter notebooks you only need to download the data from the [OSF page project](https://osf.io/dy6p2/) or linked Google Drive:FluoPi_Data/Manuscript_data/Raw_data_figures_manuscript. You will find two folders with example data:  
+To test the jupyter notebooks you can use sample images stored in github or full datasets stored at [OSF page project](https://osf.io/dy6p2/) and  linked Google Drive:FluoPi_Data/Manuscript_data/Raw_data_figures_manuscript. You will find two folders with example data:  
 * fig 4_fig 5_S4 movie
 * fig 6_S5_S6_S7_S8movies
 
@@ -56,7 +58,7 @@ for further information please see the [wiki page][wiki]
 * Tamara Matute - [tfmatute](https://github.com/tfmatute)
 * Juan Keymner - [Keymer Lab](http://keymerlab.nl/www/?page_id=26)
 * Tim Rudge - [timrudge](https://github.com/timrudge)
-* Fernan Federici - [FernanFederici](https://github.com/FernanFederici)
+* Fernan Federici - [FernanFederici](https://federicilab.org)
 
 [**Backyard Brains Chile**](http://www.backyardbrains.cl/)
 * Roberto Pellizzari - [RoHPellizzari](https://github.com/RoHPellizzari)
@@ -65,7 +67,7 @@ for further information please see the [wiki page][wiki]
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.txt](LICENSE.txt) file for details
+This project is licensed under the MIT License - see the [LICENSE.txt](LICENSE.txt) file for details. Hardware is lincesed under the CERN license.
 
 ## Acknowledgments
 
