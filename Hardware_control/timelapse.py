@@ -14,7 +14,7 @@ camera = PiCamera()
 
 # Parameters for the user to modify
 # Basic settings
-if len(argv)==5:
+if len(sys.argv)==5:
     folder = sys.argv[1]
     filename = sys.argv[2] 
     interval = sys.argv[3]
