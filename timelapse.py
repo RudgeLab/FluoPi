@@ -2,6 +2,7 @@ from picamera import PiCamera
 import RPi.GPIO as GPIO
 from time import sleep
 import time
+import datetime
 import os
 import sys
 from shutil import copyfile
@@ -15,7 +16,7 @@ camera = PiCamera()
 # Parameters for the user to modify
 
 # Basic settings
-if len(argv)==5:
+if len(sys.argv)==5:
     folder = sys.argv[1]
     filename = sys.argv[2] 
     interval = sys.argv[3]
@@ -62,7 +63,8 @@ for i in range(steps):
     sleep(1) ## preview wait time  
     camera.awb_gains = [1,1]
     #camera._get_camera_settings() still not sure how to use it
-    fname = os.path.join(folder, filename + "_%04d.jpg"%(i))
+    datestr =  datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    fname = os.path.join(folder, datestr + '_' + filename + "_%04d.jpg"%(i))
     camera.capture(fname)
 
     GPIO.output(29,GPIO.LOW)
