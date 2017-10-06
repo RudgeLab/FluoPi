@@ -381,21 +381,27 @@ def obtain_rois(data,blobs):
                              #  --> r=2*std implies 95% confidence
 
 ####### this lines are to eliminate the out of image bounds error
-            x1 = round(x-r)
-            x2 = round(x+r+1)  #plus 1 because slice working
-            y1 = round(y-r)
-            y2 = round(y+r+1)  #plus 1 because slice working
+            x1 = int(round(x-r))
+            x2 = int(round(x+r+1))  #plus 1 because slice working
+            y1 = int(round(y-r))
+            y2 = int(round(y+r+1))  #plus 1 because slice working
 
-            if x1 <= 0:
+            if x1 < 0:
                 x1 = 0
             if x2 >= data[char].shape[0]:
-                x2 = data[char].shape[0]
-            if y1 <= 0:
+                x2 = data[char].shape[0]-1
+            if y1 < 0:
                 y1 = 0
             if y2 >= data[char].shape[1]:
-                y2 = data[char].shape[1]
-
-            rois[i] = data[char][x1:x2,y1:y2,:]
+                y2 = data[char].shape[1]-1
+            
+            if x2>x1 and y2>y1:
+                print(x1)
+                print(x2)
+                print(i)
+                rois[i] = data[char][x1:x2,y1:y2,:]
+            else:
+                rois[i] = []
 #######
             xr = int((rois[i].shape[0]+1)/2)
             yr = int((rois[i].shape[1]+1)/2)
@@ -659,19 +665,19 @@ def croi_mean_int_frames(data, blobs, radii, cv):
 ####### this lines is to eliminate the out of image bounds error
                 r = radii[i][j]
     
-                x1 = round(x-r)
-                x2 = round(x+r+1)
-                y1 = round(y-r)
-                y2 = round(y+r+1)
+                x1 = int(round(x-r))
+                x2 = int(round(x+r+1))
+                y1 = int(round(y-r))
+                y2 = int(round(y+r+1))
 
-                if x1 <= 0:
+                if x1 < 0:
                     x1 = 0
                 if x2 >= data[char].shape[0]:
-                    x2 = data[char].shape[0]
-                if y1 <= 0:
+                    x2 = data[char].shape[0]-1
+                if y1 < 0:
                     y1 = 0
                 if y2 >= data[char].shape[1]:
-                    y2 = data[char].shape[1]
+                    y2 = data[char].shape[1]-1
 
                 SRoi = data[char][x1:x2,y1:y2,j]
 

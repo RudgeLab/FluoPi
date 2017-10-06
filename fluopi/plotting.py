@@ -188,7 +188,7 @@ def tl_roi(rois, idx, times, fname, radius='null', chan_sum=False,
     Save the images of the selected frames of a ROI.
     
     """
-    from analysis import channels_sum
+    from fluopi.analysis import channels_sum
     
     if type(idx) == int:      #Check that ID is only one colony
         if len(times)>0:        #Check time vector have some value
@@ -247,9 +247,9 @@ def tl_roi(rois, idx, times, fname, radius='null', chan_sum=False,
                     plt.figure(figsize=(4*m,4*n))
                     count = 1
                     for i in times :
-                        plt.subplot(int(str(n)+str(m)+str(count)))
+                        plt.subplot(n, m, count)
+                        roi = rois['G'][idx][:,:,i]
                         if chan_sum == True:
-                            roi = ROI[:,:,i]
                             plt.imshow(roi, interpolation='none',vmin=0, vmax=mx)
                             plt.colorbar()
                         else:
