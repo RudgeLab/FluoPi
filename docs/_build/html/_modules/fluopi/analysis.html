@@ -202,8 +202,10 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Substract the mean background value for each channel and frame obtained with BG_Val function.</span>
 <span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
 <span class="sd">    data: dictionary</span>
-<span class="sd">        R G B images data</span>
+<span class="sd">      R G B images data</span>
 <span class="sd">    bg : array</span>
 <span class="sd">        ackground mean value of each channel for every time frame (can be obtained with BG_Val function)</span>
 
@@ -420,21 +422,27 @@
                              <span class="c1">#  --&gt; r=2*std implies 95% confidence</span>
 
 <span class="c1">####### this lines are to eliminate the out of image bounds error</span>
-            <span class="n">x1</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="n">r</span><span class="p">)</span>
-            <span class="n">x2</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">x</span><span class="o">+</span><span class="n">r</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>  <span class="c1">#plus 1 because slice working</span>
-            <span class="n">y1</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">y</span><span class="o">-</span><span class="n">r</span><span class="p">)</span>
-            <span class="n">y2</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">y</span><span class="o">+</span><span class="n">r</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>  <span class="c1">#plus 1 because slice working</span>
+            <span class="n">x1</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="n">r</span><span class="p">))</span>
+            <span class="n">x2</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">x</span><span class="o">+</span><span class="n">r</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>  <span class="c1">#plus 1 because slice working</span>
+            <span class="n">y1</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">y</span><span class="o">-</span><span class="n">r</span><span class="p">))</span>
+            <span class="n">y2</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">y</span><span class="o">+</span><span class="n">r</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>  <span class="c1">#plus 1 because slice working</span>
 
-            <span class="k">if</span> <span class="n">x1</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">x1</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="n">x1</span> <span class="o">=</span> <span class="mi">0</span>
             <span class="k">if</span> <span class="n">x2</span> <span class="o">&gt;=</span> <span class="n">data</span><span class="p">[</span><span class="n">char</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
-                <span class="n">x2</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">char</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-            <span class="k">if</span> <span class="n">y1</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">x2</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">char</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="mi">1</span>
+            <span class="k">if</span> <span class="n">y1</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="n">y1</span> <span class="o">=</span> <span class="mi">0</span>
             <span class="k">if</span> <span class="n">y2</span> <span class="o">&gt;=</span> <span class="n">data</span><span class="p">[</span><span class="n">char</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
-                <span class="n">y2</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">char</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-
-            <span class="n">rois</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">char</span><span class="p">][</span><span class="n">x1</span><span class="p">:</span><span class="n">x2</span><span class="p">,</span><span class="n">y1</span><span class="p">:</span><span class="n">y2</span><span class="p">,:]</span>
+                <span class="n">y2</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">char</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="mi">1</span>
+            
+            <span class="k">if</span> <span class="n">x2</span><span class="o">&gt;</span><span class="n">x1</span> <span class="ow">and</span> <span class="n">y2</span><span class="o">&gt;</span><span class="n">y1</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="n">x1</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="n">x2</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+                <span class="n">rois</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">char</span><span class="p">][</span><span class="n">x1</span><span class="p">:</span><span class="n">x2</span><span class="p">,</span><span class="n">y1</span><span class="p">:</span><span class="n">y2</span><span class="p">,:]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">rois</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="c1">#######</span>
             <span class="n">xr</span> <span class="o">=</span> <span class="nb">int</span><span class="p">((</span><span class="n">rois</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
             <span class="n">yr</span> <span class="o">=</span> <span class="nb">int</span><span class="p">((</span><span class="n">rois</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
@@ -464,8 +472,8 @@
 <span class="sd">    cv: vector</span>
 <span class="sd">            contain the ID of the of colonies analysed</span>
 
-<span class="sd">    Returns:</span>
-<span class="sd">    ----------</span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
 <span class="sd">        sum_chan_rois: dictionary</span>
 <span class="sd">            Sum of channels for each time step and ROI</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -505,7 +513,7 @@
 <span class="sd">            number of sigma values used between min_sig and max_sig on skfeat.blob_log</span>
 
 <span class="sd">    Returns</span>
-<span class="sd">    ----------</span>
+<span class="sd">    -------</span>
 <span class="sd">        R: dictionary</span>
 <span class="sd">            The time series of colony size, indexed by colony id number</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -546,10 +554,10 @@
 <span class="sd">        filename: string</span>
 <span class="sd">            filename to save the plot generated</span>
 <span class="sd">    </span>
-<span class="sd">    Return</span>
-<span class="sd">    ----------</span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
 <span class="sd">        A: dictionary</span>
-<span class="sd">         colony area at each time step of the selected colony. call as: A[colonyID][time step]</span>
+<span class="sd">         colony area at each time step of the selected colony. Call it as: A[colonyID][time step]</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
     <span class="n">A</span> <span class="o">=</span> <span class="p">{}</span>
@@ -583,7 +591,7 @@
 <span class="sd">            delay parameter</span>
 <span class="sd">        </span>
 <span class="sd">    Returns</span>
-<span class="sd">    ----------</span>
+<span class="sd">    -------</span>
 <span class="sd">    function evaluation</span>
 <span class="sd">    </span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -621,7 +629,7 @@
 <span class="sd">            para_bounds=([lower bounds],[upper bounds])</span>
 <span class="sd">        </span>
 <span class="sd">    Returns</span>
-<span class="sd">    ----------</span>
+<span class="sd">    -------</span>
 <span class="sd">        Y_fit: dictionay</span>
 <span class="sd">            contain the fitting result for each colony in the dictionary. </span>
 <span class="sd">            It is:</span>
@@ -674,17 +682,17 @@
 <span class="sd">            contain the ID of the colonies to analyse</span>
 <span class="sd">        </span>
 <span class="sd">    Returns</span>
-<span class="sd">    ----------</span>
-<span class="sd">        AllC_CRois_mean_val: dictionary</span>
+<span class="sd">    -------</span>
+<span class="sd">        all_chan_crois_mean_val: dictionary</span>
 <span class="sd">            contain the mean pixel value of each channel for each time step of each colony.</span>
-<span class="sd">            call it as: AllC_CRois_mean_val[&#39;channel_name&#39;][blob_number][timepoint]</span>
+<span class="sd">            call it as: all_chan_crois_mean_val[&#39;channel_name&#39;][blob_number][timepoint]</span>
 
 <span class="sd">    </span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">AllC_CRois_mean_val</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">all_chan_crois_mean_val</span> <span class="o">=</span> <span class="p">{}</span>
     
     <span class="k">for</span> <span class="n">char</span> <span class="ow">in</span> <span class="n">CHANNELS</span><span class="p">:</span>
-        <span class="n">CRois_mean_val</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">crois_mean_val</span> <span class="o">=</span> <span class="p">{}</span>
         
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">cv</span><span class="p">:</span>
             <span class="c1">#x and y are the colony center pixel stored on blobs</span>
@@ -698,19 +706,19 @@
 <span class="c1">####### this lines is to eliminate the out of image bounds error</span>
                 <span class="n">r</span> <span class="o">=</span> <span class="n">radii</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span>
     
-                <span class="n">x1</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="n">r</span><span class="p">)</span>
-                <span class="n">x2</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">x</span><span class="o">+</span><span class="n">r</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
-                <span class="n">y1</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">y</span><span class="o">-</span><span class="n">r</span><span class="p">)</span>
-                <span class="n">y2</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">y</span><span class="o">+</span><span class="n">r</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+                <span class="n">x1</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="n">r</span><span class="p">))</span>
+                <span class="n">x2</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">x</span><span class="o">+</span><span class="n">r</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
+                <span class="n">y1</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">y</span><span class="o">-</span><span class="n">r</span><span class="p">))</span>
+                <span class="n">y2</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">y</span><span class="o">+</span><span class="n">r</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
 
-                <span class="k">if</span> <span class="n">x1</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">x1</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
                     <span class="n">x1</span> <span class="o">=</span> <span class="mi">0</span>
                 <span class="k">if</span> <span class="n">x2</span> <span class="o">&gt;=</span> <span class="n">data</span><span class="p">[</span><span class="n">char</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
-                    <span class="n">x2</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">char</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-                <span class="k">if</span> <span class="n">y1</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">x2</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">char</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="mi">1</span>
+                <span class="k">if</span> <span class="n">y1</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
                     <span class="n">y1</span> <span class="o">=</span> <span class="mi">0</span>
                 <span class="k">if</span> <span class="n">y2</span> <span class="o">&gt;=</span> <span class="n">data</span><span class="p">[</span><span class="n">char</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
-                    <span class="n">y2</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">char</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+                    <span class="n">y2</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">char</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="mi">1</span>
 
                 <span class="n">SRoi</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">char</span><span class="p">][</span><span class="n">x1</span><span class="p">:</span><span class="n">x2</span><span class="p">,</span><span class="n">y1</span><span class="p">:</span><span class="n">y2</span><span class="p">,</span><span class="n">j</span><span class="p">]</span>
 
@@ -725,10 +733,10 @@
                             <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
                 <span class="k">if</span> <span class="n">count</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
                     <span class="n">meanInt</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">CRoi_int</span><span class="o">/</span><span class="n">count</span>
-            <span class="n">CRois_mean_val</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">meanInt</span>
-        <span class="n">AllC_CRois_mean_val</span><span class="p">[</span><span class="n">char</span><span class="p">]</span> <span class="o">=</span> <span class="n">CRois_mean_val</span>
+            <span class="n">crois_mean_val</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">meanInt</span>
+        <span class="n">all_chan_crois_mean_val</span><span class="p">[</span><span class="n">char</span><span class="p">]</span> <span class="o">=</span> <span class="n">crois_mean_val</span>
     
-    <span class="k">return</span><span class="p">(</span><span class="n">AllC_CRois_mean_val</span><span class="p">)</span></div>
+    <span class="k">return</span><span class="p">(</span><span class="n">all_chan_crois_mean_val</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="f_mu"><a class="viewcode-back" href="../../source/fluopi.html#fluopi.analysis.f_mu">[docs]</a><span class="k">def</span> <span class="nf">f_mu</span> <span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -747,7 +755,7 @@
 <span class="sd">        </span>
 <span class="sd">        </span>
 <span class="sd">    Returns</span>
-<span class="sd">    ----------</span>
+<span class="sd">    -------</span>
 <span class="sd">        evaluated &quot;mu&quot; fucntion with the given parameters</span>
 
 <span class="sd">    </span>
@@ -771,7 +779,7 @@
 <span class="sd">        </span>
 <span class="sd">        </span>
 <span class="sd">    Returns</span>
-<span class="sd">    ----------</span>
+<span class="sd">    -------</span>
 <span class="sd">        evaluated linear fucntion with the given parameters for the given x</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     
@@ -796,7 +804,7 @@
 
 <span class="sd">        </span>
 <span class="sd">    Returns</span>
-<span class="sd">    ----------                 </span>
+<span class="sd">    -------                 </span>
 <span class="sd">        z: vector</span>
 <span class="sd">            fitted parameters</span>
 <span class="sd">    </span>
