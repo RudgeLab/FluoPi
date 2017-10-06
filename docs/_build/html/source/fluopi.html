@@ -60,7 +60,7 @@ the input radius value) around the colony position value</p>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>A</strong> – colony area at each time step of the selected colony. call as: A[colonyID][time step]</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>A</strong> – colony area at each time step of the selected colony. Call it as: A[colonyID][time step]</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dictionary</p>
@@ -74,19 +74,21 @@ the input radius value) around the colony position value</p>
 <dt id="fluopi.analysis.bg_subst">
 <code class="descclassname">fluopi.analysis.</code><code class="descname">bg_subst</code><span class="sig-paren">(</span><em>data</em>, <em>bg</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/fluopi/analysis.html#bg_subst"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fluopi.analysis.bg_subst" title="Permalink to this definition">¶</a></dt>
 <dd><p>Substract the mean background value for each channel and frame obtained with BG_Val function.</p>
-<dl class="docutils">
-<dt>data: dictionary</dt>
-<dd>R G B images data</dd>
-<dt>bg <span class="classifier-delimiter">:</span> <span class="classifier">array</span></dt>
-<dd>ackground mean value of each channel for every time frame (can be obtained with BG_Val function)</dd>
-</dl>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>Data</strong> – R G B images data with the background substracted</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>data</strong> (<em>dictionary</em>) – R G B images data</li>
+<li><strong>bg</strong> (<em>array</em>) – ackground mean value of each channel for every time frame (can be obtained with BG_Val function)</li>
+</ul>
+</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">dictionary</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>Data</strong> – R G B images data with the background substracted</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dictionary</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -127,16 +129,16 @@ mean background value over time</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>rois_data</strong> (<em>dictionary</em>) – RGB time-lapse image data of each ROIS, from obtain_rois()</li>
 <li><strong>cv</strong> (<em>vector</em>) – contain the ID of the of colonies analysed</li>
-<li><strong>Returns</strong> – </li>
-<li><strong>----------</strong> – <dl class="docutils">
-<dt>sum_chan_rois: dictionary</dt>
-<dd>Sum of channels for each time step and ROI</dd>
-</dl>
-</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>sum_chan_rois</strong> – Sum of channels for each time step and ROI</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dictionary</p>
 </td>
 </tr>
 </tbody>
@@ -254,8 +256,8 @@ inside the colony limits on each time.</p>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>AllC_CRois_mean_val</strong> – contain the mean pixel value of each channel for each time step of each colony.
-call it as: AllC_CRois_mean_val[‘channel_name’][blob_number][timepoint]</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>all_chan_crois_mean_val</strong> – contain the mean pixel value of each channel for each time step of each colony.
+call it as: all_chan_crois_mean_val[‘channel_name’][blob_number][timepoint]</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dictionary</p>
@@ -764,7 +766,7 @@ This images can be used to make timelapse videos of isolated colonies.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>rois</strong> (<em>dictionary</em>) – RGB time-lapse image data of each rois, from obtain_rois()</li>
 <li><strong>idx</strong> (<em>intr</em>) – contain the ID of the of the selected colony</li>
 <li><strong>times</strong> (<em>vector</em>) – conitains the selected frames times</li>
@@ -773,10 +775,13 @@ e.g. fname=(‘rois/Col’+str(idx)+’_ROI_step%d.png’)</li>
 <li><strong>chan_sum</strong> (<em>boolean</em>) – True to perfom the sum of the three channels of the ROI.
 False to show the image original colors.</li>
 <li><strong>gridsize</strong> (<em>vector</em>) – size of the subplot grid. if gridsize=[0,0] the figure will not be shown on the notebook.</li>
-<li><strong>Returns</strong> – </li>
-<li><strong>----------</strong> – </li>
-<li><strong>the images of the selected frames of a ROI.</strong> (<em>Save</em>) – </li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">Save the images of the selected frames of a ROI.</p>
 </td>
 </tr>
 </tbody>
