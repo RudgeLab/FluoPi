@@ -14,7 +14,7 @@ camera = PiCamera()
 
 # Parameters for the user to modify
 # Basic settings
-if len(argv)==5:
+if len(sys.argv)==5:
     folder = sys.argv[1]
     filename = sys.argv[2] 
     interval = sys.argv[3]
@@ -23,7 +23,7 @@ else:
     print ("Required parameters: folder name, filename, interval, number of steps.")
     sys.exit()
 
-# Camera settings
+# Minimal camera settings
 camera.resolution=(960,720)
 camera.ISO=400
 camera.framerate = 1 # frames/sec, determines the max shutter speed
@@ -39,7 +39,7 @@ camera.awb_mode = 'off'
 #camera.digital_gain=1
 #camera.brightness = 50
 #camera.sharpness = 0
-#camera.contrast = 0
+#camera.contrast = 0              # useful to take reduce the background
 #camera.saturation = 0
 #camera.exposure_compensation=0
 #camera.image_effect='none'
@@ -55,24 +55,28 @@ copyfile(__FILE__, os.path.join(folder, 'script.py'))
 for i in range(steps):
     
     t1 = time.time()
-            
+    print('Cycle ' + str(i))
+    
+    # turn the LEDs on            
     GPIO.output(29,GPIO.HIGH)
 
     camera.start_preview()
     sleep(1) ## preview wait time  
-    camera.awb_gains = [1,1]
-    #camera._get_camera_settings() still not sure how to use it
     fname = os.path.join(folder, filename + "_%04d.jpg"%(i))
     camera.capture(fname)
-
+    
+    #turn the LEDs off
     GPIO.output(29,GPIO.LOW)
     camera.stop_preview()
 
     elapsed = time.time()-t1
 
-    #camera._get_camera_settings()
-    print(elapsed)
-    print(camera.shutter_speed)
-    sleep(interval-elapsed) ##  loop wait time
+    # print some relevant information
+    print('Elapsed cycle time: ' + str(elapsed))
+    print('effective camera shutter speed :' + str(camera.shutter_speed) + '\n\n')
+    # if the effective shutter speed doesn´t coincide with the one you set,
+    # you must modify the camera.framerate parameter.
+    
+    sleep(interval-elapsed) ##  waiting time between cycles
     
 GPIO.cleanup()
