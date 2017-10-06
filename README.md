@@ -1,4 +1,4 @@
-# FluoPi
+# [![][FluoPi logo]][website] 
 
 Hardware design files, code and teaching materials for a low cost and open source fluorescent image registration station.
 
@@ -80,3 +80,5 @@ This project is licensed under the MIT License - see the [LICENSE.txt](LICENSE.t
 
 
 [wiki]: https://github.com/SynBioUC/FluoPi/wiki
+[FluoPi logo]: <img src="https://github.com/SynBioUC/FluoPi/blob/master/Images_wiki/fluopi23_logo.jpg" width="200">
+[website]: https://osf.io/dy6p2/
