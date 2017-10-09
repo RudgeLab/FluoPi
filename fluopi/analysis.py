@@ -59,7 +59,7 @@ def get_im_data(x_frames,image_count,f_name):
 
     """
     
-    W,H,_ = plt.imread(f_name%1).shape      # Measure the image size based on the first image on the folder
+    W,H,_ = plt.imread(f_name%0).shape      # Measure the image size based on the first image on the folder
     NT = int(image_count/x_frames)
     ImsR = np.zeros((W,H,NT))
     ImsG = np.zeros((W,H,NT))
