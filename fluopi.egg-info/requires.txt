@@ -1,4 +1,0 @@
-numpy
-matplotlib
-scikit-image
-scipy

@@ -1,9 +1,0 @@
-README.md
-fluopi/__init__.py
-fluopi/analysis.py
-fluopi/plotting.py
-fluopi.egg-info/PKG-INFO
-fluopi.egg-info/SOURCES.txt
-fluopi.egg-info/dependency_links.txt
-fluopi.egg-info/requires.txt
-fluopi.egg-info/top_level.txt
