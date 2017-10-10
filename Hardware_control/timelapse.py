@@ -2,6 +2,7 @@ from picamera import PiCamera
 import RPi.GPIO as GPIO
 from time import sleep
 import time
+import datetime
 import os
 import sys
 from shutil import copyfile
@@ -15,14 +16,21 @@ camera = PiCamera()
 # Parameters for the user to modify
 # Basic settings
 if len(sys.argv)==5:
-    folder = sys.argv[1]
-    filename = sys.argv[2] 
-    interval = sys.argv[3]
-    steps = sys.argv[4]
+    folder = str(sys.argv[1])            # e.g. Timelapse
+    filename = str(sys.argv[2])          # e.g. im_exp1
+    interval = int(sys.argv[3])     # wait time in seconds e.g. 1800
+    steps = int(sys.argv[4])        # number of images   e.g 200
 else:
-    print ("Required parameters: folder name, filename, interval, number of steps.")
+    print ("Required parameters: folder name, filename, interval (secs), number of steps.")
     sys.exit()
-
+    
+print('folder = ' + folder + '\nfilename = ' + filename +  
+      '\ninterval = ' + str(interval) + ' sec'+ '\nsteps = '+ str(steps))
+ 
+# make the folder if it doesn't exist
+if os.path.exists(folder) == False:
+    os.mkdir(folder)
+    
 # Minimal camera settings
 camera.resolution=(960,720)
 camera.ISO=400
@@ -48,7 +56,8 @@ camera.awb_mode = 'off'
 #camera.exposure_speed
 
 # Save this file with the data (to record settings etc.)
-copyfile(__FILE__, os.path.join(folder, 'script.py'))
+scriptpath = os.path.dirname(os.path.realpath(__file__))
+copyfile(os.path.join(scriptpath, sys.argv[0]), os.path.join(folder, 'script.py'))
 
 # Run the timelapse loop
     
@@ -60,21 +69,19 @@ for i in range(steps):
     # turn the LEDs on            
     GPIO.output(29,GPIO.HIGH)
 
-    camera.start_preview()
-    sleep(1) ## preview wait time  
-    fname = os.path.join(folder, filename + "_%04d.jpg"%(i))
+    datestr = datetime.datetime.now().strftime("%Y-%m-%d-%H:%M:%S")
+    fname = os.path.join(folder, datestr + "_" + filename + "_%04d.jpg"%(i))
     camera.capture(fname)
     
     #turn the LEDs off
     GPIO.output(29,GPIO.LOW)
-    camera.stop_preview()
 
     elapsed = time.time()-t1
 
     # print some relevant information
     print('Elapsed cycle time: ' + str(elapsed))
-    print('effective camera shutter speed :' + str(camera.shutter_speed) + '\n\n')
-    # if the effective shutter speed doesn´t coincide with the one you set,
+    print('Effective camera shutter speed :' + str(camera.shutter_speed) + '\n')
+    # if the effective shutter speed doesnt coincide with the one you set,
     # you must modify the camera.framerate parameter.
     
     sleep(interval-elapsed) ##  waiting time between cycles
