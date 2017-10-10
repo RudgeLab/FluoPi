@@ -396,9 +396,8 @@ def obtain_rois(data,blobs):
                 y2 = data[char].shape[1]-1
             
             if x2>x1 and y2>y1:
-                print(x1)
-                print(x2)
-                print(i)
+                print('ROI','x1','x2','y1','y2')
+                print(i,x1,x2,y1,y2)
                 rois[i] = data[char][x1:x2,y1:y2,:]
             else:
                 rois[i] = []

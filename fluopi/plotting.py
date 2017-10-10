@@ -248,7 +248,7 @@ def tl_roi(rois, idx, times, fname, radius='null', chan_sum=False,
                     count = 1
                     for i in times :
                         plt.subplot(n, m, count)
-                        roi = rois['G'][idx][:,:,i]
+                        roi = ROI[:,:,i]
                         if chan_sum == True:
                             plt.imshow(roi, interpolation='none',vmin=0, vmax=mx)
                             plt.colorbar()
