@@ -248,9 +248,12 @@ def tl_roi(rois, idx, times, fname, radius='null', chan_sum=False,
                     count = 1
                     for i in times :
                         plt.subplot(n, m, count)
-                        roi = ROI[:,:,i]
+                        ROI[:,:,0] = rois[CHANNELS[0]][idx][:,:,i]      #RED layer
+                        ROI[:,:,1] = rois[CHANNELS[1]][idx][:,:,i]      #GREEN layer
+                        ROI[:,:,2] = rois[CHANNELS[2]][idx][:,:,i]      #BlUE layer
+                        roi = ROI.astype('uint8')
                         if chan_sum == True:
-                            plt.imshow(roi, interpolation='none',vmin=0, vmax=mx)
+                            plt.imshow(np.sum(roi, axis=2), interpolation='none',vmin=0, vmax=mx)
                             plt.colorbar()
                         else:
                             plt.imshow(roi)
