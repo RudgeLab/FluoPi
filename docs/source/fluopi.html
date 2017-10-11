@@ -1,0 +1,857 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>fluopi package &#8212; FluoPi Module 1.0.0 documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="fluopi-package">
+<h1>fluopi package<a class="headerlink" href="#fluopi-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-fluopi.analysis">
+<span id="fluopi-analysis-module"></span><h2>fluopi.analysis module<a class="headerlink" href="#module-fluopi.analysis" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="fluopi.analysis.area">
+<code class="descclassname">fluopi.analysis.</code><code class="descname">area</code><span class="sig-paren">(</span><em>r</em>, <em>cv</em>, <em>T</em>, <em>filename='null'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/fluopi/analysis.html#area"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fluopi.analysis.area" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute and plot the colonies area over time as a perfect circle (using
+the input radius value) around the colony position value</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>r</strong> (<em>dictionary</em>) – colony radius at each time step of the selected colony (obtained with frame_colony_radius() function)</li>
+<li><strong>cv</strong> – colonies ID vector to plot</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>A</strong> – colony area at each time step of the selected colony. Call it as: A[colonyID][time step]</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dictionary</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="fluopi.analysis.bg_subst">
+<code class="descclassname">fluopi.analysis.</code><code class="descname">bg_subst</code><span class="sig-paren">(</span><em>data</em>, <em>bg</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/fluopi/analysis.html#bg_subst"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fluopi.analysis.bg_subst" title="Permalink to this definition">¶</a></dt>
+<dd><p>Substract the mean background value for each channel and frame obtained with BG_Val function.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>data</strong> (<em>dictionary</em>) – R G B images data</li>
+<li><strong>bg</strong> (<em>array</em>) – ackground mean value of each channel for every time frame (can be obtained with BG_Val function)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>Data</strong> – R G B images data with the background substracted</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dictionary</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="fluopi.analysis.bg_value">
+<code class="descclassname">fluopi.analysis.</code><code class="descname">bg_value</code><span class="sig-paren">(</span><em>x1</em>, <em>x2</em>, <em>y1</em>, <em>y2</em>, <em>data</em>, <em>im_count</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/fluopi/analysis.html#bg_value"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fluopi.analysis.bg_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>compute the background mean value for each channel and frame based on a rectagle
+defined by the user. Plot the rectangle over the image and makes plots of each channel
+mean background value over time</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>x1</strong><strong>,</strong><strong>x2</strong><strong>,</strong><strong>x1</strong><strong>,</strong><strong>x2</strong> (<em>int values</em>) – rectangle area limits: (x1,y1) = left-up corner. (x2,y2) = rigth-bottom corner</li>
+<li><strong>data</strong> (<em>dictionary</em>) – R G B images data to get the background, and his names on data[‘Im’]</li>
+<li><strong>im_count</strong> (<em>int</em>) – total number of files on the folder (can be obtained with count_files function)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>bg</strong> – Background mean value of each channel for every time frame</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dictionary</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="fluopi.analysis.channels_sum">
+<code class="descclassname">fluopi.analysis.</code><code class="descname">channels_sum</code><span class="sig-paren">(</span><em>rois_data</em>, <em>cv</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/fluopi/analysis.html#channels_sum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fluopi.analysis.channels_sum" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the sum over the RGB channels for each image</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>rois_data</strong> (<em>dictionary</em>) – RGB time-lapse image data of each ROIS, from obtain_rois()</li>
+<li><strong>cv</strong> (<em>vector</em>) – contain the ID of the of colonies analysed</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>sum_chan_rois</strong> – Sum of channels for each time step and ROI</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dictionary</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="fluopi.analysis.colony_blobs_id">
+<code class="descclassname">fluopi.analysis.</code><code class="descname">colony_blobs_id</code><span class="sig-paren">(</span><em>data</em>, <em>thresh</em>, <em>im_name</em>, <em>filename='null'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/fluopi/analysis.html#colony_blobs_id"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fluopi.analysis.colony_blobs_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Use skimage to identify the position of each colony and define the circular region
+used by each of them</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>data</strong> (<em>array of single channel image data</em>) – </li>
+<li><strong>thresh</strong> – Pixel values &gt; thresh are included in the analysis, range (0,1)</li>
+<li><strong>im_name</strong> – Name of an image on which to overlay colony positions and sizes</li>
+<li><strong>filename</strong> (<em>string</em>) – filename with whom save the output image+blobs+ID</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>A</strong> – Contains the (x,y) position and size of each blob for each of N colonies detected</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">array (Nx3)</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="fluopi.analysis.colony_classifier">
+<code class="descclassname">fluopi.analysis.</code><code class="descname">colony_classifier</code><span class="sig-paren">(</span><em>fit</em>, <em>classes</em>, <em>chanx_dat</em>, <em>chany_dat</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/fluopi/analysis.html#colony_classifier"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fluopi.analysis.colony_classifier" title="Permalink to this definition">¶</a></dt>
+<dd><p>Classify chanx_dat and chany_dat (which correspond to the data serie being
+classified) on the classes names given as inputs. The classification is
+on the small chany_dat distance value with the value computed with the
+chanx_dat and each fitted function (that are on “fit”). In other words,
+accord the minimal y-coordinate distance between each dot and fitted lines.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>fit</strong> (<em>array like</em>) – each position on the array cointains the parameters of the linear
+fit of each categorie. fit = [z1, z2, z3] where z is the return of
+linear_fit.</li>
+<li><strong>classes</strong> (<em>string array</em>) – contain the names of the defined categories (its length have to be
+same long as fit)</li>
+<li><strong>chanx_dat</strong> (<em>vector</em>) – data of the channel on x axis for the data to be classified</li>
+<li><strong>chany_dat</strong> (<em>vector</em>) – data of the channel on y axis for the data to be classified</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li><strong>clas</strong> (<em>list</em>) – contain the category of each classified colony in order.
+e.g. clas = [‘cat3’, ‘cat1, ‘cat1’, ‘cat1’, ‘cat2’, etc …]</li>
+<li><strong>clas_dict</strong> (<em>dictionary</em>) – contain the channel value of the colonies of each category in the
+corresponding dictinary class. clas_dict = [‘class’][chan_xdat,
+chany_dat, boolean]. The boolean vector have the length of the
+total colony analyzed, and indicate (with True) which colonies
+correspond to that category.</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="fluopi.analysis.count_files">
+<code class="descclassname">fluopi.analysis.</code><code class="descname">count_files</code><span class="sig-paren">(</span><em>path</em>, <em>file_type</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/fluopi/analysis.html#count_files"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fluopi.analysis.count_files" title="Permalink to this definition">¶</a></dt>
+<dd><p>To count the number of files of a defined extension (filetype on a certain folder (path)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>path</strong> (<em>string</em>) – folder name where the images are stored</li>
+<li><strong>file_type</strong> (<em>string</em>) – extension of the files to count (e.g. tif, png, jpg)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>ImageCount</strong> – number of defined filetype files on the path folder</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">int</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="fluopi.analysis.croi_mean_int_frames">
+<code class="descclassname">fluopi.analysis.</code><code class="descname">croi_mean_int_frames</code><span class="sig-paren">(</span><em>data</em>, <em>blobs</em>, <em>radii</em>, <em>cv</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/fluopi/analysis.html#croi_mean_int_frames"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fluopi.analysis.croi_mean_int_frames" title="Permalink to this definition">¶</a></dt>
+<dd><p>compute the mean intensity values for each time and channels for each CROI
+(circular ROI), redefining the ROIS based on radii values
+It takes the fit radius value at each time (radii), with it defines a
+circular ROI, sum all the pixel values inside them and divide this value
+for the number of pixel considered. –&gt; obtain the intensity mean value
+inside the colony limits on each time.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>data</strong> (<em>dictionary</em>) – RGB dictionary with the images data</li>
+<li><strong>blobs</strong> (<em>array like</em>) – contains the information of identified blobs</li>
+<li><strong>radii</strong> (<em>dictionary</em>) – contains the radius for each colony on each time step</li>
+<li><strong>cv</strong> (<em>vector</em>) – contain the ID of the colonies to analyse</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>all_chan_crois_mean_val</strong> – contain the mean pixel value of each channel for each time step of each colony.
+call it as: all_chan_crois_mean_val[‘channel_name’][blob_number][timepoint]</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dictionary</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="fluopi.analysis.data_sum_time">
+<code class="descclassname">fluopi.analysis.</code><code class="descname">data_sum_time</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/fluopi/analysis.html#data_sum_time"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fluopi.analysis.data_sum_time" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sum the data for each pixel over time</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>Data</strong> (<em>dictionary</em>) – R G B images data</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>SData</strong> – Sum data over time and over channels for each pixel of the Data</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">array like</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="fluopi.analysis.f_linear">
+<code class="descclassname">fluopi.analysis.</code><code class="descname">f_linear</code><span class="sig-paren">(</span><em>x</em>, <em>a</em>, <em>b</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/fluopi/analysis.html#f_linear"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fluopi.analysis.f_linear" title="Permalink to this definition">¶</a></dt>
+<dd><p>compute the linear function value with given parameters</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>x</strong> (<em>int</em><em> or </em><em>vector</em>) – independent variable values</li>
+<li><strong>a</strong> (<em>double</em>) – slope parameter</li>
+<li><strong>b</strong> (<em>double</em>) – y-intercept parameter</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">evaluated linear fucntion with the given parameters for the given x</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="fluopi.analysis.f_mu">
+<code class="descclassname">fluopi.analysis.</code><code class="descname">f_mu</code><span class="sig-paren">(</span><em>t</em>, <em>b</em>, <em>d</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/fluopi/analysis.html#f_mu"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fluopi.analysis.f_mu" title="Permalink to this definition">¶</a></dt>
+<dd><p>compute the grwoth rate (mu) function value</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>t</strong> (<em>int</em><em> or </em><em>vector</em>) – independent variable values (suposed to be time vector)</li>
+<li><strong>b</strong> (<em>double</em>) – functon parameter</li>
+<li><strong>c</strong> (<em>double</em>) – function parameter</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">evaluated “mu” fucntion with the given parameters</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="fluopi.analysis.f_sigma">
+<code class="descclassname">fluopi.analysis.</code><code class="descname">f_sigma</code><span class="sig-paren">(</span><em>t</em>, <em>a</em>, <em>b</em>, <em>c</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/fluopi/analysis.html#f_sigma"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fluopi.analysis.f_sigma" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the sigmoide function value using the given input values</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>t</strong> (<em>vector</em>) – independent variable ( “x axis”, suposed to be time)</li>
+<li><strong>a</strong> (<em>double</em>) – maximum value parameter</li>
+<li><strong>b</strong> (<em>double</em>) – function parameter</li>
+<li><strong>c</strong> (<em>double</em>) – delay parameter</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">function evaluation</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="fluopi.analysis.frame_colony_radius">
+<code class="descclassname">fluopi.analysis.</code><code class="descname">frame_colony_radius</code><span class="sig-paren">(</span><em>rois</em>, <em>cv</em>, <em>thr</em>, <em>min_sig=0.5</em>, <em>max_sig=10</em>, <em>num_sig=200</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/fluopi/analysis.html#frame_colony_radius"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fluopi.analysis.frame_colony_radius" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the colony radius at each time step</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>rois</strong> (<em>dictionary</em>) – ROI image data from obtain_rois()</li>
+<li><strong>cv</strong> (<em>vector</em>) – contain the ID of the of colonies analysed</li>
+<li><strong>thr</strong> (<em>double</em>) – Threshold for skfeat.blob_log</li>
+<li><strong>min_sig</strong> (<em>double</em>) – minimum value of sigma used on skfeat.blob_log</li>
+<li><strong>max_sig</strong> (<em>double</em>) – maximum value of sigma used on skfeat.blob_log</li>
+<li><strong>num_sig</strong> (<em>int</em>) – number of sigma values used between min_sig and max_sig on skfeat.blob_log</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>R</strong> – The time series of colony size, indexed by colony id number</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dictionary</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="fluopi.analysis.function_fit">
+<code class="descclassname">fluopi.analysis.</code><code class="descname">function_fit</code><span class="sig-paren">(</span><em>xdata, ydata, init, end, cv, func=&lt;function f_sigma&gt;, param_bounds=([1, -inf, 0.1], [inf, -1, 1])</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/fluopi/analysis.html#function_fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fluopi.analysis.function_fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fit a given function to given data</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>xdata</strong> (<em>vector</em>) – independent variable ( “x axis”, suposed to be time vector)</li>
+<li><strong>ydict</strong> (<em>array like</em>) – array of dependent variable vectors</li>
+<li><strong>init</strong> (<em>double</em>) – point on the time vector to init the fitting</li>
+<li><strong>end</strong> (<em>double</em>) – point on the time vector to end the fitting</li>
+<li><strong>cv</strong> (<em>vector</em>) – contain the ID of the colonies to analyse</li>
+<li><strong>func</strong> (<em>function</em>) – function to be fitted</li>
+<li><strong>param_bounds</strong> (<em>array of vectors</em>) – lower and upper bounds of each parameters
+para_bounds=([lower bounds],[upper bounds])</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><p><strong>Y_fit</strong> – contain the fitting result for each colony in the dictionary.
+It is:</p>
+<p>Y_fit[col ID][evalF z]:</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>evalF: vector</dt>
+<dd><p class="first last">result vector of the fitted function:
+evalF=func(xdata, optimal_parameters)</p>
+</dd>
+<dt>z: vector</dt>
+<dd><p class="first last">fitted parameters</p>
+</dd>
+</dl>
+</div></blockquote>
+</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dictionay</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="fluopi.analysis.get_im_data">
+<code class="descclassname">fluopi.analysis.</code><code class="descname">get_im_data</code><span class="sig-paren">(</span><em>x_frames</em>, <em>image_count</em>, <em>f_name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/fluopi/analysis.html#get_im_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fluopi.analysis.get_im_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load image data from a sequence of files</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>x_frames</strong> (<em>int</em>) – step frames (e.g 10 to use only ten to ten images)</li>
+<li><strong>image_count</strong> (<em>int</em>) – total number of files on the folder (can be obtained with count_files function)</li>
+<li><strong>f_name</strong> (<em>string</em>) – file name pattern including full path where images are stored, e.g. “/folder/image-%04d”</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>ImsR,ImsG,ImsB</strong> – data per channel of each image (ImsR -&gt; matrix size = (W,H,image_count/x_frames))</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">array_like</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="fluopi.analysis.linear_fit">
+<code class="descclassname">fluopi.analysis.</code><code class="descname">linear_fit</code><span class="sig-paren">(</span><em>data1</em>, <em>data2</em>, <em>filename='null'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/fluopi/analysis.html#linear_fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fluopi.analysis.linear_fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fit linear function (f_linear) to given data, display the fited function
+and make a plot of the result. You are able to save the resulting plot by
+given as input the “filename” to save it.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>data1</strong> (<em>vector</em>) – independent variable ( “x axis”) to be used as input of f_linear</li>
+<li><strong>data2</strong> (<em>vector</em>) – “y-data values” used as reference to peform the fitting</li>
+<li><strong>filename</strong> (<em>string</em>) – name of the image file if it is desired to save it.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>z</strong> – fitted parameters</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">vector</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="fluopi.analysis.obtain_rois">
+<code class="descclassname">fluopi.analysis.</code><code class="descname">obtain_rois</code><span class="sig-paren">(</span><em>data</em>, <em>blobs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/fluopi/analysis.html#obtain_rois"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fluopi.analysis.obtain_rois" title="Permalink to this definition">¶</a></dt>
+<dd><p>Based on the information of each identified colony, create arrays to contain
+the regions of interest (ROI) around each one.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>data</strong> (<em>dictionary</em>) – R G B image data per frame</li>
+<li><strong>blobs</strong> (<em>array like</em>) – Array of colony positions and sizes given by skimage in colonyBlob()</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li><em>all_rois</em> – The ROI array image data for square region around colony position of side 2*(colony size)
+to call it: all_rois[‘channel_name’][blob_number][y,x,timepoint]</li>
+<li><em>all_rois_circle</em> – The ROI array image data only within circle (radius = width/2), with the data outside the circle equal to zero.
+The size of the array is equal to square ROIS (all_rois) size.
+to call it: all_rois_circle[‘channel_name’][blob_number][y,x,timepoint]</li>
+<li><em>nc</em> – Number of colonies analysed (length of returned arrays)</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="fluopi.analysis.smooth_data">
+<code class="descclassname">fluopi.analysis.</code><code class="descname">smooth_data</code><span class="sig-paren">(</span><em>data</em>, <em>sigma</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/fluopi/analysis.html#smooth_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fluopi.analysis.smooth_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Apply gaussian filter to smooth each frame data</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>data</strong> (<em>dictionary</em>) – 4 dimensional (R,G,B, and Time) matrix with the data</li>
+<li><strong>sigma</strong> (<em>double</em>) – Filter parameter (standard deviation)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li><strong>NSIms</strong> (<em>dictionary</em>) – Sum over time of Smoothed data per channel (call it nsims[channel][r,c])</li>
+<li><strong>NSImsAll</strong> (<em>array_like</em>) – Matrix with sum of nsims over the channels (call it nsimsAll[r,c])</li>
+<li><strong>SImsT</strong> (<em>dictionary</em>) – Smoothed data per channel per frame (call it as simsT[channel][r,c,f])</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="fluopi.analysis.time_vector">
+<code class="descclassname">fluopi.analysis.</code><code class="descname">time_vector</code><span class="sig-paren">(</span><em>data</em>, <em>x_frames</em>, <em>dt</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/fluopi/analysis.html#time_vector"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fluopi.analysis.time_vector" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the vector of times for the image sequence loaded</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>data</strong> (<em>dictionary</em>) – dictionary with the R G B data of all images</li>
+<li><strong>xframes</strong> (<em>int</em>) – step frames used on the analysis (e.g 10 means you are using one every ten to ten images)</li>
+<li><strong>dt</strong> (<em>double</em>) – time step of the frames in hour units. It can be obtained from the file used to perform the timelapse.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>T</strong> – Time vector for the used data (hour units)</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">array_like</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-fluopi.plotting">
+<span id="fluopi-plotting-module"></span><h2>fluopi.plotting module<a class="headerlink" href="#module-fluopi.plotting" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="fluopi.plotting.check_radius">
+<code class="descclassname">fluopi.plotting.</code><code class="descname">check_radius</code><span class="sig-paren">(</span><em>rois</em>, <em>idx</em>, <em>t</em>, <em>r_fit='null'</em>, <em>r_dots='null'</em>, <em>filename='null'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/fluopi/plotting.html#check_radius"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fluopi.plotting.check_radius" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot the colony radius estimate overlayed on an kymograph image slice</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>r_fit</strong> (<em>vector</em>) – colony fited radius at each time step of the selected colony
+(obtained from a model)</li>
+<li><strong>r_dots</strong> – colony radius at each time step of the selected colony
+(obtained with frame_colony_radius() function)</li>
+<li><strong>rois</strong> (<em>dictionary</em>) – ROI image of each colony (obtained with obtain_rois() function)</li>
+<li><strong>idx</strong> (<em>int</em>) – id of the colony to check</li>
+<li><strong>t</strong> (<em>vector</em>) – the vector of real time values</li>
+<li><strong>filename</strong> (<em>string</em>) – filename to save the plot generated</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="fluopi.plotting.logplot_radius">
+<code class="descclassname">fluopi.plotting.</code><code class="descname">logplot_radius</code><span class="sig-paren">(</span><em>r</em>, <em>cv</em>, <em>t</em>, <em>filename='null'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/fluopi/plotting.html#logplot_radius"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fluopi.plotting.logplot_radius" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot the log of the square of the radius for each colony</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>r</strong> (<em>dictionary</em>) – colony radius at each time step of each colony at each time step (obtained with frame_colony_size() function)</li>
+<li><strong>cv</strong> (<em>vector</em>) – colonies ID vector to plot</li>
+<li><strong>T</strong> (<em>vector</em>) – the vector of real time values</li>
+<li><strong>filename</strong> (<em>string</em>) – filename to save the plot generated</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="fluopi.plotting.plot_im_frame">
+<code class="descclassname">fluopi.plotting.</code><code class="descname">plot_im_frame</code><span class="sig-paren">(</span><em>f_path</em>, <em>frame</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/fluopi/plotting.html#plot_im_frame"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fluopi.plotting.plot_im_frame" title="Permalink to this definition">¶</a></dt>
+<dd><p>To perform separated plots of each channel of image frame</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>f_path</strong> (<em>string_like</em>) – path directory where the images are stored</li>
+<li><strong>frame</strong> (<em>int</em>) – frame number to plot</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="fluopi.plotting.plot_radius">
+<code class="descclassname">fluopi.plotting.</code><code class="descname">plot_radius</code><span class="sig-paren">(</span><em>r</em>, <em>cv</em>, <em>t</em>, <em>filename='null'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/fluopi/plotting.html#plot_radius"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fluopi.plotting.plot_radius" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot the radius for each colony at each time step</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>r</strong> (<em>dictionary</em>) – colony radius at each time step of each colony (obtained with frame_colony_size() function)</li>
+<li><strong>cv</strong> (<em>vector</em>) – colonies ID vector to plot</li>
+<li><strong>t</strong> (<em>vector</em>) – the vector of real time values</li>
+<li><strong>filename</strong> (<em>string</em>) – filename to save the plot generated</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="fluopi.plotting.plt_im_frame_channels">
+<code class="descclassname">fluopi.plotting.</code><code class="descname">plt_im_frame_channels</code><span class="sig-paren">(</span><em>f_path</em>, <em>frame</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/fluopi/plotting.html#plt_im_frame_channels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fluopi.plotting.plt_im_frame_channels" title="Permalink to this definition">¶</a></dt>
+<dd><p>To perform separated plots of each channel of an image frame</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>f_path</strong> (<em>string_like</em>) – folder name where the images are stored</li>
+<li><strong>frame</strong> (<em>int</em>) – Frame number to plot</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="fluopi.plotting.plt_lin_fit">
+<code class="descclassname">fluopi.plotting.</code><code class="descname">plt_lin_fit</code><span class="sig-paren">(</span><em>x_min</em>, <em>x_max</em>, <em>l_fit</em>, <em>color</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/fluopi/plotting.html#plt_lin_fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fluopi.plotting.plt_lin_fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make a plot of an already linear fit, being posible to define the function
+evaluation limits (x independient variable limits) and the color of the
+dots and fitted line.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>x_min</strong> (<em>int</em>) – RGB time-lapse image data of each ROI, obtained with obtain_rois()</li>
+<li><strong>x_max</strong> (<em>int</em>) – channel name (e.g. ‘G’) to be on the x axis</li>
+<li><strong>l_fit</strong> (<em>vector</em>) – linear fitted parameters. Obtained with linear_fit function</li>
+<li><strong>color</strong> (<em>char</em>) – char of the color to be used on the dots and line (e.g. ‘r’)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="fluopi.plotting.rois_last_frame_2chan_plt">
+<code class="descclassname">fluopi.plotting.</code><code class="descname">rois_last_frame_2chan_plt</code><span class="sig-paren">(</span><em>rois_data</em>, <em>channel_x</em>, <em>channel_y</em>, <em>serie_name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/fluopi/plotting.html#rois_last_frame_2chan_plt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fluopi.plotting.rois_last_frame_2chan_plt" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sum all the pixel values for channel_x and channel_y (e.g.channel G and
+channel R) separately for the last frame of each ROI and make a plot where
+channel_x sum value is on the X axis and channel_y sum value is on the Y
+axis.
+Each dot correspond to one ROI values and represent the ratio of the two
+channels for that colony.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>rois_data</strong> (<em>dictionary</em>) – RGB time-lapse image data of each ROI, obtained with obtain_rois()</li>
+<li><strong>channel_x</strong> (<em>string</em>) – channel name (e.g. ‘G’) to be on the x axis</li>
+<li><strong>channel_y</strong> (<em>string</em>) – channel name (e.g. ‘R’) to be on the y axis</li>
+<li><strong>serie_name</strong> (<em>string</em>) – name of the the data serie in analysis (used as title of the plot)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="fluopi.plotting.rois_plt_fluo_dynam">
+<code class="descclassname">fluopi.plotting.</code><code class="descname">rois_plt_fluo_dynam</code><span class="sig-paren">(</span><em>rois</em>, <em>time_v</em>, <em>cv</em>, <em>filename='null'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/fluopi/plotting.html#rois_plt_fluo_dynam"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fluopi.plotting.rois_plt_fluo_dynam" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot the total fluorescence of each colony over time</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>rois</strong> (<em>dictionary</em>) – the ROI image array data (is better to use circular ROIS, obtained with obtain_rois() function)</li>
+<li><strong>time_v</strong> (<em>vector</em>) – the vector of real time values</li>
+<li><strong>cv</strong> (<em>vector</em>) – contain the ID of the of colonies analysed</li>
+<li><strong>filename</strong> (<em>string</em>) – filename with whom save the output image with fluorescence dynamics</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="fluopi.plotting.row_transect">
+<code class="descclassname">fluopi.plotting.</code><code class="descname">row_transect</code><span class="sig-paren">(</span><em>data</em>, <em>row</em>, <em>x_frames</em>, <em>data_frame=-1</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/fluopi/plotting.html#row_transect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fluopi.plotting.row_transect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot the value of a transect (row of pixels) in a frame and plot it</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>data</strong> (<em>dictionary</em>) – dictionary with the R G B data of all images, and his names on Data[‘Im’]</li>
+<li><strong>row</strong> (<em>int</em>) – row where you want to see the transect</li>
+<li><strong>x_frames</strong> (<em>int</em>) – step frames used on the analysis (e.g 10 means you are using one every ten to ten images)</li>
+<li><strong>data_frame</strong> (<em>int</em>) – frame number of the image of interest, default = last one</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="fluopi.plotting.tl_roi">
+<code class="descclassname">fluopi.plotting.</code><code class="descname">tl_roi</code><span class="sig-paren">(</span><em>rois, idx, times, fname, radius='null', chan_sum=False, gridsize=[0, 0]</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/fluopi/plotting.html#tl_roi"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fluopi.plotting.tl_roi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save images of selected time steps on “times” vector, for a selected ROI (idx).
+This images can be used to make timelapse videos of isolated colonies.</p>
+<p>If you specify a gridsize of a proper size, then it display the ROI frames on the notebook</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>rois</strong> (<em>dictionary</em>) – RGB time-lapse image data of each rois, from obtain_rois()</li>
+<li><strong>idx</strong> (<em>intr</em>) – contain the ID of the of the selected colony</li>
+<li><strong>times</strong> (<em>vector</em>) – conitains the selected frames times</li>
+<li><strong>fname</strong> (<em>string</em>) – the complete filename to save the images of ROIs
+e.g. fname=(‘rois/Col’+str(idx)+’_ROI_step%d.png’)</li>
+<li><strong>chan_sum</strong> (<em>boolean</em>) – True to perfom the sum of the three channels of the ROI.
+False to show the image original colors.</li>
+<li><strong>gridsize</strong> (<em>vector</em>) – size of the subplot grid. if gridsize=[0,0] the figure will not be shown on the notebook.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">Save the images of the selected frames of a ROI.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-fluopi">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-fluopi" title="Permalink to this headline">¶</a></h2>
+<p>Created on Mon May 29 17:31:17 2017</p>
+<p>&#64;author: Prosimio</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">FluoPi Module</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../Code.html">Auto Generated Documentation</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, Isaac Nunez.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="../_sources/source/fluopi.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
