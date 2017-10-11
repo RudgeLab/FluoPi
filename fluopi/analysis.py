@@ -59,7 +59,7 @@ def get_im_data(x_frames,image_count,f_name):
 
     """
     
-    W,H,_ = plt.imread(f_name%1).shape      # Measure the image size based on the first image on the folder
+    W,H,_ = plt.imread(f_name%0).shape      # Measure the image size based on the first image on the folder
     NT = int(image_count/x_frames)
     ImsR = np.zeros((W,H,NT))
     ImsG = np.zeros((W,H,NT))
@@ -396,9 +396,8 @@ def obtain_rois(data,blobs):
                 y2 = data[char].shape[1]-1
             
             if x2>x1 and y2>y1:
-                print(x1)
-                print(x2)
-                print(i)
+                print('ROI','x1','x2','y1','y2')
+                print(i,x1,x2,y1,y2)
                 rois[i] = data[char][x1:x2,y1:y2,:]
             else:
                 rois[i] = []
