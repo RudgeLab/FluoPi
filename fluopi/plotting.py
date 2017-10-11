@@ -248,7 +248,6 @@ def tl_roi(rois, idx, times, fname, radius='null', chan_sum=False,
                     count = 1
                     for i in times :
                         plt.subplot(n, m, count)
-                        print "tl_roi"
                         ROI[:,:,0] = rois[CHANNELS[0]][idx][:,:,i]      #RED layer
                         ROI[:,:,1] = rois[CHANNELS[1]][idx][:,:,i]      #GREEN layer
                         ROI[:,:,2] = rois[CHANNELS[2]][idx][:,:,i]      #BlUE layer
