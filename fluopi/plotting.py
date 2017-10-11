@@ -356,7 +356,7 @@ def check_radius(rois, idx, t, r_fit='null', r_dots='null', filename='null'):
     plt.figure(figsize=(18,7))
     w,h,_ = rois[idx].shape
     # use the x-middle transect (--> (w-1)/2)
-    plt.imshow(rois[idx][round((w-1)/2),:,:], interpolation='none')
+    plt.imshow(rois[idx][int(round((w-1)/2)),:,:], interpolation='none')
     # plt.imshow(rois[idx][round(w/2),:,:], interpolation='none', cmap='gray') 
     plt.colorbar()
     if r_fit != 'null':
