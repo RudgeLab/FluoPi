@@ -39,17 +39,7 @@ The project includes some python codes (based on [camera python module](https://
 
 ### Running the notebooks
 
-To test the jupyter notebooks you can use sample images stored in github or full datasets stored at [OSF page project](https://osf.io/dy6p2/) and  linked Google Drive:FluoPi_Data/Manuscript_data/Raw_data_figures_manuscript. You will find two folders with example data:  
-* fig 4_fig 5_S4 movie
-* fig 6_S5_S6_S7_S8movies
-
-Download the data and put the path folder in the proper code block inside the jupyter notebook.
-
-```
-fname =  "D:\myFolder\TLE_G_7_3_17\image_%04d.jpg"
-```
-
-for further information please see the [wiki page][wiki]
+Jupyter notebooks are included (Examples/ and Tutorials/) to demonstrate the analysis principles and the use of the fluopi module to analyse time-lapse image data. Sample image data is included in the relevant folders. You can start from these examples, switching the file paths to your data.
 
 ## Authors
 
@@ -57,12 +47,12 @@ for further information please see the [wiki page][wiki]
 * Isaac Nuñez - [Prosimio](https://github.com/Prosimio)
 * Tamara Matute - [tfmatute](https://github.com/tfmatute)
 * Juan Keymner - [Keymer Lab](http://keymerlab.nl/www/?page_id=26)
-* Tim Rudge - [timrudge](https://github.com/timrudge)
+* Tim Rudge - [timrudge](http://rudge-lab.org)
 * Fernan Federici - [Fernan´s labpage ](https://federicilab.org)
 
 [**Backyard Brains Chile**](http://www.backyardbrains.cl/)
 * Roberto Pellizzari - [RoHPellizzari](https://github.com/RoHPellizzari)
-* Tim Marzullo
+* Tim Marzullo - 
 
 
 ## License
