@@ -49,15 +49,20 @@ setup(
         'Development Status :: 3 - Alpha',
 
         # Indicate who your project is intended for
-        'Intended Audience :: Students and Scientists',
-        'Topic :: DIY Biology :: Get and Analize Biological Data',
+        'Intended Audience :: Education',
+        'Intended Audience :: Science/Research',
+        'Topic :: Education',
+        'Topic :: Scientific/Engineering :: Artificial Life',
+        'Topic :: Scientific/Engineering :: Bio-Informatics',
+        'Topic :: Scientific/Engineering :: Image Recognition',
+        'Topic :: System :: Hardware',
 
         # Pick your license as you wish (should match "license" above)
         'License :: OSI Approved :: MIT License',
 
         # Specify the Python versions you support here. In particular, ensure
         # that you indicate whether you support Python 2, Python 3 or both.
-
+        'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
 
     ],
