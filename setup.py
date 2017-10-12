@@ -21,11 +21,11 @@ setup(
     # https://packaging.python.org/en/latest/single_source_version.html
     version='1.0.0',
 
-    description='Module to manage and analyze timelapse data obtained with\
+    description='Module to manage and analyze time-lapse data obtained with\
     fluopi equipment',
-    long_description='Modeule to manage and analize timelapse data obtained\
-    with fluopi equipment. It include functions from read images data to \
-    analyze them with models and perform parameter stimation',
+    long_description='Module to manage and analyze timelapse data obtained\
+    with fluopi equipment. It includes functions from read images data to \
+    analyze them with models and perform parameter estimation',
 
     # The project's main homepage.
     url='https://github.com/SynBioUC/FluoPi',
