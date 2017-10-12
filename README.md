@@ -47,13 +47,12 @@ Jupyter notebooks are included (Examples/ and Tutorials/) to demonstrate the ana
 * Isaac Nuñez - [Prosimio](https://github.com/Prosimio)
 * Tamara Matute - [tfmatute](https://github.com/tfmatute)
 * Juan Keymner - [Keymer Lab](http://keymerlab.nl/www/?page_id=26)
-* Tim Rudge - [timrudge](http://rudge-lab.org)
-* Fernan Federici - [Fernan´s labpage ](https://federicilab.org)
+* Tim Rudge - [Rudge lab](http://rudge-lab.org)
+* Fernan Federici - [Federici lab](https://federicilab.org)
 
 [**Backyard Brains Chile**](http://www.backyardbrains.cl/)
 * Roberto Pellizzari - [RoHPellizzari](https://github.com/RoHPellizzari)
-* Tim Marzullo - 
-
+* Tim Marzullo - [Backyard Brains](http://www.backyardbrains.cl/)
 
 ## License
 
