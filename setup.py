@@ -29,7 +29,10 @@ setup(
 
     # The project's main homepage.
     url='https://github.com/SynBioUC/FluoPi',
-
+    
+    # The dowload release tag url
+    download_url = 'https://github.com/SynBioUC/FluoPi/archive/v1.0.tar.gz',
+    
     # Author details
     author='Prosimio',
     author_email='innunez@uc.cl',
