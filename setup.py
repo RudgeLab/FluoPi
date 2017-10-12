@@ -24,8 +24,9 @@ setup(
     description='Module to manage and analyze time-lapse data obtained with\
     fluopi equipment',
     long_description='Module to manage and analyze timelapse data obtained\
-    with fluopi equipment. It includes functions from read images data to \
-    analyze them with models and perform parameter estimation',
+    with fluopi equipment (https://osf.io/dy6p2/). It includes functions from\
+    read images data to analyze them with models and perform parameter\
+    estimation',
 
     # The project's main homepage.
     url='https://github.com/SynBioUC/FluoPi',
