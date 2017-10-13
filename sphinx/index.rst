@@ -5,19 +5,16 @@
 
 Welcome to FluoPi Module's documentation!
 =========================================
-This modules was developed to read, manipulate and analyze the data obtained with the `FluoPi <https://osf.io/dy6p2/>`_ DIY equipment.
-asdf
+This module was developed to read, manipulate and analyze the data obtained with the `FluoPi <https://osf.io/dy6p2/>`_ DIY equipment.
 
 .. toctree::
-   :maxdepth: 2
-   :caption: Contents:
+   :maxdepth: 3
+   :caption: Module Content:
 
-   Code
-   modules
-   fluopi
+   source/modules
 
 
-Indices and tables
+Index and search
 ==================
 
 * :ref:`genindex`

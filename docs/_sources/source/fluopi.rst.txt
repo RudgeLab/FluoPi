@@ -1,8 +1,6 @@
 fluopi package
 ==============
 
-Submodules
-----------
 
 fluopi\.analysis module
 -----------------------
@@ -21,10 +19,3 @@ fluopi\.plotting module
     :show-inheritance:
 
 
-Module contents
----------------
-
-.. automodule:: fluopi
-    :members:
-    :undoc-members:
-    :show-inheritance:
