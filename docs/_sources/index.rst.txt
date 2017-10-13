@@ -11,9 +11,8 @@ This modules was developed to read, manipulate and analyze the data obtained wit
    :maxdepth: 2
    :caption: Contents:
 
-   Code
-   modules
-   fluopi
+   source/modules
+   source/fluopi
 
 
 Indices and tables
