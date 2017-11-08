@@ -69,7 +69,7 @@ for i in range(steps):
     # turn the LEDs on            
     GPIO.output(29,GPIO.HIGH)
 
-    datestr = datetime.datetime.now().strftime("%Y-%m-%d-%H:%M:%S")
+    datestr = datetime.datetime.now().strftime("%Y-%m-%d-%H_%M_%S")
     fname = os.path.join(folder, datestr + "_" + filename + "_%04d.jpg"%(i))
     camera.capture(fname)
     
