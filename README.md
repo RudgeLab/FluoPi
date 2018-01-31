@@ -70,3 +70,5 @@ This project is licensed under the MIT License - see the [LICENSE.txt](LICENSE.t
 
 [wiki]: https://github.com/SynBioUC/FluoPi/wiki
 [website]: https://osf.io/dy6p2/
+
+# [<img src="https://github.com/SynBioUC/FluoPi/blob/master/dimensions.jpg" width="600">][website] 
