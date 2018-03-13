@@ -14,7 +14,7 @@ With this equipment you are able to:
 ## Getting Started
 
 You can see the full project at [OSF](https://osf.io/dy6p2/)
-and a pre-print manuscript at [Biorxiv](https://www.biorxiv.org/content/early/2017/09/27/194324)
+and a pre-print manuscript at [Biorxiv](https://www.biorxiv.org/content/early/2017/09/27/194324) and peer-reviewed article in [PLoS](http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0187163)
 
 ### Prerequisites
 
@@ -57,6 +57,9 @@ Jupyter notebooks are included (Examples/ and Tutorials/) to demonstrate the ana
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE.txt](LICENSE.txt) file for details. Hardware is lincesed under the CERN license.
+
+## FAQs and updates 
+Please follow updates, ask questions and check FAQs in this [doc](https://docs.google.com/document/d/1-tSU8xBUZicgM2oZv8TOGw7QUYI85IWkbmjetRthfG8/edit?usp=sharing)
 
 ## Acknowledgments
 
