@@ -1,0 +1,12 @@
+Manufacturing specifications:
+
+PCB size: ~ 170 mm x 125 mm 
+Track width: 1.0 mm
+N° layers: 2
+Material: FR-4
+Glass Transition Temperature: TG 130-140
+Thickness: 1.6 mm
+min Track/Spacing: 6/6mil
+Min Hole size: 1.0 mm (choose something lower than 1.0 mm)
+SilkScreen: White
+Finished Copper: bigger than 1 oz Cu
