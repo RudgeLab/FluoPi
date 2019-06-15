@@ -276,7 +276,7 @@ def smooth_data(data,sigma):
     return(NSIms,NSIms_All,SImsT)
 
 
-def colony_blobs_id(data, thresh, im_name, filename='null'):
+def colony_blobs_id(data, im_name, thresh, sigma_lims =[1,10], max_over=0.8, filename='null'):
     """
     Use skimage to identify the position of each colony and define the circular region
     used by each of them
@@ -291,6 +291,15 @@ def colony_blobs_id(data, thresh, im_name, filename='null'):
     im_name:
         Name of an image on which to overlay colony positions and sizes
     
+    sigma_lims: list [min,max]
+        Indicates the minimum and maximum sigma to search for colonies.
+        The actual radio of a colony is: sqrt(2)*sigma
+        
+    max_over: int or float
+        Indicates the maximum overlap allowed between two colonies.
+        If the area of two colonies overlaps by a fraction greater than threshold,
+        the smaller colony is con taked in account.
+    
     filename: string
         filename with whom save the output image+blobs+ID
 
@@ -300,15 +309,15 @@ def colony_blobs_id(data, thresh, im_name, filename='null'):
         Contains the (x,y) position and size of each blob for each of N colonies detected
     """
 
-    A = skfeat.blob_log(data, min_sigma=1.0, max_sigma=10.0, num_sigma=100, 
-                        threshold=thresh, overlap=0.8)
+    A = skfeat.blob_log(data, min_sigma=sigma_lims[0], max_sigma=sigma_lims[1], num_sigma=100, 
+                        threshold=thresh, overlap=max_over)
 
     plt.figure(figsize=(8,8))
     plt.imshow(data, cmap='gray')
     #plt.hold(True)
     plt.title('Sumarized Image')
     for i in range(len(A)):
-        circle = plt.Circle((A[i,1], A[i,0]), 2*A[i,2], color='r', fill=False , 
+        circle = plt.Circle((A[i,1], A[i,0]), (2**0.5)*A[i,2], color='r', fill=False , 
                             lw=0.5)
         fig = plt.gcf()
         ax = fig.gca()
@@ -320,7 +329,7 @@ def colony_blobs_id(data, thresh, im_name, filename='null'):
     plt.title('Over '+ im_name)
     for i in range(len(A)):
         # plot the circle area identified for each colony
-        circle = plt.Circle((A[i,1], A[i,0]), 2*A[i,2], color='w', fill=False , lw=0.5)
+        circle = plt.Circle((A[i,1], A[i,0]), (2**0.5)*A[i,2], color='w', fill=False , lw=0.5)
         fig = plt.gcf()
         ax = fig.gca()
         ax.add_artist(circle)

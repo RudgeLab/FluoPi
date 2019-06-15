@@ -57,61 +57,129 @@ def plt_im_frame_channels(f_path,frame):
     plt.title('Blue channel')
 
 
-def row_transect(data, row, x_frames, data_frame=-1):
+def row_transect(data, row, data_frame=-1, show_im = True):
     """
     Plot the value of a transect (row of pixels) in a frame and plot it
 
     Parameters
     ----------
-    data : dictionary
-        dictionary with the R G B data of all images, and his names on Data['Im']
+    data : dictionary or numpy array
+        dictionary with the R G B data of all images
+        bi dimentional numpy array.
 
     row : int
         row where you want to see the transect
 
-    x_frames : int
-        step frames used on the analysis (e.g 10 means you are using one every ten to ten images)
-    
     data_frame: int
         frame number of the image of interest, default = last one
+    
+    show_im: boolean
+        if True, the image frame is ploted
+
+    """  
+    row = int(row)  #just in case a non integer number is given
+     
+    if type(data) == dict:
+                            
+        plt.figure(figsize=(15,3))
+        plt.subplot(131)
+        plt.plot(data[CHANNELS[0]][row,:,data_frame])
+        plt.xlabel('pixels')
+        plt.ylabel('value')
+        plt.title('Red channel')
+
+        plt.subplot(132)
+        plt.plot(data[CHANNELS[1]][row,:,data_frame])
+        plt.xlabel('pixels')
+        plt.title('Green channel')
+
+        plt.subplot(133)
+        plt.plot(data[CHANNELS[2]][row,:,data_frame])
+        plt.xlabel('pixels')
+        plt.title('Blue channel')
+
+        
+        if show_im == True:
+        #Rebuild the image
+        
+            n,m,l = data[CHANNELS[0]].shape
+            image = np.zeros((n,m,len(CHANNELS)))
+            for i in range(len(CHANNELS)):
+                image[:,:,i] = data[CHANNELS[i]][:,:,data_frame]
+                
+            image = image.astype('uint8')   #change the data type to show the image properly
+
+            #plot selected line transect on the image        
+
+            plt.figure(figsize=(6,6))
+            fig = plt.gcf()
+            ax = fig.gca()
+            ax.imshow(image)
+            rect = matplotlib.patches.Rectangle((0,row), m, 0, linewidth=1, edgecolor='r', facecolor='none')
+            ax.add_patch(rect)
+            
+    if type(data) == np.ndarray:
+        
+        plt.figure()
+        plt.plot(data[row,:])
+        plt.xlabel('pixels')
+        plt.ylabel('value')
+        plt.title('Fused Channels')
+
+
+
+        if show_im == True:
+
+            #image = data.astype('uint8')   #change the data type to show the image properly
+            #plot selected line transect on the image        
+
+            plt.figure(figsize=(6,6))
+            
+            plt.title('All channels')
+            #fig.colorbar()
+            fig = plt.gcf()
+            ax = fig.gca()
+            im = ax.imshow(data,cmap='viridis')
+            fig.colorbar(im, fraction =0.035)
+            #ax.colorbar()
+            rect = matplotlib.patches.Rectangle((0,row), data.shape[1], 0, linewidth=1, edgecolor='r', facecolor='none')
+            ax.add_patch(rect)
+
+def im_zoom(x_lims, y_lims, imagen):
+    """
+    Make a zoom of a region of interest in an image
+
+    Parameters
+    ----------
+        xlims: list
+            x-axis limits of the zoomed section. 
+            e.g. [x_min, x_max]
+
+        ylims: list
+            y-axis limits of the zoomed section. 
+            e.g. [y_min, y_max]
+
+        imagen: numpy array
+            the imagen array to be display
 
     """
     
-    row = int(row)  #just in case a non integer number is given
+    X2R = x_lims[1]-x_lims[0] #convert on steps because the rectangle patch definition
+    Y2R = y_lims[1]-y_lims[0]
     
-    plt.figure(figsize=(15,3))
-    plt.subplot(131)
-    plt.plot(data[CHANNELS[0]][row,:,data_frame])
-    plt.xlabel('pixels')
-    plt.ylabel('value')
-    plt.title('Red channel')
-
-    plt.subplot(132)
-    plt.plot(data[CHANNELS[1]][row,:,data_frame])
-    plt.xlabel('pixels')
-    plt.title('Green channel')
-
-    plt.subplot(133)
-    plt.plot(data[CHANNELS[2]][row,:,data_frame])
-    plt.xlabel('pixels')
-    plt.title('Blue channel')
-
-    #plot selected line transect on the image
-    if data_frame > 0:
-        ImFrame = x_frames*(data_frame)   # The corresponding image on the path
-    else:
-        _,_,ST = data[CHANNELS[0]].shape
-        ImFrame = (ST-1)*x_frames
-        
+    plt.figure(figsize=(15,5))
     
-    Im = plt.imread(data['Im']%(ImFrame))
-    S1,S2,_ = Im.shape
-    plt.figure(figsize=(6,6))
+    plt.subplot(121)
+    plt.imshow(imagen)
     fig = plt.gcf()
     ax = fig.gca()
-    ax.imshow(Im)
-    rect = matplotlib.patches.Rectangle((0,row), S2, 0, linewidth=1, edgecolor='r', facecolor='none')
+    rect = matplotlib.patches.Rectangle((y_lims[0],x_lims[0]), Y2R, X2R, linewidth=1, edgecolor='r', facecolor='none')
     ax.add_patch(rect)
+    
+    plt.subplot(122)
+    plt.imshow(imagen[x_lims[0]:x_lims[1],y_lims[0]:y_lims[1]])
+    plt.colorbar()
+
     
 def rois_plt_fluo_dynam(rois, time_v, cv, filename='null'):
     """
