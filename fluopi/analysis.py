@@ -478,11 +478,13 @@ def frame_colony_radius(rois, cv, thr, min_sig=0.5, max_sig=10, num_sig=200):
         
         num_sig: int
             number of sigma values used between min_sig and max_sig on skfeat.blob_log
+        
 
     Returns
     -------
         R: dictionary
-            The time series of colony size, indexed by colony id number
+            The time series of colony radius size, indexed by colony id number.
+
     """
     R = {}
     nt = rois[cv[0]].shape[2]
@@ -491,13 +493,14 @@ def frame_colony_radius(rois, cv, thr, min_sig=0.5, max_sig=10, num_sig=200):
         for i in range(nt):
             troi = rois[k][:,:,i].astype(np.float32)
             if len(troi):
-                nt_roi = (troi-troi.min())/(troi.max()-troi.min())
+                nt_roi = (troi-troi.min())/(troi.max()-troi.min())  # Normalization
                 AA = skfeat.blob_log(nt_roi, min_sigma=min_sig, 
                                      max_sigma=max_sig, num_sigma=num_sig, 
                                      threshold=thr, overlap=0.8)
                 #AA = skfeat.blob_log(nt_roi, min_sigma=0.1, max_sigma=6.0, num_sigma=150, threshold=thr, overlap=0.8)
                 if len(AA)>0:
-                    R[k][i] = AA[0,2]
+                    R[k][i] = AA[0,2]*(2)
+                    #R[k][i] = AA[0,2]*(2**0.5)
     return(R)
 
 

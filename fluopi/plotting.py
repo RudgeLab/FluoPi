@@ -362,7 +362,7 @@ def logplot_radius(r, cv, t, filename='null'):
         #plt.savefig("Radius.pdf", transparent=True)
         plt.savefig(str(filename)+".pdf", transparent=True)
 
-def plot_radius(r, cv, t, filename='null'):
+def plot_radius(r, cv, t, col_label=True, filename='null'):
     """
     Plot the radius for each colony at each time step
     
@@ -376,26 +376,79 @@ def plot_radius(r, cv, t, filename='null'):
             
         t: vector
             the vector of real time values
+        
+        col_label: boolen
+            to define if include or not the colony labels in the plot
             
         filename: string
             filename to save the plot generated
     """
     for i in cv:
         R = r[i]
-        plt.plot(t,R, '.')
-        #plt.hold(True)
-
+        
+        if col_label == True:
+            plt.plot(t,R, '.',label='colony '+str(i))
+            plt.legend(loc='best')
+        else:
+            plt.plot(t,R, '.')
+            
         plt.xlabel('Time [h]')
         plt.ylabel('Radius [pixels]')
-        plt.title('Colony radius')
-
+        plt.title('Colony radius')     
      
     if filename != 'null':    
         #plt.savefig("Radius.pdf", transparent=True)
         plt.savefig(str(filename)+".pdf", transparent=True)
 
 
-def check_radius(rois, idx, t, r_fit='null', r_dots='null', filename='null'):
+def ROI_radius(rois, idx, frame= -1, r='null', filename='null', transect = False, plt_circle = False):
+    """
+    Plot the colony radius estimate overlayed on an kymograph image slice
+    
+    Parameters
+    ----------      
+        r:
+            colony radius at each time step of the selected colony 
+            (obtained with frame_colony_radius() function) 
+        
+        rois: dictionary
+            ROI image of each colony (obtained with obtain_rois() function)
+        
+        idx: int
+            id of the colony to check
+            
+        frame: int
+            the frame to see
+        
+        filename: string
+            filename to save the plot generated
+            
+        transect: boolean
+            To indicate of include or not the middle transect line
+            
+        plt_circle: boolean
+            To indicate of include or not the circle line
+    """
+    rw,cl,_ = rois[idx].shape
+    
+    plt.figure()
+    fig = plt.gcf()
+    ax = fig.gca()
+    ax.imshow(rois[idx][:,:,frame], interpolation='none', cmap='gray')
+    
+    if transect == True:
+        rect = matplotlib.patches.Rectangle((0,int((rw-1)/2)), cl, 0, linewidth=1, edgecolor='r', facecolor='none')
+        ax.add_patch(rect)
+        
+    if plt_circle == True:
+        circle = plt.Circle((int((cl-1)/2), int((rw-1)/2)), r[idx][frame], color='w', fill=False , lw=0.5)
+        ax.add_artist(circle)
+    
+    if filename != 'null':    
+        plt.savefig(str(filename)+".pdf", transparent=True)
+
+
+def check_radius(rois, idx, t, r_fit='null', r_dots='null', filename='null', transect = False):
     """
     Plot the colony radius estimate overlayed on an kymograph image slice
     
@@ -420,20 +473,36 @@ def check_radius(rois, idx, t, r_fit='null', r_dots='null', filename='null'):
         
         filename: string
             filename to save the plot generated
+            
+        transect: boolean
+            To indicate of include or not the middle transect line
     """
     plt.figure(figsize=(18,7))
-    w,h,_ = rois[idx].shape
-    # use the x-middle transect (--> (w-1)/2)
-    plt.imshow(rois[idx][int(round((w-1)/2)),:,:], interpolation='none')
-    # plt.imshow(rois[idx][round(w/2),:,:], interpolation='none', cmap='gray') 
-    plt.colorbar()
-    if r_fit != 'null':
-        plt.plot(t, -r_fit*2+(h-1)/2, 'r-')
-        plt.plot(t, r_fit*2+(h-1)/2, 'r-')
-    if r_dots != 'null':
-        plt.plot(t, -r_dots*2+(h-1)/2, 'rx', ms=9)
-        plt.plot(t, r_dots*2+(h-1)/2, 'rx', ms=9)             
+    fig = plt.gcf()
+    ax = fig.gca()
     
+    w,h,_ = rois[idx].shape
+    
+    # use the x-middle transect (--> (w-1)/2)
+    im = ax.imshow(rois[idx][int(round((w-1)/2)),:,:], interpolation='none')#,cmap='gray') 
+    fig.colorbar(im, fraction =0.03)
+
+    if transect == True:
+        rect2 = matplotlib.patches.Rectangle((0,int((h-1)/2)), len(t)-1, 0, linewidth=1, edgecolor='r', facecolor='none')
+        ax.add_patch(rect2)
+    
+    if r_fit != 'null':
+
+        plt.plot(-r_fit+(h-1)/2, 'r-')
+        plt.plot(r_fit+(h-1)/2, 'r-')
+    
+    if r_dots != 'null':
+
+        plt.plot(-r_dots+(h-1)/2, 'rx', ms=9)
+        plt.plot(r_dots+(h-1)/2, 'rx', ms=9)             
+    
+    step = int(len(t)*0.1)
+    plt.xticks(range(0,len(t),step),t[0:-1:step].astype(int))
     plt.xlabel('Time')
     plt.ylabel('y-axis position')
     plt.title('Colony '+str(idx))
