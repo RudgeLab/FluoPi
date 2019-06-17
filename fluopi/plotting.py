@@ -221,8 +221,8 @@ def rois_plt_fluo_dynam(rois, time_v, cv, filename='null'):
 #plt.legend(['Colony %d'%i for i in range(len(A))])
 
 
-def tl_roi(rois, idx, times, fname, radius='null', chan_sum=False, 
-           gridsize=[0,0]):
+def tl_roi(rois, times, idx, frames, fname = 'null', radius='null', chan_sum=False, 
+           same_bar = True, gridsize=[0,0]):
     """
     Save images of selected time steps on "times" vector, for a selected ROI (idx).
     This images can be used to make timelapse videos of isolated colonies.
@@ -234,11 +234,14 @@ def tl_roi(rois, idx, times, fname, radius='null', chan_sum=False,
     rois: dictionary
             RGB time-lapse image data of each rois, from obtain_rois()
     
+    times: vector
+        contain the experimental time vector
+    
     idx: intr
             contain the ID of the of the selected colony
-            
-    times: vector
-        conitains the selected frames times
+         
+    frames: vector
+        conitains the selected time frames
     
     fname: string
         the complete filename to save the images of ROIs
@@ -259,7 +262,7 @@ def tl_roi(rois, idx, times, fname, radius='null', chan_sum=False,
     from fluopi.analysis import channels_sum
     
     if type(idx) == int:      #Check that ID is only one colony
-        if len(times)>0:        #Check time vector have some value
+        if len(frames)>0:        #Check time vector have some value
             
             w1 = rois[CHANNELS[0]][idx].shape[0]
             h1 = rois[CHANNELS[0]][idx].shape[1]
@@ -274,58 +277,77 @@ def tl_roi(rois, idx, times, fname, radius='null', chan_sum=False,
            
             
         # make the plot of each frame and save it
-            for i in times :
+            roi = {}
+            for i in frames:
     
                 plt.figure(figsize=(8,8))        
                                 
                 if chan_sum == True:   #Plot the ROI os sum with a colorbar
                     roi = ROI[:,:,i]
-                    plt.imshow(roi, interpolation='none',vmin=0, vmax=mx)
+                    if same_bar == True:
+                        plt.imshow(roi, interpolation='none',vmin=0, vmax=mx)
+                    else:
+                        plt.imshow(roi)
                     plt.colorbar()
                     plt.xticks([])
                     plt.yticks([])
                     
-                    if radius != 'null':
-                        circle = plt.Circle((round((w1-1)/2), round((h1-1)/2)), 2*radius[i], color='r', fill=False , lw=2)
-                        fig = plt.gcf()
-                        ax = fig.gca()
-                        ax.add_artist(circle)
-                        #ax.axes.get_xaxis().set_visible(False)
-                        #ax.axes.get_yaxis().set_visible(False)
                         
                 else:                #Plot the ROI original image
                     ROI[:,:,0] = rois[CHANNELS[0]][idx][:,:,i]      #RED layer
                     ROI[:,:,1] = rois[CHANNELS[1]][idx][:,:,i]      #GREEN layer
                     ROI[:,:,2] = rois[CHANNELS[2]][idx][:,:,i]      #BlUE layer
-                    roi = ROI.astype('uint8')
-                    plt.imshow(roi)
+                    roi[i] = ROI.astype('uint8')
+                    plt.imshow(roi[i])
                     plt.xticks([])
                     plt.yticks([])
                 
-                plt.savefig(fname%(i+1), transparent=True)
+                if radius != 'null':
+                    
+                    circle = plt.Circle((round((w1-1)/2), round((h1-1)/2)), radius[i], color='r', fill=False , lw=2)
+                    fig = plt.gcf()
+                    ax = fig.gca()
+                    ax.add_artist(circle)
+                    #ax.axes.get_xaxis().set_visible(False)
+                    #ax.axes.get_yaxis().set_visible(False)
+                
+                if fname != 'null':
+                    plt.savefig(fname%(times[i]), transparent=True)
+                
                 plt.close()
             
             # display the plots in the notebook
             n = gridsize[0]
             m = gridsize[1]
             if n and m >0:              # make n or m equal to zero to not display the figure in the notebook.
-                if (n*m)<(len(times)):
+                if (n*m)<(len(frames)):
                     print('the subplot grid is smaller than the number of plots. Increase x or y, and try again')
                 else:
                     plt.figure(figsize=(4*m,4*n))
                     count = 1
-                    for i in times :
+                    for i in frames :
                         plt.subplot(n, m, count)
-                        ROI[:,:,0] = rois[CHANNELS[0]][idx][:,:,i]      #RED layer
-                        ROI[:,:,1] = rois[CHANNELS[1]][idx][:,:,i]      #GREEN layer
-                        ROI[:,:,2] = rois[CHANNELS[2]][idx][:,:,i]      #BlUE layer
-                        roi = ROI.astype('uint8')
+
                         if chan_sum == True:
-                            plt.imshow(roi) #, interpolation='none',vmin=0, vmax=mx)
+                            roi = ROI[:,:,i]
+                            if same_bar == True:
+                                plt.imshow(roi, interpolation='none',vmin=0, vmax=mx)
+                            else:
+                                plt.imshow(roi)
                             plt.colorbar()
+                        
                         else:
-                            plt.imshow(roi)
-                        plt.title(str(i+1)+' Hours')
+                            
+                            plt.imshow(roi[i])
+                            
+                        if radius != 'null':
+                    
+                            circle = plt.Circle((round((w1-1)/2), round((h1-1)/2)), radius[i], color='r', fill=False , lw=2)
+                            fig = plt.gcf()
+                            ax = fig.gca()
+                            ax.add_artist(circle)
+                        
+                        plt.title(str(times[i])+' Hours')
                         count += 1
         else:
             print('ERROR: Time vector have to be of lenght higher than zero')
