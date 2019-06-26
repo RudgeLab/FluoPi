@@ -37,7 +37,7 @@ def count_files(path,file_type):
     print(path.split('\\')[-1]+' = '+str(ImageCount) + ' files')
     return(ImageCount)
 
-def get_im_data(x_frames,image_count,f_name):
+def get_im_data(x_frames,image_count,f_name, init = 0):
     """
     Load image data from a sequence of files
 
@@ -51,6 +51,10 @@ def get_im_data(x_frames,image_count,f_name):
 
     f_name : string
         file name pattern including full path where images are stored, e.g. "/folder/image-%04d"
+    
+    init: int
+        first image number name to be used in the analysis. 
+        e.g. init = 33 means to use /folder/image-%33
 
     Returns
     -------
@@ -59,13 +63,15 @@ def get_im_data(x_frames,image_count,f_name):
 
     """
     
-    W,H,_ = plt.imread(f_name%0).shape      # Measure the image size based on the first image on the folder
+    W,H,_ = plt.imread(f_name%init).shape      # Measure the image size based on the first image on the folder
     NT = int(image_count/x_frames)
     ImsR = np.zeros((W,H,NT))
     ImsG = np.zeros((W,H,NT))
     ImsB = np.zeros((W,H,NT))
+    init = int(init)
+    
     for i in range(0,NT):
-        im = plt.imread(f_name%(i*x_frames))
+        im = plt.imread(f_name%(init + i*x_frames))
         ImsR[:,:,i] = im[:,:,0]              # Last number code the channel: 0=red, 1=green, 2=blue
         ImsG[:,:,i] = im[:,:,1]
         ImsB[:,:,i] = im[:,:,2]
