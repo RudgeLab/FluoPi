@@ -84,18 +84,18 @@ def row_transect(data, row, data_frame=-1, show_im = True):
         plt.figure(figsize=(15,3))
         plt.subplot(131)
         plt.plot(data[CHANNELS[0]][row,:,data_frame])
-        plt.xlabel('pixels')
+        plt.xlabel('pixel position')
         plt.ylabel('value')
         plt.title('Red channel')
 
         plt.subplot(132)
         plt.plot(data[CHANNELS[1]][row,:,data_frame])
-        plt.xlabel('pixels')
+        plt.xlabel('pixel position')
         plt.title('Green channel')
 
         plt.subplot(133)
         plt.plot(data[CHANNELS[2]][row,:,data_frame])
-        plt.xlabel('pixels')
+        plt.xlabel('pixel position')
         plt.title('Blue channel')
 
         
