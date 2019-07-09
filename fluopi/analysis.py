@@ -3,6 +3,7 @@ import matplotlib
 import matplotlib.pyplot as plt
 import numpy as np
 import glob
+import pickle as pkl
 
 from skimage.filters import gaussian
 import skimage.feature as skfeat
@@ -12,6 +13,55 @@ from scipy.optimize import curve_fit
 
 # Define the image channels
 CHANNELS = ['R','G','B']
+
+
+def save_obj(obj, name, folder ):
+    """
+    To save a .pkl object in a desired folder
+
+    Parameters
+    ----------
+    obj : python object
+        python object to be saved.
+        (e.g. dictionay, list, etc)
+
+    name : string
+        name with which save the object
+        
+    folder: string
+        folder name where to save the object
+    
+    Returns
+    -------
+    ImageCount : int
+        number of defined filetype files on the path folder
+
+    """
+    with open(folder+'/'+ name + '.pkl', 'wb') as f:
+        pkl.dump(obj, f, pkl.HIGHEST_PROTOCOL)
+
+
+def load_obj(name, folder ):
+    
+    """
+    To load a .pkl object from a desired folder
+
+    Parameters
+    ----------
+    name : string
+       name of the object to be loaded
+        
+    folder: string
+        name of the folder where the object is.
+    
+    Returns
+    -------
+    
+    returns the .pkl object to be loaded
+
+    """
+    with open(folder+'/' + name + '.pkl', 'rb') as f:
+        return pkl.load(f)
 
 
 def count_files(path,file_type):
