@@ -57,7 +57,7 @@ def plt_im_frame_channels(f_path,frame):
     plt.title('Blue channel')
 
 
-def row_transect(data, row, data_frame=-1, show_im = True):
+def row_transect(data, row, data_frame=-1, title = 'Transect value', show_im = True):
     """
     Plot the value of a transect (row of pixels) in a frame and plot it
 
@@ -72,6 +72,9 @@ def row_transect(data, row, data_frame=-1, show_im = True):
 
     data_frame: int
         frame number of the image of interest, default = last one
+        
+    title: string
+        Whole figure title
     
     show_im: boolean
         if True, the image frame is ploted
@@ -81,7 +84,8 @@ def row_transect(data, row, data_frame=-1, show_im = True):
      
     if type(data) == dict:
                             
-        plt.figure(figsize=(15,3))
+        fig = plt.figure(figsize=(15,3))
+
         plt.subplot(131)
         plt.plot(data[CHANNELS[0]][row,:,data_frame])
         plt.xlabel('pixel position')
@@ -97,7 +101,9 @@ def row_transect(data, row, data_frame=-1, show_im = True):
         plt.plot(data[CHANNELS[2]][row,:,data_frame])
         plt.xlabel('pixel position')
         plt.title('Blue channel')
-
+        
+        fig.suptitle(str(title), fontsize=16)
+        plt.subplots_adjust(left=0.1, wspace=0.2, top=0.8)
         
         if show_im == True:
         #Rebuild the image
